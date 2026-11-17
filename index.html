@@ -1,12 +1,14 @@
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#101010">
-<meta name="description" content="NEXA Crédito. Conectamos você a possibilidades de crédito com transparência e atendimento nacional.">
+<meta name="description" content="NEXA CRÉDITO: informações sobre possibilidades de crédito, com transparência e atendimento nacional.">
 <title>NEXA CRÉDITO | Seu próximo passo</title>
+
 <style>
 :root {
   --black:#101010;
@@ -29,28 +31,39 @@ header{
   position:sticky;top:0;z-index:10;
   background:#101010f5;border-bottom:1px solid #333;
 }
-nav{height:76px;display:flex;align-items:center;
-justify-content:space-between}
+nav{
+  min-height:76px;display:flex;align-items:center;
+  justify-content:space-between;gap:15px;
+}
 .logo{display:flex;align-items:center;gap:10px}
-.monogram{font-size:34px;font-weight:900;color:var(--gold);
-letter-spacing:-7px;padding-right:8px}
+.monogram{
+  font-size:34px;font-weight:900;color:var(--gold);
+  letter-spacing:-7px;padding-right:8px
+}
 .logo-name{font-size:18px;font-weight:800;letter-spacing:2px}
 .logo-name span{color:var(--gold)}
-.menu{display:flex;gap:24px;font-size:13px;color:#ddd}
+.menu{display:flex;gap:20px;font-size:13px;color:#ddd}
 .menu a:hover{color:var(--gold)}
 .hero{
   padding:90px 0 75px;
   background:radial-gradient(ellipse at 80% 20%,#493a1b 0%,#191919 35%,#101010 75%);
 }
-.hero h1{font-size:clamp(38px,7vw,68px);line-height:1.08;
-max-width:750px;margin:18px 0}
+.hero h1{
+  font-size:clamp(38px,7vw,68px);line-height:1.08;
+  max-width:750px;margin:18px 0
+}
 .hero h1 span{color:var(--gold)}
-.hero p{color:#ccc;max-width:570px;font-size:17px}
-.eyebrow{color:var(--gold);font-size:12px;
-letter-spacing:3px;font-weight:bold}
+.hero p{color:#ccc;max-width:620px;font-size:17px}
+.eyebrow{
+  color:var(--gold);font-size:12px;
+  letter-spacing:3px;font-weight:bold
+}
 .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
-.btn{display:inline-block;padding:13px 22px;border-radius:5px;
-font-weight:bold;font-size:14px;border:1px solid var(--gold)}
+.btn{
+  display:inline-block;padding:13px 22px;border-radius:5px;
+  font-weight:bold;font-size:14px;border:1px solid var(--gold);
+  cursor:pointer
+}
 .primary{background:var(--gold);color:#151515}
 .secondary{color:var(--gold)}
 section{padding:70px 0}
@@ -62,49 +75,72 @@ section{padding:70px 0}
   background:var(--dark);border:1px solid #333;
   padding:25px;border-radius:10px;display:flex;
   flex-direction:column;align-items:flex-start;
+  transition:.2s
 }
 .product:hover{border-color:var(--gold);transform:translateY(-3px)}
-.product{transition:.2s}
 .product .symbol{font-size:27px;color:var(--gold);margin-bottom:12px}
 .product h3{font-size:19px;margin-bottom:7px}
 .product p{font-size:14px;color:var(--muted);margin-bottom:18px}
 .product .btn{margin-top:auto}
+.info-card{
+  background:var(--dark);border:1px solid #383838;
+  border-radius:10px;padding:25px;margin-top:18px
+}
+.info-card h3{color:var(--gold);margin-bottom:10px}
+.info-card p,.info-card li{color:#ccc;font-size:14px}
+.info-card ul{padding-left:20px;margin-top:10px}
 .security{
- background:#1a1a1a;border:1px solid #514322;
- border-radius:10px;padding:30px;
+  background:#1a1a1a;border:1px solid #514322;
+  border-radius:10px;padding:30px
 }
 .security h2{color:var(--gold);font-size:25px;margin-bottom:10px}
 .security p{color:#ddd}
+.notice{
+  border-left:3px solid var(--gold);
+  padding:15px 18px;background:#1b1b1b;
+  color:#ddd;margin-top:20px;font-size:14px
+}
 .form-area{background:#191919;border-radius:12px;padding:28px}
 form{display:grid;gap:14px;max-width:600px}
 label{font-size:13px;color:#ddd}
 input,select,textarea{
- width:100%;padding:13px;background:#101010;
- border:1px solid #444;border-radius:5px;color:white;
- font:inherit;
+  width:100%;padding:13px;background:#101010;
+  border:1px solid #444;border-radius:5px;color:white;
+  font:inherit
 }
-input:focus,select:focus,textarea:focus{outline:1px solid var(--gold)}
+input:focus,select:focus,textarea:focus{
+  outline:1px solid var(--gold)
+}
+input[type="checkbox"]{width:auto}
 button{cursor:pointer;font:inherit}
 .faq details{border-bottom:1px solid #333;padding:17px 0}
 .faq summary{cursor:pointer;font-weight:bold}
 .faq details p{color:var(--muted);padding-top:12px;font-size:14px}
-footer{background:#080808;border-top:1px solid #333;padding:35px 0}
-footer p{font-size:12px;color:#999;margin:10px 0}
-.footer-links{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--gold)}
-.whatsapp{
- position:fixed;bottom:20px;right:20px;z-index:20;
- background:#25d366;color:#07190d;padding:13px 19px;
- border-radius:30px;font-weight:bold;box-shadow:0 4px 20px #0008;
+.legal-links{display:flex;flex-wrap:wrap;gap:14px;margin-top:15px}
+.legal-links a{color:var(--gold);font-size:13px;text-decoration:underline}
+footer{
+  background:#080808;border-top:1px solid #333;padding:35px 0
 }
-@media(max-width:650px){
- .menu{display:none}
- .hero{padding:65px 0}
- .grid{grid-template-columns:1fr}
- section{padding:52px 0}
- .section-title{font-size:27px}
+footer p{font-size:12px;color:#999;margin:10px 0}
+.footer-links{
+  display:flex;gap:18px;flex-wrap:wrap;
+  font-size:13px;color:var(--gold)
+}
+.whatsapp{
+  position:fixed;bottom:20px;right:20px;z-index:20;
+  background:#25d366;color:#07190d;padding:13px 19px;
+  border-radius:30px;font-weight:bold;box-shadow:0 4px 20px #0008
+}
+@media(max-width:750px){
+  .menu{display:none}
+  .hero{padding:65px 0}
+  .grid{grid-template-columns:1fr}
+  section{padding:52px 0}
+  .section-title{font-size:27px}
 }
 </style>
 </head>
+
 <body>
 
 <header>
@@ -116,6 +152,7 @@ footer p{font-size:12px;color:#999;margin:10px 0}
    </a>
    <div class="menu">
     <a href="#produtos">Produtos</a>
+    <a href="#transparencia">Transparência</a>
     <a href="#seguranca">Segurança</a>
     <a href="#contato">Contato</a>
     <a href="#faq">Dúvidas</a>
@@ -125,14 +162,18 @@ footer p{font-size:12px;color:#999;margin:10px 0}
 </header>
 
 <main>
+
 <section class="hero">
  <div class="container">
   <div class="eyebrow">NEXA CRÉDITO • ATENDIMENTO NACIONAL</div>
   <h1>Seu próximo passo começa com <span>boas escolhas.</span></h1>
-  <p>Conectamos você a possibilidades de crédito com informação clara, atendimento responsável e transparência em cada etapa.</p>
+  <p>
+   Conectamos você a informações sobre possibilidades de crédito,
+   com atendimento responsável, clareza e transparência.
+  </p>
   <div class="actions">
    <a class="btn primary" href="#produtos">Conheça as opções</a>
-   <a class="btn secondary" href="#contato">Fale com nossa equipe</a>
+   <a class="btn secondary" href="#contato">Fale conosco</a>
   </div>
  </div>
 </section>
@@ -141,44 +182,230 @@ footer p{font-size:12px;color:#999;margin:10px 0}
  <div class="container">
   <div class="eyebrow">NOSSAS SOLUÇÕES</div>
   <h2 class="section-title">Encontre uma opção para você.</h2>
-  <p class="section-intro">Conheça as modalidades e consulte as condições disponíveis.</p>
+  <p class="section-intro">
+   Consulte as informações e condições diretamente com a instituição responsável.
+  </p>
+
   <div class="grid">
 
    <article class="product">
     <div class="symbol">01 /</div>
     <h3>Antecipação FGTS</h3>
-    <p>Consulte as possibilidades de antecipação do saque-aniversário e as condições disponíveis.</p>
-    <a class="btn primary" href="https://central-cred.startcapital.app/credit/nexacredito" target="_blank" rel="noopener">Acessar contratação</a>
+    <p>
+     Consulte as possibilidades de antecipação do saque-aniversário,
+     os requisitos e as condições disponíveis na plataforma responsável.
+    </p>
+    <a class="btn primary"
+       href="https://central-cred.startcapital.app/credit/nexacredito"
+       target="_blank" rel="noopener noreferrer">
+       Acessar plataforma
+    </a>
    </article>
 
    <article class="product">
     <div class="symbol">02 /</div>
     <h3>Consignado CLT</h3>
-    <p>Consulte as condições para trabalhadores com carteira assinada.</p>
-    <a class="btn primary" href="https://v8-auto-clt-front.vercel.app/3e509b26-3c31-4cd9-b697-cc579ad5c450/contratacao" target="_blank" rel="noopener">Acessar contratação</a>
+    <p>
+     Consulte as condições para trabalhadores com carteira assinada,
+     conforme os critérios e a análise da instituição responsável.
+    </p>
+    <a class="btn primary"
+       href="https://v8-auto-clt-front.vercel.app/3e509b26-3c31-4cd9-b697-cc579ad5c450/contratacao"
+       target="_blank" rel="noopener noreferrer">
+       Acessar plataforma
+    </a>
    </article>
 
    <article class="product">
     <div class="symbol">03 /</div>
-    <h3>Crédito para beneficiários</h3>
-    <p>Consulte com nossa equipe quais modalidades estão disponíveis e se você atende aos critérios.</p>
-    <a class="btn secondary" href="#contato">Consultar opções</a>
+    <h3>Informações para beneficiários</h3>
+    <p>
+     Consulte informações sobre modalidades de crédito eventualmente
+     disponíveis para pessoas que recebem benefícios sociais.
+     A disponibilidade depende das regras de cada produto e instituição.
+    </p>
+    <a class="btn secondary" href="#bolsa-familia">
+     Entenda as condições
+    </a>
    </article>
 
    <article class="product">
     <div class="symbol">04 /</div>
     <h3>Consignado e cartão</h3>
-    <p>Conheça as alternativas disponíveis conforme seu perfil e as regras de cada instituição.</p>
-    <a class="btn secondary" href="#contato">Falar com especialista</a>
+    <p>
+     Conheça informações sobre alternativas de crédito e cartão.
+     A elegibilidade depende do perfil e das regras da instituição responsável.
+    </p>
+    <a class="btn secondary" href="#contato">Consultar informações</a>
    </article>
 
    <article class="product">
     <div class="symbol">05 /</div>
     <h3>Crédito na conta de energia</h3>
-    <p>Consulte a disponibilidade da modalidade, os requisitos e as condições da operação.</p>
-    <a class="btn secondary" href="#contato">Consultar condições</a>
+    <p>
+     Saiba mais sobre a modalidade de crédito com pagamento por meio
+     da fatura de energia e consulte os requisitos diretamente com a Crefaz.
+    </p>
+    <a class="btn secondary" href="#crefaz">Ver informações</a>
    </article>
 
+  </div>
+ </div>
+</section>
+
+<section id="crefaz">
+ <div class="container">
+  <div class="eyebrow">INFORMAÇÕES SOBRE A MODALIDADE</div>
+  <h2 class="section-title">Crédito na conta de energia</h2>
+  <p class="section-intro">
+   Conheça os pontos importantes antes de solicitar uma proposta.
+  </p>
+
+  <div class="info-card">
+   <h3>Como funciona?</h3>
+   <p>
+    Essa modalidade pode permitir que o pagamento das parcelas de um
+    empréstimo seja realizado por meio da fatura de energia elétrica,
+    conforme as regras da operação e da empresa responsável.
+   </p>
+  </div>
+
+  <div class="info-card">
+   <h3>Condições e requisitos</h3>
+   <p>
+    A disponibilidade, os critérios de elegibilidade, os documentos,
+    o valor liberado e o número de parcelas dependem da análise e das
+    regras vigentes da instituição concessora.
+   </p>
+   <ul>
+    <li>Taxas de juros definidas na proposta da instituição.</li>
+    <li>Custo Efetivo Total (CET) informado antes da contratação.</li>
+    <li>Valor, prazo e parcelas sujeitos à análise.</li>
+    <li>Eventuais tarifas, tributos e encargos devem constar da proposta e do contrato.</li>
+   </ul>
+  </div>
+
+  <div class="notice">
+   A NEXA CRÉDITO não é representante, correspondente bancário ou
+   parceira oficial da Crefaz. A menção à modalidade é informativa.
+   Consulte diretamente a empresa responsável para confirmar
+   disponibilidade, condições e contratação.
+  </div>
+
+  <div class="actions">
+   <a class="btn secondary"
+      href="https://site.crefaz.com.br/produto/energia"
+      target="_blank" rel="noopener noreferrer">
+      Consultar informações oficiais da Crefaz
+   </a>
+  </div>
+ </div>
+</section>
+
+<section id="bolsa-familia">
+ <div class="container">
+  <div class="eyebrow">INFORMAÇÃO IMPORTANTE</div>
+  <h2 class="section-title">Crédito e Bolsa Família</h2>
+
+  <div class="info-card">
+   <h3>Existe empréstimo consignado do Bolsa Família?</h3>
+   <p>
+    A legislação que instituiu o novo Bolsa Família revogou a autorização
+    para novas operações de crédito consignado com desconto direto
+    nesse benefício.
+   </p>
+   <p style="margin-top:12px">
+    Por isso, a NEXA não anuncia nem oferece contratação de novo
+    consignado com desconto direto no Bolsa Família.
+   </p>
+  </div>
+
+  <div class="info-card">
+   <h3>Outras modalidades de crédito</h3>
+   <p>
+    Receber o Bolsa Família não significa aprovação automática ou
+    disponibilidade garantida de empréstimo. Eventuais modalidades
+    de crédito pessoal que não utilizem o benefício como desconto
+    dependem da oferta legal da instituição, da análise de crédito
+    e das condições apresentadas ao consumidor.
+   </p>
+  </div>
+
+  <div class="notice">
+   Nunca comprometa o dinheiro destinado às necessidades essenciais
+   da família sem avaliar cuidadosamente o custo total da operação.
+  </div>
+
+  <div class="actions">
+   <a class="btn secondary"
+      href="https://www.gov.br/mds/pt-br"
+      target="_blank" rel="noopener noreferrer">
+      Consultar informações do Ministério do Desenvolvimento Social
+   </a>
+  </div>
+ </div>
+</section>
+
+<section id="transparencia">
+ <div class="container">
+  <div class="eyebrow">NOSSA ATUAÇÃO</div>
+  <h2 class="section-title">Transparência em primeiro lugar.</h2>
+
+  <div class="security">
+   <h2>O que é a NEXA CRÉDITO?</h2>
+   <p>
+    A NEXA CRÉDITO é uma marca independente de divulgação de informações
+    e atendimento a pessoas interessadas em conhecer possibilidades
+    de crédito.
+   </p>
+   <p style="margin-top:12px">
+    A NEXA não é banco, financeira, instituição autorizada pelo Banco
+    Central do Brasil ou correspondente bancário. Não concede empréstimos,
+    não aprova operações e não representa instituições financeiras.
+   </p>
+   <p style="margin-top:12px">
+    Não afirmamos possuir vínculo contratual ou parceria oficial com
+    as instituições e plataformas mencionadas neste site.
+   </p>
+   <p style="margin-top:12px">
+    A análise, aprovação, contratação, liberação dos recursos e cobrança
+    das operações são de responsabilidade exclusiva da instituição
+    identificada na proposta e no contrato.
+   </p>
+  </div>
+
+  <div class="info-card">
+   <h3>Taxas, CET e condições</h3>
+   <p>
+    Taxas de juros, Custo Efetivo Total (CET), valores, prazos, parcelas,
+    tarifas e demais condições são definidos pela instituição concessora,
+    de acordo com a modalidade e a análise de cada proposta.
+   </p>
+   <p style="margin-top:10px">
+    Antes de contratar, solicite e leia a proposta completa, confira
+    o CET, o valor total a pagar, o número de parcelas e a identificação
+    da instituição responsável.
+   </p>
+  </div>
+
+  <div class="info-card">
+   <h3>Referência regulatória</h3>
+   <p>
+    A Resolução CMN nº 4.935/2021 disciplina a contratação de
+    correspondentes no País por instituições autorizadas.
+    A NEXA não se apresenta como correspondente bancário nem afirma
+    estar abrangida por contrato de correspondente.
+   </p>
+   <div class="legal-links">
+    <a href="https://www.bcb.gov.br/estabilidadefinanceira/exibenormativo?numero=4935&tipo=Resolu%C3%A7%C3%A3o+CMN"
+       target="_blank" rel="noopener noreferrer">
+       Consultar Resolução CMN nº 4.935/2021
+    </a>
+    <a href="https://www.bcb.gov.br"
+       target="_blank" rel="noopener noreferrer">
+       Banco Central do Brasil
+    </a>
+   </div>
   </div>
  </div>
 </section>
@@ -188,7 +415,16 @@ footer p{font-size:12px;color:#999;margin:10px 0}
   <div class="security">
    <div class="eyebrow">SEGURANÇA EM PRIMEIRO LUGAR</div>
    <h2>Não solicitamos depósitos antecipados!</h2>
-   <p>A NEXA não solicita PIX, depósitos ou transferências antecipadas para liberar empréstimos ou aprovar propostas. Desconfie de cobranças dessa natureza feitas em nome da NEXA. Em caso de dúvida, utilize nossos canais oficiais.</p>
+   <p>
+    A NEXA não solicita PIX, depósitos ou transferências antecipadas
+    para liberar empréstimos ou aprovar propostas.
+    Nunca faça pagamentos a pessoas que prometam aprovação garantida.
+   </p>
+   <p style="margin-top:12px">
+    Confira sempre a identidade da instituição, os canais oficiais
+    e os dados do beneficiário antes de realizar qualquer pagamento
+    previsto em contrato.
+   </p>
   </div>
  </div>
 </section>
@@ -196,29 +432,40 @@ footer p{font-size:12px;color:#999;margin:10px 0}
 <section id="contato">
  <div class="container">
   <div class="eyebrow">FALE COM A NEXA</div>
-  <h2 class="section-title">Vamos entrar em contato?</h2>
-  <p class="section-intro">Informe seus dados básicos. Nossa equipe poderá conversar com você sobre sua solicitação.</p>
+  <h2 class="section-title">Vamos conversar?</h2>
+  <p class="section-intro">
+   Informe apenas os dados básicos para que possamos receber
+   sua solicitação pelo WhatsApp.
+  </p>
+
   <div class="form-area">
    <form id="leadForm">
     <div>
      <label for="nome">Nome</label>
-     <input id="nome" required maxlength="100" placeholder="Como podemos chamar você?">
+     <input id="nome" required maxlength="100"
+            autocomplete="name"
+            placeholder="Como podemos chamar você?">
     </div>
+
     <div>
      <label for="telefone">WhatsApp com DDD</label>
-     <input id="telefone" required type="tel" maxlength="20" placeholder="(16) 99999-9999">
+     <input id="telefone" required type="tel" maxlength="20"
+            autocomplete="tel"
+            placeholder="(16) 99999-9999">
     </div>
+
     <div>
-     <label for="produto">Produto de interesse</label>
+     <label for="produto">Assunto de interesse</label>
      <select id="produto" required>
       <option value="">Selecione uma opção</option>
       <option>Antecipação FGTS</option>
       <option>Consignado CLT</option>
-      <option>Crédito para beneficiários</option>
+      <option>Informações para beneficiários</option>
       <option>Consignado e cartão</option>
-      <option>Crédito na conta de energia</option>
+      <option>Crédito na conta de energia - Crefaz</option>
      </select>
     </div>
+
     <div>
      <label for="horario">Melhor horário</label>
      <select id="horario">
@@ -227,10 +474,104 @@ footer p{font-size:12px;color:#999;margin:10px 0}
       <option>Tarde</option>
      </select>
     </div>
-    <label><input type="checkbox" id="consentimento" required style="width:auto"> Li o aviso de privacidade e autorizo o contato sobre esta solicitação.</label>
-    <button class="btn primary" type="submit">Solicitar contato</button>
+
+    <label style="display:flex;gap:10px;align-items:flex-start">
+     <input type="checkbox" id="consentimento" required>
+     <span>
+      Autorizo o envio destes dados à NEXA CRÉDITO pelo WhatsApp
+      para responder à minha solicitação. Li o aviso de privacidade.
+     </span>
+    </label>
+
+    <button class="btn primary" type="submit">
+     Enviar solicitação pelo WhatsApp
+    </button>
    </form>
-   <p id="feedback" style="margin-top:15px;color:#d7b56d" aria-live="polite"></p>
+
+   <p id="feedback" style="margin-top:15px;color:#d7b56d"
+      aria-live="polite"></p>
+
+   <p style="font-size:12px;color:#999;margin-top:12px">
+    Este formulário não realiza análise de crédito e não armazena
+    os dados em uma planilha. Ele prepara uma mensagem para envio
+    ao WhatsApp da NEXA. O compartilhamento posterior com terceiros
+    exige informação e autorização específicas.
+   </p>
+  </div>
+ </div>
+</section>
+
+<section id="privacidade">
+ <div class="container">
+  <div class="eyebrow">PRIVACIDADE E PROTEÇÃO DE DADOS</div>
+  <h2 class="section-title">Aviso de privacidade</h2>
+
+  <div class="info-card">
+   <h3>1. Quais dados são solicitados?</h3>
+   <p>
+    Nome, telefone, assunto de interesse e melhor horário para contato.
+    Não solicitamos CPF, senhas, dados bancários ou documentos pessoais
+    por este formulário.
+   </p>
+  </div>
+
+  <div class="info-card">
+   <h3>2. Para que utilizamos os dados?</h3>
+   <p>
+    Os dados são utilizados para receber a solicitação, entrar em contato
+    pelo WhatsApp e responder às dúvidas relacionadas ao assunto escolhido.
+   </p>
+  </div>
+
+  <div class="info-card">
+   <h3>3. Compartilhamento</h3>
+   <p>
+    O envio do formulário não autoriza automaticamente o compartilhamento
+    dos dados com bancos, financeiras ou outras empresas. Caso seja
+    necessário encaminhar informações a terceiros, a finalidade e
+    o destinatário deverão ser informados previamente, com a autorização
+    aplicável.
+   </p>
+  </div>
+
+  <div class="info-card">
+   <h3>4. Armazenamento e segurança</h3>
+   <p>
+    O formulário do site não mantém uma base própria de cadastro.
+    Ao prosseguir, você será direcionado ao WhatsApp, serviço externo
+    sujeito às próprias políticas de privacidade e segurança.
+    Não envie documentos ou informações financeiras sem verificar
+    a identidade do destinatário.
+   </p>
+  </div>
+
+  <div class="info-card">
+   <h3>5. Seus direitos</h3>
+   <p>
+    Nos termos da Lei Geral de Proteção de Dados (Lei nº 13.709/2018),
+    você pode solicitar informações sobre o tratamento dos seus dados,
+    correção, eliminação quando aplicável, revogação do consentimento
+    e demais direitos previstos na legislação.
+   </p>
+   <p style="margin-top:10px">
+    Para dúvidas e solicitações de privacidade, entre em contato pelo
+    WhatsApp oficial da NEXA: (16) 98807-9346.
+   </p>
+  </div>
+
+  <div class="info-card">
+   <h3>6. Alterações deste aviso</h3>
+   <p>
+    Este aviso poderá ser atualizado para refletir mudanças nos serviços,
+    nos procedimentos de atendimento ou na legislação aplicável.
+   </p>
+  </div>
+
+  <div class="legal-links">
+   <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm"
+      target="_blank" rel="noopener noreferrer">
+      Consultar a Lei Geral de Proteção de Dados
+   </a>
   </div>
  </div>
 </section>
@@ -240,26 +581,87 @@ footer p{font-size:12px;color:#999;margin:10px 0}
   <div class="eyebrow">INFORMAÇÃO E TRANSPARÊNCIA</div>
   <h2 class="section-title">Perguntas frequentes</h2>
 
-  <details><summary>A aprovação do crédito é garantida?</summary>
-   <p>Não. A aprovação depende da análise e dos critérios da instituição financeira responsável.</p>
+  <details>
+   <summary>A aprovação do crédito é garantida?</summary>
+   <p>
+    Não. A aprovação depende da análise e dos critérios da instituição
+    responsável pela operação.
+   </p>
   </details>
-  <details><summary>Preciso pagar antecipadamente para liberar o crédito?</summary>
-   <p>A NEXA não solicita depósitos antecipados para liberar empréstimos. Desconfie de pedidos de PIX ou transferências com essa finalidade.</p>
+
+  <details>
+   <summary>A NEXA é um banco ou financeira?</summary>
+   <p>
+    Não. A NEXA é uma marca independente de divulgação de informações
+    e atendimento. Não é instituição financeira nem correspondente bancário.
+   </p>
   </details>
-  <details><summary>Quais são as taxas de juros?</summary>
-   <p>As taxas e o Custo Efetivo Total (CET) variam conforme a modalidade e a proposta. Consulte as condições completas antes de contratar.</p>
+
+  <details>
+   <summary>Quem define as taxas e condições?</summary>
+   <p>
+    A instituição concessora define as taxas, o CET, os valores,
+    os prazos e as condições da proposta. Confira todas as informações
+    antes de contratar.
+   </p>
   </details>
-  <details><summary>Quanto tempo demora a liberação?</summary>
-   <p>O prazo depende da análise, aprovação e procedimentos da instituição responsável.</p>
+
+  <details>
+   <summary>Existe consignado novo do Bolsa Família?</summary>
+   <p>
+    A autorização legal para novas operações de consignado com desconto
+    direto no Bolsa Família foi revogada. A NEXA não anuncia essa
+    modalidade como disponível. Outras modalidades dependem das regras
+    legais e da oferta da instituição responsável.
+   </p>
   </details>
-  <details><summary>Quais documentos podem ser necessários?</summary>
-   <p>A instituição responsável informará os documentos necessários durante o processo de contratação.</p>
+
+  <details>
+   <summary>Como funciona o crédito na conta de energia?</summary>
+   <p>
+    É uma modalidade em que o pagamento pode ocorrer por meio da fatura
+    de energia, conforme as condições da empresa responsável.
+    Taxas, CET, valores e requisitos devem ser confirmados na proposta oficial.
+   </p>
   </details>
-  <details><summary>Como meus dados serão utilizados?</summary>
-   <p>Os dados informados no formulário são utilizados para atender à solicitação e realizar o contato autorizado. Consulte a política de privacidade para conhecer as regras de tratamento e compartilhamento.</p>
+
+  <details>
+   <summary>Preciso pagar antecipadamente para liberar o crédito?</summary>
+   <p>
+    A NEXA não solicita PIX, depósitos ou transferências antecipadas
+    para liberar empréstimos. Desconfie de pedidos de pagamento
+    para garantir aprovação.
+   </p>
   </details>
+
+  <details>
+   <summary>Quanto tempo demora a liberação?</summary>
+   <p>
+    O prazo depende da análise, aprovação e procedimentos da instituição
+    responsável. A NEXA não garante prazo de liberação.
+   </p>
+  </details>
+
+  <details>
+   <summary>O formulário guarda meus dados?</summary>
+   <p>
+    Não. O formulário prepara uma mensagem e direciona você ao WhatsApp.
+    O site não envia os dados para uma planilha ou banco de dados próprio.
+   </p>
+  </details>
+
+  <details>
+   <summary>A NEXA é parceira oficial das instituições citadas?</summary>
+   <p>
+    Não afirmamos possuir parceria ou contrato de correspondente com
+    as instituições e plataformas mencionadas. Consulte diretamente
+    a empresa responsável pela proposta e contratação.
+   </p>
+  </details>
+
  </div>
 </section>
+
 </main>
 
 <footer>
@@ -268,32 +670,73 @@ footer p{font-size:12px;color:#999;margin:10px 0}
    <span class="monogram">NX</span>
    <span class="logo-name">NEXA <span>CRÉDITO</span></span>
   </div>
-  <p>A NEXA CRÉDITO é um canal de atendimento e encaminhamento de interessados. Não é instituição financeira e não concede empréstimos em nome próprio. As operações são realizadas pelas instituições responsáveis, sujeitas à análise e aprovação.</p>
+
+  <p>
+   A NEXA CRÉDITO é uma marca independente de divulgação de informações
+   e atendimento a interessados em possibilidades de crédito.
+   Não é banco, instituição financeira ou correspondente bancário.
+   Não concede empréstimos em nome próprio.
+  </p>
+
+  <p>
+   A análise, aprovação, contratação e liberação dos recursos são
+   de responsabilidade da instituição identificada na proposta
+   e no contrato.
+  </p>
+
   <div class="footer-links">
    <a href="#faq">Perguntas frequentes</a>
    <a href="#seguranca">Segurança</a>
-   <a href="mailto:contato@nexacredito.com.br">Contato</a>
+   <a href="#privacidade">Privacidade</a>
+   <a href="#transparencia">Transparência</a>
+   <a href="https://wa.me/5516988079346"
+      target="_blank" rel="noopener noreferrer">WhatsApp</a>
   </div>
+
   <p>© 2026 NEXA CRÉDITO. Todos os direitos reservados.</p>
-  <p>As condições de cada operação devem ser verificadas nos canais oficiais da instituição responsável.</p>
- </div>
+  <p>As condições de cada operação devem ser verificadas diretamente com a instituição responsável.</p>
+</div>
 </footer>
 
-<a class="whatsapp" href="https://wa.me/5516988079346" target="_blank" rel="noopener">WhatsApp</a>
+<a class="whatsapp"
+   href="https://wa.me/5516988079346"
+   target="_blank" rel="noopener noreferrer">
+ WhatsApp
+</a>
 
 <script>
 document.getElementById("leadForm").addEventListener("submit",function(e){
  e.preventDefault();
- if(!document.getElementById("consentimento").checked)return;
+
+ const consentimento=document.getElementById("consentimento");
+ if(!consentimento.checked){
+  document.getElementById("feedback").textContent=
+   "É necessário autorizar o contato para continuar.";
+  return;
+ }
+
  const nome=document.getElementById("nome").value.trim();
  const telefone=document.getElementById("telefone").value.trim();
  const produto=document.getElementById("produto").value;
  const horario=document.getElementById("horario").value;
- const mensagem=`Olá! Quero solicitar contato da NEXA CRÉDITO.%0A Nome: ${encodeURIComponent(nome)}%0A WhatsApp: ${encodeURIComponent(telefone)}%0A Produto: ${encodeURIComponent(produto)}%0A Melhor horário: ${encodeURIComponent(horario)}`;
- document.getElementById("feedback").textContent="Abrindo o WhatsApp para enviar sua solicitação...";
- window.open("https://wa.me/5516988079346?text="+mensagem,"_blank");
+
+ const mensagem=
+  "Olá! Quero solicitar contato da NEXA CRÉDITO.\n"+
+  "Nome: "+nome+"\n"+
+  "WhatsApp: "+telefone+"\n"+
+  "Assunto: "+produto+"\n"+
+  "Melhor horário: "+horario;
+
+ const url="https://wa.me/5516988079346?text="+
+  encodeURIComponent(mensagem);
+
+ document.getElementById("feedback").textContent=
+  "Abrindo o WhatsApp para você enviar sua solicitação...";
+
+ window.open(url,"_blank","noopener,noreferrer");
 });
 </script>
+
 </body>
 </html>
 
