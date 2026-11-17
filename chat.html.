@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b13">
+<title>NEXA | Atendimento Inteligente</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b13;color:#fff;font-family:Arial,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:18px}
+.app{width:100%;max-width:480px;background:#111827;border:1px solid #26344b;border-radius:22px;overflow:hidden;box-shadow:0 20px 70px #0008}
+header{padding:24px;background:linear-gradient(120deg,#111827,#182b46);border-bottom:1px solid #334155}
+.logo{color:#d8b56a;font-weight:900;letter-spacing:4px;font-size:23px}
+header p{color:#cbd5e1;font-size:13px;margin-bottom:0}
+main{padding:22px}
+.welcome{font-size:15px;line-height:1.6;color:#e2e8f0}
+label{display:block;font-size:12px;color:#d8b56a;margin:16px 0 7px}
+input,select,textarea{width:100%;padding:13px;border-radius:10px;border:1px solid #334155;background:#080f1d;color:white;font-size:14px;outline:none}
+textarea{resize:vertical;min-height:90px}
+button{width:100%;padding:15px;border:0;border-radius:10px;background:linear-gradient(100deg,#b88b43,#f0d28b);color:#111827;font-weight:bold;margin-top:18px;font-size:14px}
+button:disabled{opacity:.5}
+.status{font-size:12px;color:#94a3b8;margin-top:15px;text-align:center}
+#result{display:none;margin-top:18px;padding:15px;background:#172a25;border:1px solid #356b50;border-radius:10px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+<div class="logo">NEXA</div>
+<p>ATENDIMENTO INTELIGENTE · CENTRAL DE RELACIONAMENTO</p>
+</header>
+<main>
+<div class="welcome">
+<strong>Olá! Seja bem-vindo à NEXA.</strong><br>
+Estamos prontos para direcionar seu atendimento. Escolha o assunto e envie sua mensagem.
+</div>
+
+<form id="chatForm">
+<label for="name">SEU NOME</label>
+<input id="name" maxlength="100" required placeholder="Como podemos chamar você?">
+
+<label for="contact">CONTATO (OPCIONAL)</label>
+<input id="contact" maxlength="100" placeholder="WhatsApp ou e-mail">
+
+<label for="subject">QUAL ASSUNTO DESEJA TRATAR?</label>
+<select id="subject" required>
+<option value="">Selecione uma opção</option>
+<option>FGTS</option>
+<option>CLT</option>
+<option>Crefaz</option>
+<option>Atendimento humano</option>
+<option>Outros</option>
+</select>
+
+<label for="message">SUA MENSAGEM</label>
+<textarea id="message" maxlength="4000" required placeholder="Conte brevemente o que precisa..."></textarea>
+
+<button id="send" type="submit">INICIAR ATENDIMENTO</button>
+</form>
+
+<div id="result"></div>
+<div class="status" id="status">Atendimento sujeito à disponibilidade da equipe.</div>
+</main>
+</div>
+
+<script>
+const ENDPOINT = "https://qjujystvdehvolwhtkgw.supabase.co/functions/v1/clever-task";
+const SUPABASE_KEY = "sb_publishable_uS0uMa2YNj6VKSKo1FQ_Og_hXQHrFxN";
+
+document.getElementById("chatForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+
+  const button = document.getElementById("send");
+  const status = document.getElementById("status");
+  const result = document.getElementById("result");
+
+  button.disabled = true;
+  button.textContent = "ENVIANDO...";
+  status.textContent = "Registrando seu atendimento...";
+
+  try {
+    const response = await fetch(ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY
+      },
+      body: JSON.stringify({
+        customer_name: document.getElementById("name").value.trim(),
+        customer_contact: document.getElementById("contact").value.trim(),
+        subject: document.getElementById("subject").value,
+        message: document.getElementById("message").value.trim()
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || !data.success) {
+      throw new Error(data.error || "Não foi possível enviar.");
+    }
+
+    result.style.display = "block";
+    result.textContent = "Atendimento recebido! Seu protocolo é: " + data.protocol;
+    document.getElementById("chatForm").reset();
+    status.textContent = "Sua solicitação foi registrada.";
+  } catch (error) {
+    status.textContent = "Não foi possível concluir: " + error.message;
+  } finally {
+    button.disabled = false;
+    button.textContent = "INICIAR ATENDIMENTO";
+  }
+});
+</script>
+</body>
+</html>
