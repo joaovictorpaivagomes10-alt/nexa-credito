@@ -174,6 +174,42 @@ header{
  border:1px solid var(--gold);border-radius:6px;
  color:var(--gold2);font-size:11px;letter-spacing:1px;font-weight:bold;
 }
+
+/* Opções de FGTS dentro do mesmo cartão */
+.fgts-options{
+ display:grid;
+ gap:10px;
+ margin-top:18px;
+ position:relative;
+ z-index:2;
+}
+.fgts-option{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:10px;
+ padding:11px 12px;
+ border:1px solid rgba(217,180,91,.25);
+ border-radius:9px;
+ background:rgba(8,11,19,.45);
+}
+.fgts-option strong{
+ display:block;
+ color:var(--gold2);
+ font-size:12px;
+}
+.fgts-option small{
+ display:block;
+ color:var(--muted);
+ font-size:10px;
+}
+.fgts-option .btn{
+ margin:0;
+ padding:10px 12px;
+ font-size:11px;
+ white-space:nowrap;
+}
+
 .notice{
  margin-top:25px;padding:18px 20px;border-radius:10px;
  background:#19180f;border:1px solid #6c592e;
@@ -299,6 +335,8 @@ footer a{color:var(--gold2)}
  .products{grid-template-columns:1fr}
  .product{min-height:auto}
  .product p{min-height:0}
+ .fgts-option{align-items:flex-start;flex-direction:column}
+ .fgts-option .btn{width:100%}
  .trust-inner{grid-template-columns:1fr;gap:13px}
  .hero h1{font-size:45px}
  .hero-visual{min-height:290px}
@@ -381,7 +419,24 @@ footer a{color:var(--gold2)}
      <div class="product-icon">◈</div>
      <h3>Antecipação FGTS</h3>
      <p>Consulte a possibilidade de antecipação do saque-aniversário do FGTS, conforme os critérios da instituição responsável.</p>
-     <a class="btn" href="https://central-cred.startcapital.app/credit/nexacredito" target="_blank" rel="noopener">Acessar consulta ↗</a>
+
+     <div class="fgts-options">
+      <div class="fgts-option">
+       <div>
+        <strong>START CAPITAL</strong>
+        <small>Primeira plataforma</small>
+       </div>
+       <a class="btn" href="https://central-cred.startcapital.app/credit/nexacredito" target="_blank" rel="noopener">Acessar consulta ↗</a>
+      </div>
+
+      <div class="fgts-option">
+       <div>
+        <strong>LOTUS MAIS</strong>
+        <small>Segunda plataforma</small>
+       </div>
+       <a class="btn" href="https://app.lotusmais.com.br/self-hiring/mwl17jnro6so" target="_blank" rel="noopener">Acessar consulta ↗</a>
+      </div>
+     </div>
     </article>
 
     <article class="product">
@@ -608,3 +663,4 @@ renderOptions();
 </script>
 </body>
 </html>
+
