@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b13">
+<title>NEXA HUB | Acesso</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root {
+  --bg:#080b13;
+  --panel:#101725;
+  --gold:#d8b56a;
+  --white:#f5f5f5;
+  --muted:#8d98aa;
+  --border:rgba(216,181,106,.2);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;
+  background:radial-gradient(circle at 50% 25%,#17243a 0%,#080b13 55%);
+  color:var(--white);font-family:Arial,sans-serif;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+}
+.login{width:100%;max-width:430px}
+.brand{text-align:center;margin-bottom:30px}
+.logo{
+  width:76px;height:76px;margin:auto;
+  display:grid;place-items:center;
+  border:1px solid var(--gold);border-radius:22px;
+  color:var(--gold);font-size:29px;font-weight:800;
+  box-shadow:0 0 35px rgba(216,181,106,.12);
+}
+.brand h1{font-size:25px;letter-spacing:6px;margin:20px 0 6px}
+.brand p{color:var(--muted);font-size:12px;letter-spacing:3px}
+.card{
+  background:rgba(16,23,37,.94);
+  border:1px solid var(--border);
+  border-radius:22px;padding:30px;
+  box-shadow:0 25px 80px #0008;
+}
+h2{font-size:21px;margin:0 0 8px}
+.subtitle{color:var(--muted);font-size:13px;margin-bottom:27px}
+label{display:block;font-size:12px;margin:17px 0 8px;color:#d9deea}
+input{
+  width:100%;padding:15px;border-radius:11px;
+  border:1px solid #29364a;background:#0a111e;
+  color:white;outline:none;font-size:15px;
+}
+input:focus{border-color:var(--gold)}
+button{
+  width:100%;margin-top:24px;padding:15px;
+  border:0;border-radius:11px;
+  background:linear-gradient(110deg,#b88d43,#f0d28c);
+  color:#17130b;font-weight:800;font-size:14px;
+  cursor:pointer;
+}
+button:disabled{opacity:.6;cursor:wait}
+#status{font-size:13px;margin-top:17px;line-height:1.5;color:var(--muted)}
+.footer{text-align:center;color:#687487;font-size:11px;margin-top:25px}
+</style>
+</head>
+<body>
+<main class="login">
+  <header class="brand">
+    <div class="logo">NX</div>
+    <h1>NEXA HUB</h1>
+    <p>INTELLIGENCE PLATFORM</p>
+  </header>
+
+  <section class="card">
+    <h2>Acessar plataforma</h2>
+    <div class="subtitle">Entre com suas credenciais autorizadas.</div>
+
+    <form id="loginForm">
+      <label for="email">E-mail</label>
+      <input id="email" type="email" autocomplete="username"
+        placeholder="seu@email.com" required>
+
+      <label for="password">Senha</label>
+      <input id="password" type="password"
+        autocomplete="current-password" placeholder="Sua senha" required>
+
+      <button id="loginButton" type="submit">ENTRAR NA NEXA HUB</button>
+    </form>
+    <div id="status" role="status"></div>
+  </section>
+
+  <div class="footer">NEXA CRÉDITO · AMBIENTE RESTRITO</div>
+</main>
+
+<script>
+const SUPABASE_URL = "https://qjujystvdehvolwhtkgw.supabase.co";
+const SUPABASE_KEY = "sb_publishable_uS0uMa2YNj6VKSKo1FQ_Og_hXQHrFxN";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+const form = document.getElementById("loginForm");
+const statusBox = document.getElementById("status");
+const button = document.getElementById("loginButton");
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  button.disabled = true;
+  statusBox.textContent = "Validando acesso...";
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  try {
+    const { data, error } = await db.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) throw error;
+
+    const { data: profile, error: profileError } = await db
+      .from("profiles")
+      .select("role, active, full_name")
+      .eq("id", data.user.id)
+      .single();
+
+    if (profileError) throw profileError;
+
+    if (!profile.active) {
+      await db.auth.signOut();
+      throw new Error("Conta inativa. Procure o administrador.");
+    }
+
+    if (!["admin", "seller"].includes(profile.role)) {
+      await db.auth.signOut();
+      throw new Error("Perfil sem permissão de acesso.");
+    }
+
+    statusBox.textContent = "Acesso validado. Preparando seu ambiente...";
+
+    if (profile.role === "admin") {
+      window.location.href = "admin.html";
+    } else {
+      window.location.href = "vendedor.html";
+    }
+
+  } catch (error) {
+    statusBox.textContent = error.message || "Não foi possível entrar.";
+  } finally {
+    button.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
