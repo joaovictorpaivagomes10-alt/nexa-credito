@@ -13,12 +13,11 @@
 body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
 .layout{display:flex;min-height:100vh}
 aside{width:245px;background:#0d1421;border-right:1px solid var(--line);padding:25px 17px;flex-shrink:0}
-.logo{font-size:23px;font-weight:800;letter-spacing:4px;color:var(--gold);padding:5px 10px}
+.logo{font-size:23px;font-weight:800;letter-spacing:4px;color:var(--gold)}
 .logo small{display:block;font-size:9px;letter-spacing:3px;color:var(--muted);margin-top:8px}
 nav{margin-top:38px}
 nav button{display:block;width:100%;text-align:left;background:none;border:0;color:#aab5c5;padding:14px 12px;border-radius:9px;margin-bottom:6px;cursor:pointer;font-size:13px}
 nav button.active,nav button:hover{background:#1b2739;color:var(--gold)}
-.bottom{margin-top:40px}
 main{flex:1;min-width:0;padding:30px}
 .top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:30px}
 h1{font-size:25px;margin:0}
@@ -34,12 +33,10 @@ h1{font-size:25px;margin:0}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th,td{text-align:left;padding:13px 9px;border-bottom:1px solid var(--line)}
 th{color:var(--muted);font-weight:500}
-td{color:#e5e8ef}
 .empty{color:var(--muted);font-size:13px;padding:15px 0}
 .tag{font-size:11px;color:#e6ca8f;background:#342b1d;padding:5px 8px;border-radius:20px}
 .action{background:#27364b;border:1px solid #40516a;color:white;border-radius:8px;padding:10px 13px;cursor:pointer}
 .action:hover{border-color:var(--gold)}
-#message,#chatMessage{font-size:12px;color:var(--muted);margin-top:12px}
 .table-wrap{overflow-x:auto}
 .chat-layout{display:grid;grid-template-columns:1fr 1fr;gap:15px}
 .chat-list{max-height:520px;overflow:auto}
@@ -57,9 +54,8 @@ td{color:#e5e8ef}
 @media(max-width:760px){
 .layout{display:block}
 aside{width:100%;padding:15px;border-right:0;border-bottom:1px solid var(--line)}
-nav{display:flex;overflow-x:auto;overflow-y:hidden;margin-top:15px;gap:5px;scrollbar-width:thin;touch-action:pan-x}
-nav button{white-space:nowrap;width:auto;min-width:max-content;margin:0;flex-shrink:0;padding:13px}
-.bottom{margin-top:12px}
+nav{display:flex;overflow-x:auto;margin-top:15px;gap:5px}
+nav button{white-space:nowrap;width:auto;min-width:max-content;margin:0;padding:13px}
 main{padding:20px 14px}
 .grid{grid-template-columns:1fr}
 .top{align-items:flex-start}
@@ -74,16 +70,14 @@ table{min-width:480px}
 <aside>
 <div class="logo">NEXA HUB<small>INTELLIGENCE PLATFORM</small></div>
 <nav>
-<button type="button" class="active" onclick="showSection('overview',this)">◈ Visão geral</button>
-<button type="button" onclick="showSection('sellers',this)">♙ Vendedores</button>
-<button type="button" onclick="showSection('systems',this)">▦ Central de Sistemas</button>
-<button type="button" onclick="showSection('conversations',this)">▤ Atendimentos</button>
+<button class="active" onclick="showSection('overview',this)">◈ Visão geral</button>
+<button onclick="showSection('sellers',this)">♙ Vendedores</button>
+<button onclick="showSection('systems',this)">▦ Central de Sistemas</button>
+<button onclick="showSection('conversations',this)">▤ Atendimentos</button>
 </nav>
-<div class="bottom">
-<button class="action" id="logout" type="button">Sair da plataforma</button>
-</div>
+<br>
+<button class="action" id="logout">Sair da plataforma</button>
 </aside>
-
 <main>
 <header class="top">
 <div>
@@ -101,7 +95,7 @@ table{min-width:480px}
 </div>
 <div class="panel">
 <h2>Centro de controle NEXA</h2>
-<p class="sub">Gerencie vendedores, acessos, sistemas e atendimentos em um único ambiente.</p>
+<p class="sub">Gerencie vendedores, acessos, sistemas e atendimentos.</p>
 <div id="message">Carregando informações...</div>
 </div>
 </section>
@@ -110,10 +104,8 @@ table{min-width:480px}
 <div class="panel">
 <h2>Equipe de vendedores</h2>
 <div class="table-wrap">
-<table>
-<thead><tr><th>Nome</th><th>E-mail</th><th>Status</th><th>Cadastro</th></tr></thead>
-<tbody id="sellerRows"></tbody>
-</table>
+<table><thead><tr><th>Nome</th><th>E-mail</th><th>Status</th></tr></thead>
+<tbody id="sellerRows"></tbody></table>
 </div>
 <div id="sellerMessage" class="empty"></div>
 </div>
@@ -123,10 +115,8 @@ table{min-width:480px}
 <div class="panel">
 <h2>Central de Sistemas</h2>
 <div class="table-wrap">
-<table>
-<thead><tr><th>Sistema</th><th>Categoria</th><th>Status</th><th>Endereço</th></tr></thead>
-<tbody id="systemRows"></tbody>
-</table>
+<table><thead><tr><th>Sistema</th><th>Categoria</th><th>Status</th><th>Endereço</th></tr></thead>
+<tbody id="systemRows"></tbody></table>
 </div>
 <div id="systemMessage" class="empty"></div>
 </div>
@@ -135,267 +125,107 @@ table{min-width:480px}
 <section id="conversations" hidden>
 <div class="panel">
 <div class="panel-head">
-<div>
-<h2>Central de Atendimentos</h2>
-<p class="sub">Solicitações e histórico de mensagens dos clientes.</p>
+<div><h2>Central de Atendimentos</h2><p class="sub">Conversas e histórico dos clientes.</p></div>
+<button class="action" id="refreshChats">↻ Atualizar</button>
 </div>
-<button class="action" type="button" id="refreshChats">↻ Atualizar</button>
-</div>
-<div id="chatMessage">Aguardando carregamento...</div>
+<div id="chatMessage" class="empty">Aguardando carregamento...</div>
 </div>
 <div class="chat-layout">
 <div class="panel">
 <h2>Conversas recebidas</h2>
-<div id="chatList" class="chat-list">
-<div class="empty">Carregando...</div>
-</div>
+<div id="chatList" class="chat-list"><div class="empty">Carregando...</div></div>
 </div>
 <div class="panel">
 <h2 id="detailTitle">Histórico da conversa</h2>
-<div id="messageHistory">
-<div class="empty">Selecione um atendimento.</div>
-</div>
+<div id="messageHistory"><div class="empty">Selecione um atendimento.</div></div>
 </div>
 </div>
 </section>
 </main>
 </div>
-
 <script>
 const URL="https://qjujystvdehvolwhtkgw.supabase.co";
 const KEY="sb_publishable_uS0uMa2YNj6VKSKo1FQ_Og_hXQHrFxN";
 const CHAT_FUNCTION=URL+"/functions/v1/admin-chat-list";
-
 const supabaseClient=window.supabase.createClient(URL,KEY);
-
-let currentSession=null;
-let chatSessions=[];
-let chatMessages=[];
-
+let currentSession=null,chatSessions=[],chatMessages=[];
 const $=id=>document.getElementById(id);
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function date(v){if(!v)return "—";let d=new Date(v);return isNaN(d)?"—":d.toLocaleString("pt-BR")}
 
-const esc=value=>String(value??"").replace(/[&<>"']/g,c=>({
-"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-}[c]));
-
-function formatDate(value){
-if(!value)return "—";
-const date=new Date(value);
-return isNaN(date)?"—":date.toLocaleString("pt-BR");
-}
-
-/* NAVEGAÇÃO */
 function showSection(section,button){
 document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
 if(button)button.classList.add("active");
-
 document.querySelectorAll("main section").forEach(s=>s.hidden=true);
-const target=$(section);
-if(!target)return;
-target.hidden=false;
-
-const titles={
-overview:"Visão geral",
-sellers:"Vendedores",
-systems:"Central de Sistemas",
-conversations:"Atendimentos"
-};
-$("pageTitle").textContent=titles[section]||"NEXA HUB";
-
+$(section).hidden=false;
+$("pageTitle").textContent=({overview:"Visão geral",sellers:"Vendedores",systems:"Central de Sistemas",conversations:"Atendimentos"})[section];
 if(section==="conversations")loadChats();
 }
-
 window.showSection=showSection;
 
-/* AUTENTICAÇÃO */
 async function start(){
 try{
 const {data,error}=await supabaseClient.auth.getSession();
-if(error||!data.session){
-location.replace("hub.html");
-return;
-}
-
-const {data:profile,error:profileError}=await supabaseClient
-.from("profiles")
-.select("role,active,full_name")
-.eq("id",data.session.user.id)
-.single();
-
-if(profileError||!profile||!profile.active||profile.role!=="admin"){
-await supabaseClient.auth.signOut();
-location.replace("hub.html");
-return;
-}
-
-$("welcome").textContent="Bem-vindo(a), "+(profile.full_name||"Administrador");
+if(error||!data.session){location.replace("hub.html");return}
+const {data:p,error:e}=await supabaseClient.from("profiles").select("role,active,full_name").eq("id",data.session.user.id).single();
+if(e||!p||!p.active||p.role!=="admin"){await supabaseClient.auth.signOut();location.replace("hub.html");return}
+$("welcome").textContent="Bem-vindo(a), "+(p.full_name||"Administrador");
 await loadData();
-
-}catch(error){
-$("message").textContent="Erro ao iniciar painel: "+error.message;
-}
+}catch(e){$("message").textContent="Erro: "+e.message}
 }
 
-/* VENDEDORES E SISTEMAS */
 async function loadData(){
-const [sellers,systems]=await Promise.all([
-supabaseClient.rpc("admin_list_sellers"),
-supabaseClient.rpc("admin_list_systems")
-]);
-
-if(sellers.error){
-$("sellerMessage").textContent="Erro: "+sellers.error.message;
-}else{
-const rows=sellers.data||[];
-$("sellerCount").textContent=rows.length;
-$("sellerRows").innerHTML=rows.map(s=>`
-<tr>
-<td>${esc(s.full_name||"Sem nome")}</td>
-<td>${esc(s.email)}</td>
-<td><span class="tag">${s.active?"ATIVO":"INATIVO"}</span></td>
-<td>${formatDate(s.created_at)}</td>
-</tr>`).join("");
+const [a,b]=await Promise.all([supabaseClient.rpc("admin_list_sellers"),supabaseClient.rpc("admin_list_systems")]);
+if(a.error){$("sellerMessage").textContent=a.error.message}
+else{
+let rows=a.data||[];$("sellerCount").textContent=rows.length;
+$("sellerRows").innerHTML=rows.map(s=>`<tr><td>${esc(s.full_name||"Sem nome")}</td><td>${esc(s.email)}</td><td><span class="tag">${s.active?"ATIVO":"INATIVO"}</span></td></tr>`).join("");
 $("sellerMessage").textContent=rows.length?"":"Nenhum vendedor cadastrado.";
 }
-
-if(systems.error){
-$("systemMessage").textContent="Erro: "+systems.error.message;
-}else{
-const rows=systems.data||[];
-$("systemCount").textContent=rows.length;
-$("systemRows").innerHTML=rows.map(s=>`
-<tr>
-<td>${esc(s.name)}</td>
-<td>${esc(s.category)}</td>
-<td><span class="tag">${s.active?"ATIVO":"INATIVO"}</span></td>
-<td>${s.url?`<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" style="color:#e4c783">Abrir</a>`:"—"}</td>
-</tr>`).join("");
+if(b.error){$("systemMessage").textContent=b.error.message}
+else{
+let rows=b.data||[];$("systemCount").textContent=rows.length;
+$("systemRows").innerHTML=rows.map(s=>`<tr><td>${esc(s.name)}</td><td>${esc(s.category)}</td><td><span class="tag">${s.active?"ATIVO":"INATIVO"}</span></td><td>${s.url?`<a href="${esc(s.url)}" target="_blank" rel="noopener" style="color:#e4c783">Abrir</a>`:"—"}</td></tr>`).join("");
 $("systemMessage").textContent=rows.length?"":"Nenhum sistema cadastrado.";
 }
 $("message").textContent="Informações carregadas.";
 }
 
-/* ATENDIMENTOS */
 async function loadChats(){
-const status=$("chatMessage");
-const list=$("chatList");
-
-status.textContent="Buscando atendimentos...";
-list.innerHTML='<div class="empty">Carregando conversas...</div>';
-
+$("chatMessage").textContent="Buscando atendimentos...";
+$("chatList").innerHTML='<div class="empty">Carregando conversas...</div>';
 try{
 const {data,error}=await supabaseClient.auth.getSession();
-if(error)throw error;
-if(!data.session)throw new Error("Sessão expirada. Entre novamente.");
-
-const response=await fetch(CHAT_FUNCTION,{
-method:"POST",
-headers:{
-"Content-Type":"application/json",
-"apikey":KEY,
-"Authorization":"Bearer "+data.session.access_token
-},
-body:JSON.stringify({})
-});
-
-const raw=await response.text();
-let result;
-try{result=JSON.parse(raw);}
-catch{throw new Error("Resposta inválida do servidor. HTTP "+response.status);}
-
-if(!response.ok)throw new Error(result.error||result.message||"Erro HTTP "+response.status);
-if(result.success===false)throw new Error(result.error||"Falha ao consultar atendimentos.");
-
+if(error)throw error;if(!data.session)throw new Error("Sessão expirada.");
+const r=await fetch(CHAT_FUNCTION,{method:"POST",headers:{"Content-Type":"application/json","apikey":KEY,"Authorization":"Bearer "+data.session.access_token},body:JSON.stringify({})});
+const raw=await r.text();let result;
+try{result=JSON.parse(raw)}catch{throw new Error("Resposta inválida HTTP "+r.status)}
+if(!r.ok)throw new Error(result.error||result.message||"Erro HTTP "+r.status);
 const payload=result.data||result;
 chatSessions=Array.isArray(payload.sessions)?payload.sessions:[];
 chatMessages=Array.isArray(payload.messages)?payload.messages:[];
-
 renderChats();
-
-status.textContent=chatSessions.length
-?chatSessions.length+" atendimento(s) encontrado(s)."
-:"Nenhum atendimento recebido ainda.";
-
-if(currentSession){
-const selected=chatSessions.find(s=>s.id===currentSession);
-if(selected)showMessages(selected);
-else{
-currentSession=null;
-$("messageHistory").innerHTML='<div class="empty">Selecione um atendimento.</div>';
-}
-}
-}catch(error){
-status.textContent="Não foi possível carregar: "+error.message;
-list.innerHTML='<div class="empty">Falha ao consultar os atendimentos.</div>';
-}
+$("chatMessage").textContent=chatSessions.length?chatSessions.length+" atendimento(s) encontrado(s).":"Nenhum atendimento encontrado.";
+if(currentSession){let s=chatSessions.find(x=>x.id===currentSession);if(s)showMessages(s)}
+}catch(e){$("chatMessage").textContent="Erro ao carregar: "+e.message;$("chatList").innerHTML='<div class="empty">Falha ao carregar.</div>'}
 }
 
-/* LISTA DE CONVERSAS */
 function renderChats(){
-const list=$("chatList");
-
-if(!chatSessions.length){
-list.innerHTML='<div class="empty">Nenhum atendimento encontrado.</div>';
-return;
+if(!chatSessions.length){$("chatList").innerHTML='<div class="empty">Nenhum atendimento encontrado.</div>';return}
+$("chatList").innerHTML=chatSessions.map(s=>`<div class="chat-row ${currentSession===s.id?"selected":""}" data-id="${esc(s.id)}"><strong>${esc(s.customer_name||"Cliente")}</strong><div>${esc(s.subject||"Atendimento")}</div><small>Protocolo: ${esc(s.protocol||"—")}</small><br><small>Status: ${esc(s.status||"—")} · ${date(s.last_message_at||s.created_at)}</small></div>`).join("");
+document.querySelectorAll(".chat-row").forEach(row=>row.addEventListener("click",()=>{let s=chatSessions.find(x=>x.id===row.dataset.id);if(s)showMessages(s)}));
 }
 
-list.innerHTML=chatSessions.map(s=>`
-<div class="chat-row ${currentSession===s.id?"selected":""}" data-id="${esc(s.id)}">
-<strong>${esc(s.customer_name||"Cliente")}</strong>
-<div>${esc(s.subject||"Atendimento")}</div>
-<small>Protocolo: ${esc(s.protocol||"—")}</small><br>
-<small>Status: ${esc(s.status||"—")} · ${formatDate(s.last_message_at||s.created_at)}</small>
-</div>`).join("");
-
-list.querySelectorAll(".chat-row").forEach(row=>{
-row.addEventListener("click",()=>{
-const selected=chatSessions.find(s=>s.id===row.dataset.id);
-if(selected)showMessages(selected);
-});
-});
+function showMessages(s){
+currentSession=s.id;renderChats();
+$("detailTitle").textContent="Protocolo "+(s.protocol||"—");
+let messages=chatMessages.filter(m=>m.session_id===s.id).sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
+if(!messages.length){$("messageHistory").innerHTML='<div class="empty">Ainda não há mensagens.</div>';return}
+$("messageHistory").innerHTML=messages.map(m=>`<div class="message-item ${esc(m.sender_type||"customer")}"><small>${esc(m.sender_type||"cliente").toUpperCase()} · ${date(m.created_at)}</small>${esc(m.message)}</div>`).join("");
 }
 
-/* HISTÓRICO */
-function showMessages(session){
-currentSession=session.id;
-renderChats();
-
-$("detailTitle").textContent="Protocolo "+(session.protocol||"—");
-
-const history=$("messageHistory");
-const messages=chatMessages
-.filter(m=>m.session_id===session.id)
-.sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
-
-if(!messages.length){
-history.innerHTML='<div class="empty">Ainda não há mensagens neste atendimento.</div>';
-return;
-}
-
-history.innerHTML=messages.map(m=>{
-const type=m.sender_type||"customer";
-const labels={
-customer:"CLIENTE",
-assistant:"NEXA ASSISTENTE",
-seller:"VENDEDOR"
-};
-return `
-<div class="message-item ${esc(type)}">
-<small>${labels[type]||"MENSAGEM"} · ${formatDate(m.created_at)}</small>
-${esc(m.message)}
-</div>`;
-}).join("");
-}
-
-/* BOTÕES */
 $("refreshChats").addEventListener("click",loadChats);
-
-$("logout").addEventListener("click",async()=>{
-await supabaseClient.auth.signOut();
-location.replace("hub.html");
-});
-
-/* INICIAR */
+$("logout").addEventListener("click",async()=>{await supabaseClient.auth.signOut();location.replace("hub.html")});
 start();
 </script>
 </body>
