@@ -2,267 +2,454 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#101010">
-<meta name="description" content="NEXA CRÉDITO — Informação, orientação e acesso a possibilidades de crédito. Atendimento pelo WhatsApp.">
-<title>NEXA CRÉDITO | Informação e soluções</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101010">
+  <meta name="description" content="NEXA CRÉDITO: conheça possibilidades de crédito e soluções financeiras com transparência.">
+  <title>NEXA CRÉDITO | Soluções para você</title>
 
-<style>
-:root {
-  --black:#101010;
-  --dark:#191919;
-  --gold:#d6b66b;
-  --white:#ffffff;
-  --gray:#bdbdbd;
-}
-* {box-sizing:border-box;margin:0;padding:0}
-html {scroll-behavior:smooth}
-body {
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--black);
-  color:var(--white);
-  line-height:1.6;
-}
-a {color:inherit;text-decoration:none}
-header {
-  padding:20px 7%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid #333;
-}
-.logo {
-  color:var(--gold);
-  font-size:25px;
-  font-weight:800;
-  letter-spacing:2px;
-}
-.logo span {color:white}
-nav {display:flex;gap:22px;font-size:14px}
-nav a:hover {color:var(--gold)}
-.hero {
-  padding:90px 7%;
-  text-align:center;
-  background:linear-gradient(140deg,#101010,#252018);
-}
-.eyebrow {
-  color:var(--gold);
-  letter-spacing:3px;
-  font-size:12px;
-  font-weight:bold;
-}
-.hero h1 {
-  font-size:clamp(34px,6vw,58px);
-  line-height:1.15;
-  max-width:800px;
-  margin:20px auto;
-}
-.hero h1 span {color:var(--gold)}
-.hero p {
-  color:var(--gray);
-  max-width:620px;
-  margin:0 auto 30px;
-}
-.btn {
-  display:inline-block;
-  background:var(--gold);
-  color:#17130a;
-  padding:14px 25px;
-  border-radius:7px;
-  font-weight:bold;
-  transition:.2s;
-}
-.btn:hover {transform:translateY(-2px);opacity:.9}
-section {padding:65px 7%}
-.section-title {text-align:center;margin-bottom:35px}
-.section-title h2 {font-size:30px}
-.section-title p {color:var(--gray);margin-top:8px}
-.gold {color:var(--gold)}
-.grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:20px;
-}
-.card {
-  background:var(--dark);
-  border:1px solid #37332a;
-  border-radius:12px;
-  padding:25px;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-}
-.card .symbol {
-  font-size:28px;
-  color:var(--gold);
-  margin-bottom:15px;
-}
-.card h3 {font-size:19px;margin-bottom:10px}
-.card p {color:var(--gray);font-size:14px;margin-bottom:20px}
-.card a {
-  color:var(--gold);
-  font-weight:bold;
-  font-size:14px;
-  margin-top:auto;
-}
-.about {
-  background:#171717;
-  text-align:center;
-}
-.about p {
-  max-width:760px;
-  margin:15px auto;
-  color:var(--gray);
-}
-.contact {
-  text-align:center;
-  background:linear-gradient(140deg,#211d13,#101010);
-}
-.contact p {color:var(--gray);margin:12px auto 25px}
-.info {
-  max-width:850px;
-  margin:auto;
-  background:var(--dark);
-  border:1px solid #37332a;
-  padding:25px;
-  border-radius:12px;
-}
-.info h3 {color:var(--gold);margin-bottom:10px}
-.info p {color:var(--gray);font-size:14px;margin-bottom:12px}
-footer {
-  padding:30px 7%;
-  text-align:center;
-  border-top:1px solid #333;
-  color:#999;
-  font-size:12px;
-}
-footer strong {color:var(--gold)}
-.whatsapp {
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  background:#25D366;
-  color:white;
-  padding:14px 18px;
-  border-radius:40px;
-  font-weight:bold;
-  box-shadow:0 4px 18px #0008;
-  z-index:10;
-}
-@media(max-width:650px) {
-  header {flex-direction:column;gap:15px}
-  nav {gap:14px;flex-wrap:wrap;justify-content:center}
-  .hero {padding:70px 6%}
-  section {padding:50px 6%}
-}
-</style>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --gold: #c9a45c;
+      --gold-light: #e2c88f;
+      --black: #101010;
+      --card: #1c1c1c;
+      --white: #ffffff;
+      --gray: #bdbdbd;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1120px;
+      margin: auto;
+    }
+
+    header {
+      padding: 22px 0;
+      border-bottom: 1px solid #30291d;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo {
+      color: var(--gold);
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: 3px;
+    }
+
+    .logo span {
+      display: block;
+      color: white;
+      font-size: 10px;
+      letter-spacing: 5px;
+      text-align: center;
+    }
+
+    .nav a {
+      color: var(--gold-light);
+      font-size: 13px;
+    }
+
+    .hero {
+      padding: 85px 0 65px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 55px);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: var(--gold);
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: auto;
+      color: var(--gray);
+      font-size: 16px;
+    }
+
+    .section-title {
+      color: var(--gold);
+      font-size: 27px;
+      margin-bottom: 25px;
+    }
+
+    .featured {
+      background: linear-gradient(135deg, #29241b, #171717);
+      border: 1px solid #80663c;
+      border-radius: 18px;
+      padding: 35px;
+      margin: 10px auto 65px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-label {
+      display: inline-block;
+      background: #d5b16a;
+      color: #17130d;
+      padding: 6px 13px;
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-bottom: 18px;
+    }
+
+    .featured h2 {
+      font-size: clamp(26px, 5vw, 38px);
+      color: var(--gold-light);
+      margin-bottom: 12px;
+    }
+
+    .featured p {
+      color: #d0d0d0;
+      max-width: 650px;
+    }
+
+    .featured .notice {
+      margin-top: 20px;
+      color: var(--gold-light);
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .products {
+      padding-bottom: 70px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .product {
+      background: var(--card);
+      border: 1px solid #333;
+      border-radius: 14px;
+      padding: 25px;
+      transition: .25s;
+    }
+
+    .product:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+
+    .product h3 {
+      color: var(--gold-light);
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .product p {
+      color: var(--gray);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .product a {
+      color: var(--gold);
+      font-weight: bold;
+      font-size: 13px;
+    }
+
+    .about {
+      padding: 55px 0;
+      border-top: 1px solid #30291d;
+      text-align: center;
+    }
+
+    .about p {
+      color: var(--gray);
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .contact {
+      padding: 45px 20px;
+      text-align: center;
+      background: #1c1a16;
+      border: 1px solid #55452b;
+      border-radius: 16px;
+      margin-bottom: 60px;
+    }
+
+    .contact h2 {
+      color: var(--gold-light);
+      margin-bottom: 12px;
+    }
+
+    .contact p {
+      color: var(--gray);
+      margin-bottom: 22px;
+    }
+
+    .button {
+      display: inline-block;
+      background: var(--gold);
+      color: #17130d;
+      padding: 14px 25px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: .2s;
+    }
+
+    .button:hover {
+      background: var(--gold-light);
+      transform: scale(1.02);
+    }
+
+    footer {
+      border-top: 1px solid #30291d;
+      padding: 30px 0;
+      text-align: center;
+    }
+
+    footer p {
+      color: #999;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    footer .footer-logo {
+      color: var(--gold);
+      font-weight: bold;
+      letter-spacing: 3px;
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+
+    @media (max-width: 650px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 65px 0 50px;
+      }
+
+      .featured {
+        padding: 25px;
+      }
+
+      .nav a {
+        font-size: 11px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-  <a href="#inicio" class="logo">N<span>X</span> | NEXA</a>
-  <nav>
-    <a href="#inicio">Início</a>
-    <a href="#solucoes">Soluções</a>
-    <a href="#sobre">Sobre</a>
-    <a href="#contato">Contato</a>
-  </nav>
-</header>
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        NEXA
+        <span>CRÉDITO</span>
+      </div>
 
-<main>
+      <a href="#produtos">NOSSAS SOLUÇÕES</a>
+    </div>
+  </header>
 
-<section class="hero" id="inicio">
-  <div class="eyebrow">NEXA CRÉDITO</div>
-  <h1>Seu próximo passo começa com <span>boas escolhas.</span></h1>
-  <p>Conheça possibilidades de crédito, consulte informações e encontre caminhos de acordo com seu perfil, sempre com transparência.</p>
-  <a class="btn" href="https://wa.me/5516988079346" target="_blank" rel="noopener">Fale com nossa equipe</a>
-</section>
+  <main>
 
-<section id="solucoes">
-  <div class="section-title">
-    <h2>Nossas <span class="gold">possibilidades</span></h2>
-    <p>Informação para ajudar você a conhecer alternativas disponíveis.</p>
-  </div>
+    <section class="hero container">
+      <h1>
+        Seu próximo passo<br>
+        começa <span>aqui.</span>
+      </h1>
 
-  <div class="grid">
+      <p>
+        Conheça possibilidades de crédito e soluções
+        financeiras com transparência, informação
+        e atendimento personalizado.
+      </p>
+    </section>
 
-    <article class="card">
-      <div class="symbol">◇</div>
-      <h3>Antecipação FGTS</h3>
-      <p>Conheça as condições para antecipação do Saque-Aniversário do FGTS, sujeitas à análise e aprovação da instituição responsável.</p>
-      <a href="https://central-cred.startcapital.app/credit/nexacredito" target="_blank" rel="noopener">Consultar possibilidade →</a>
-    </article>
+    <!-- NEXA CRED PIX CARD -->
 
-    <article class="card">
-      <div class="symbol">▤</div>
-      <h3>Crédito CLT</h3>
-      <p>Consulte informações sobre crédito consignado para trabalhadores CLT, conforme regras, elegibilidade e análise da instituição.</p>
-      <a href="https://v8-auto-clt-front.vercel.app/3e509b26-3c31-4cd9-b697-cc579ad5c450/contratacao" target="_blank" rel="noopener">Consultar possibilidade →</a>
-    </article>
+    <section class="container">
+      <div class="featured">
+        <span class="featured-label">EM BREVE</span>
 
-    <article class="card">
-      <div class="symbol">◎</div>
-      <h3>Beneficiários</h3>
-      <p>Orientações e informações sobre alternativas financeiras para beneficiários. A disponibilidade depende das regras de cada produto.</p>
-      <a href="https://wa.me/5516988079346?text=Olá!%20Gostaria%20de%20informações%20sobre%20alternativas%20financeiras." target="_blank" rel="noopener">Solicitar informações →</a>
-    </article>
+        <h2>NEXA CRED PIX CARD</h2>
 
-    <article class="card">
-      <div class="symbol">▣</div>
-      <h3>Consignado e cartões</h3>
-      <p>Conheça informações sobre modalidades consignadas e produtos financeiros, conforme convênios e critérios das instituições.</p>
-      <a href="https://wa.me/5516988079346?text=Olá!%20Gostaria%20de%20informações%20sobre%20consignado%20e%20cartões." target="_blank" rel="noopener">Fale conosco →</a>
-    </article>
+        <p>
+          Uma nova possibilidade está chegando.
+          Em breve, você poderá conhecer as condições,
+          os valores disponíveis e as opções de pagamento.
+        </p>
 
-    <article class="card">
-      <div class="symbol">⌂</div>
-      <h3>Crédito na conta de energia</h3>
-      <p>Conheça a modalidade de crédito vinculada à conta de energia e consulte as condições diretamente com a instituição responsável.</p>
-      <a href="https://site.crefaz.com.br/produto/energia" target="_blank" rel="noopener">Conhecer modalidade →</a>
-    </article>
+        <div class="notice">
+          PRODUTO EM FASE DE PREPARAÇÃO.
+          AINDA NÃO DISPONÍVEL PARA CONTRATAÇÃO.
+        </div>
+      </div>
+    </section>
 
-  </div>
-</section>
+    <!-- PRODUTOS -->
 
-<section class="about" id="sobre">
-  <div class="section-title">
-    <h2>Por que escolher a <span class="gold">NEXA?</span></h2>
-  </div>
-  <p>Nosso objetivo é facilitar o acesso à informação sobre possibilidades financeiras, aproximando interessados de canais de atendimento e instituições responsáveis pelos produtos.</p>
-  <p>Trabalhamos com comunicação clara, respeito e transparência em cada contato.</p>
-</section>
+    <section class="products container" id="produtos">
+      <h2 class="section-title">Nossas soluções</h2>
 
-<section>
-  <div class="info">
-    <h3>Transparência e segurança</h3>
-    <p>A NEXA CRÉDITO atua como canal independente de informação e contato. Não somos banco, financeira ou instituição concedente de crédito.</p>
-    <p>As propostas, taxas, prazos, custos, condições e aprovações são definidos exclusivamente pelas instituições responsáveis por cada produto.</p>
-    <p>Não garantimos aprovação de crédito. Antes de contratar, consulte o Custo Efetivo Total (CET), leia o contrato e confirme as condições diretamente com a instituição.</p>
-    <p>Nunca compartilhe senhas, códigos de autenticação ou dados bancários de acesso.</p>
-  </div>
-</section>
+      <div class="grid">
 
-<section class="contact" id="contato">
-  <div class="section-title">
-    <h2>Vamos conversar?</h2>
-    <p>Entre em contato pelo WhatsApp para receber informações.</p>
-  </div>
-  <a class="btn" href="https://wa.me/5516988079346" target="_blank" rel="noopener">Conversar pelo WhatsApp</a>
-</section>
+        <article class="product">
+          <h3>Antecipação FGTS</h3>
+          <p>
+            Consulte possibilidades de antecipação
+            do seu saldo FGTS e conheça as condições.
+          </p>
+          <a href="https://central-cred.startcapital.app/credit/nexacredito"
+             target="_blank" rel="noopener noreferrer">
+            SAIBA MAIS →
+          </a>
+        </article>
 
-</main>
+        <article class="product">
+          <h3>Crédito CLT</h3>
+          <p>
+            Conheça possibilidades de crédito
+            para trabalhadores com carteira assinada.
+          </p>
+          <a href="https://v8-auto-clt-front.vercel.app/3e509b26-3c31-4cd9-b697-cc579ad5c450/contratacao"
+             target="_blank" rel="noopener noreferrer">
+            SAIBA MAIS →
+          </a>
+        </article>
 
-<footer>
-  <p><strong>NEXA CRÉDITO</strong></p>
-  <p>Informação, transparência e orientação.</p>
-  <p>Atendimento em todo o Brasil.</p>
-  <p>© 2026 NEXA CRÉDITO. Todos os direitos reservados.</p>
-  <p>As condições dos produtos dependem das instituições responsáveis.</p>
-</footer>
+        <article class="product">
+          <h3>Benefícios</h3>
+          <p>
+            Informações sobre soluções financeiras
+            e possibilidades disponíveis para beneficiários.
+          </p>
+          <a href="https://wa.me/5516988079346?text=Olá!%20Quero%20informações%20sobre%20benefícios."
+             target="_blank" rel="noopener noreferrer">
+            CONSULTAR →
+          </a>
+        </article>
 
-<a class="whatsapp" href="https://wa.me/5516988079346" target="_blank" rel="noopener" aria-label="Fale pelo WhatsApp">WhatsApp</a>
+        <article class="product">
+          <h3>Consignado e cartões</h3>
+          <p>
+            Consulte informações sobre modalidades,
+            condições e possibilidades de crédito.
+          </p>
+          <a href="https://wa.me/5516988079346?text=Olá!%20Quero%20informações%20sobre%20consignado%20e%20cartões."
+             target="_blank" rel="noopener noreferrer">
+            SAIBA MAIS →
+          </a>
+        </article>
+
+        <article class="product">
+          <h3>Crédito na conta de energia</h3>
+          <p>
+            Conheça as condições e informações
+            sobre a solução disponibilizada pela Crefaz.
+          </p>
+          <a href="https://site.crefaz.com.br/produto/energia"
+             target="_blank" rel="noopener noreferrer">
+            SAIBA MAIS →
+          </a>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SOBRE -->
+
+    <section class="about">
+      <div class="container">
+        <h2 class="section-title">Por que NEXA?</h2>
+
+        <p>
+          Nosso objetivo é facilitar o acesso à informação
+          sobre possibilidades financeiras, com atendimento
+          próximo, transparência e clareza nas condições
+          apresentadas.
+        </p>
+      </div>
+    </section>
+
+    <!-- CONTATO -->
+
+    <section class="container">
+      <div class="contact">
+        <h2>Vamos conversar?</h2>
+
+        <p>
+          Fale com nossa equipe e tire suas dúvidas
+          sobre as soluções disponíveis.
+        </p>
+
+        <a class="button"
+           href="https://wa.me/5516988079346?text=Olá!%20Vim%20pelo%20site%20da%20NEXA%20CRÉDITO."
+           target="_blank" rel="noopener noreferrer">
+          FALAR PELO WHATSAPP
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-logo">NEXA CRÉDITO</div>
+
+      <p>
+        Atendimento independente de informação e encaminhamento.
+      </p>
+
+      <p>
+        A NEXA não é instituição financeira nem representa
+        oficialmente os fornecedores citados.
+      </p>
+
+      <p>
+        Produtos sujeitos às condições, critérios e aprovação
+        dos respectivos fornecedores.
+      </p>
+
+      <p>
+        © 2026 NEXA CRÉDITO. Todos os direitos reservados.
+      </p>
+    </div>
+  </footer>
 
 </body>
 </html>
