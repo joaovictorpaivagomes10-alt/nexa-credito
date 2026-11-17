@@ -7,83 +7,223 @@
 <meta name="theme-color" content="#080b13">
 <title>NEXA HUB | Administração</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-:root{--bg:#080b13;--panel:#111a29;--gold:#d8b56a;--text:#f4f5f7;--muted:#94a0b2;--line:#263247}
+:root{
+ --bg:#080b13;
+ --panel:#111a29;
+ --panel2:#151f30;
+ --gold:#d8b56a;
+ --gold2:#f1d99e;
+ --text:#f4f5f7;
+ --muted:#94a0b2;
+ --line:#263247;
+ --green:#55c49a;
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+body{
+ margin:0;background:
+ radial-gradient(circle at 85% 0%,#20243a 0,transparent 32%),
+ var(--bg);
+ color:var(--text);font-family:Arial,sans-serif;
+}
+button{font-family:inherit}
 .layout{display:flex;min-height:100vh}
-aside{width:245px;background:#0d1421;border-right:1px solid var(--line);padding:25px 17px;flex-shrink:0}
-.logo{font-size:23px;font-weight:800;letter-spacing:4px;color:var(--gold);padding:5px 10px}
-.logo small{display:block;font-size:9px;letter-spacing:3px;color:var(--muted);margin-top:8px}
-nav{margin-top:38px}
-nav button{display:block;width:100%;text-align:left;background:none;border:0;color:#aab5c5;padding:14px 12px;border-radius:9px;margin-bottom:6px;cursor:pointer;font-size:13px}
-nav button.active,nav button:hover{background:#1b2739;color:var(--gold)}
-.bottom{margin-top:40px}
+aside{
+ width:250px;flex-shrink:0;padding:25px 17px;
+ background:rgba(13,20,33,.97);
+ border-right:1px solid var(--line);
+ display:flex;flex-direction:column;
+}
+.logo{
+ font-size:24px;font-weight:900;letter-spacing:5px;
+ color:var(--gold);padding:8px 10px;
+}
+.logo small{
+ display:block;font-size:9px;letter-spacing:3px;
+ color:var(--muted);margin-top:9px;
+}
+.nav-label{
+ margin:35px 10px 12px;font-size:10px;
+ letter-spacing:2px;color:#69768b;
+}
+nav{display:flex;flex-direction:column;gap:7px}
+nav button{
+ display:flex;align-items:center;gap:12px;
+ width:100%;text-align:left;background:transparent;
+ border:1px solid transparent;color:#aab5c5;
+ padding:14px 13px;border-radius:11px;
+ cursor:pointer;font-size:13px;transition:.2s;
+}
+nav button:hover,nav button.active{
+ background:linear-gradient(110deg,#263247,#182334);
+ border-color:#574a31;color:var(--gold2);
+}
+.bottom{margin-top:auto;padding-top:25px}
 main{flex:1;min-width:0;padding:30px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:30px}
-h1{font-size:25px;margin:0}
-.sub{color:var(--muted);font-size:13px;margin-top:7px}
-.pill{color:var(--gold);border:1px solid #665333;padding:8px 12px;border-radius:30px;font-size:11px}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:25px}
-.stat,.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:20px}
+.top{
+ display:flex;justify-content:space-between;
+ align-items:center;gap:15px;margin-bottom:28px;
+}
+h1{font-size:26px;margin:0}
+.sub{color:var(--muted);font-size:13px;margin-top:8px;line-height:1.5}
+.pill{
+ color:var(--gold2);border:1px solid #665333;
+ background:#241f17;padding:9px 13px;
+ border-radius:30px;font-size:10px;letter-spacing:1px;
+ white-space:nowrap;
+}
+.grid{
+ display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:15px;margin-bottom:20px;
+}
+.stat,.panel{
+ background:linear-gradient(145deg,#151f30,#101725);
+ border:1px solid var(--line);border-radius:17px;
+ padding:21px;box-shadow:0 12px 35px #0002;
+}
+.stat{position:relative;overflow:hidden}
+.stat:after{
+ content:"";position:absolute;width:90px;height:90px;
+ border:1px solid #d8b56a22;border-radius:50%;
+ right:-35px;top:-35px;
+}
 .stat span{font-size:12px;color:var(--muted)}
-.stat strong{display:block;font-size:28px;color:var(--gold);margin-top:12px}
-.panel{margin-bottom:20px}
-.panel h2{font-size:16px;margin:0 0 17px}
-.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.stat strong{
+ display:block;font-size:29px;color:var(--gold2);
+ margin-top:13px;
+}
+.panel{margin-bottom:18px}
+.panel h2{font-size:16px;margin:0 0 16px}
+.panel-head{
+ display:flex;justify-content:space-between;
+ align-items:center;gap:12px;margin-bottom:15px;
+}
+.action{
+ background:linear-gradient(135deg,#d8b56a,#a98746);
+ border:0;color:#15120c;border-radius:9px;
+ padding:11px 15px;font-weight:700;
+ cursor:pointer;font-size:12px;
+}
+.action:hover{filter:brightness(1.1)}
+.action.secondary{
+ background:#25344a;border:1px solid #40516a;
+ color:white;
+}
+.action.danger{
+ background:#3b2027;border:1px solid #74404a;color:#ffd9df;
+}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{text-align:left;padding:13px 9px;border-bottom:1px solid var(--line)}
+th,td{
+ text-align:left;padding:14px 10px;
+ border-bottom:1px solid var(--line);
+}
 th{color:var(--muted);font-weight:500}
 td{color:#e5e8ef}
-.empty{color:var(--muted);font-size:13px;padding:15px 0}
-.tag{font-size:11px;color:#e6ca8f;background:#342b1d;padding:5px 8px;border-radius:20px}
-.action{background:#27364b;border:1px solid #40516a;color:white;border-radius:8px;padding:10px 13px;cursor:pointer}
-.action:hover{border-color:var(--gold)}
-#message,#chatMessage{font-size:12px;color:var(--muted);margin-top:12px}
 .table-wrap{overflow-x:auto}
-.chat-layout{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.tag{
+ display:inline-block;font-size:10px;color:#e6ca8f;
+ background:#342b1d;padding:6px 9px;border-radius:20px;
+}
+.tag.green{color:#8ce0bd;background:#15352d}
+.empty{color:var(--muted);font-size:13px;padding:15px 0}
+#message,#chatMessage{
+ font-size:12px;color:var(--muted);margin-top:12px;
+ line-height:1.5;
+}
+.chat-layout{
+ display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+ gap:15px;
+}
 .chat-list{max-height:520px;overflow:auto}
-.chat-row{padding:14px;border-bottom:1px solid var(--line);cursor:pointer;border-radius:8px}
-.chat-row:hover,.chat-row.selected{background:#1b2739}
-.chat-row strong{display:block;color:var(--gold);font-size:13px;margin-bottom:6px}
-.chat-row small{color:var(--muted)}
-.message-item{padding:12px;margin:9px 0;background:#1b2739;border-radius:10px;font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+.chat-row{
+ padding:15px;border:1px solid transparent;
+ border-bottom:1px solid var(--line);
+ cursor:pointer;border-radius:10px;transition:.2s;
+}
+.chat-row:hover,.chat-row.selected{
+ background:#1b2739;border-color:#55472e;
+}
+.chat-row strong{
+ display:block;color:var(--gold2);
+ font-size:13px;margin-bottom:7px;
+}
+.chat-row small{color:var(--muted);line-height:1.8}
+.message-item{
+ padding:13px;margin:10px 0;
+ background:#1b2739;border-radius:10px;
+ font-size:13px;line-height:1.6;overflow-wrap:anywhere;
+}
 .message-item.customer{border-left:3px solid var(--gold)}
 .message-item.assistant{border-left:3px solid #6c8fc4}
-.message-item.seller{border-left:3px solid #55b88b}
-.message-item small{display:block;color:var(--muted);margin-bottom:5px}
-#messageHistory{max-height:430px;overflow:auto}
+.message-item.seller{border-left:3px solid var(--green)}
+.message-item small{
+ display:block;color:var(--muted);margin-bottom:6px;
+ font-size:10px;letter-spacing:.5px;
+}
+#messageHistory{max-height:440px;overflow:auto}
 [hidden]{display:none!important}
+a{color:var(--gold2)}
 @media(max-width:760px){
  .layout{display:block}
- aside{width:100%;padding:15px;border-right:0;border-bottom:1px solid var(--line)}
- nav{display:flex;overflow-x:auto;overflow-y:hidden;margin-top:15px;gap:5px;scrollbar-width:thin;touch-action:pan-x}
- nav button{white-space:nowrap;width:auto;min-width:max-content;margin:0;flex-shrink:0;padding:13px}
- .bottom{margin-top:12px}
- main{padding:20px 14px}
- .grid{grid-template-columns:1fr}
+ aside{
+  width:100%;padding:17px 14px;
+  border-right:0;border-bottom:1px solid var(--line);
+ }
+ .logo{font-size:21px}
+ .nav-label{margin:20px 8px 10px}
+ nav{
+  flex-direction:row;overflow-x:auto;overflow-y:hidden;
+  gap:6px;scrollbar-width:thin;touch-action:pan-x;
+  padding-bottom:7px;
+ }
+ nav button{
+  white-space:nowrap;width:auto;min-width:max-content;
+  flex-shrink:0;padding:12px;
+ }
+ .bottom{padding-top:10px}
+ main{padding:21px 14px}
+ .grid{grid-template-columns:1fr;gap:10px}
+ .stat{padding:17px}
+ .stat strong{font-size:25px}
  .top{align-items:flex-start}
  h1{font-size:21px}
- table{min-width:480px}
+ .pill{font-size:9px}
+ table{min-width:490px}
  .chat-layout{grid-template-columns:1fr}
+ .panel{padding:16px}
 }
 </style>
 </head>
-<body>
 
+<body>
 <div class="layout">
+
 <aside>
- <div class="logo">NEXA HUB<small>INTELLIGENCE PLATFORM</small></div>
+ <div class="logo">NEXA HUB
+  <small>INTELLIGENCE PLATFORM</small>
+ </div>
+
+ <div class="nav-label">GESTÃO DA PLATAFORMA</div>
 
  <nav>
-  <button type="button" class="active" onclick="showSection('overview',this)">◈ Visão geral</button>
-  <button type="button" onclick="showSection('sellers',this)">♙ Vendedores</button>
-  <button type="button" onclick="showSection('systems',this)">▦ Central de Sistemas</button>
-  <button type="button" onclick="showSection('conversations',this)">▤ Atendimentos</button>
+  <button type="button" class="active"
+   onclick="showSection('overview',this)">◈ Visão geral</button>
+
+  <button type="button"
+   onclick="showSection('sellers',this)">♙ Vendedores</button>
+
+  <button type="button"
+   onclick="showSection('systems',this)">▦ Central de Sistemas</button>
+
+  <button type="button"
+   onclick="showSection('conversations',this)">▤ Atendimentos</button>
  </nav>
 
  <div class="bottom">
-  <button class="action" id="logout" type="button">Sair da plataforma</button>
+  <button class="action secondary" id="logout" type="button">
+   ↪ Sair da plataforma
+  </button>
  </div>
 </aside>
 
@@ -98,14 +238,27 @@ td{color:#e5e8ef}
 
 <section id="overview">
  <div class="grid">
-  <div class="stat"><span>Vendedores cadastrados</span><strong id="sellerCount">—</strong></div>
-  <div class="stat"><span>Sistemas cadastrados</span><strong id="systemCount">—</strong></div>
-  <div class="stat"><span>Conta administrativa</span><strong style="font-size:17px">ATIVA</strong></div>
+  <div class="stat">
+   <span>Vendedores cadastrados</span>
+   <strong id="sellerCount">—</strong>
+  </div>
+  <div class="stat">
+   <span>Sistemas cadastrados</span>
+   <strong id="systemCount">—</strong>
+  </div>
+  <div class="stat">
+   <span>Conta administrativa</span>
+   <strong style="font-size:18px">ATIVA</strong>
+  </div>
  </div>
+
  <div class="panel">
   <h2>Centro de controle NEXA</h2>
-  <p class="sub">Gerencie vendedores, acessos, sistemas e atendimentos em um único ambiente.</p>
-  <div id="message">Carregando informações...</div>
+  <p class="sub">
+   Gerencie vendedores, sistemas, acessos e atendimentos
+   em um único ambiente.
+  </p>
+  <div id="message">Conectando à plataforma...</div>
  </div>
 </section>
 
@@ -114,7 +267,9 @@ td{color:#e5e8ef}
   <h2>Equipe de vendedores</h2>
   <div class="table-wrap">
    <table>
-    <thead><tr><th>Nome</th><th>E-mail</th><th>Status</th><th>Cadastro</th></tr></thead>
+    <thead>
+     <tr><th>Nome</th><th>E-mail</th><th>Status</th><th>Cadastro</th></tr>
+    </thead>
     <tbody id="sellerRows"></tbody>
    </table>
   </div>
@@ -127,7 +282,9 @@ td{color:#e5e8ef}
   <h2>Central de Sistemas</h2>
   <div class="table-wrap">
    <table>
-    <thead><tr><th>Sistema</th><th>Categoria</th><th>Status</th><th>Endereço</th></tr></thead>
+    <thead>
+     <tr><th>Sistema</th><th>Categoria</th><th>Status</th><th>Endereço</th></tr>
+    </thead>
     <tbody id="systemRows"></tbody>
    </table>
   </div>
@@ -151,9 +308,10 @@ td{color:#e5e8ef}
   <div class="panel">
    <h2>Conversas recebidas</h2>
    <div id="chatList" class="chat-list">
-    <div class="empty">Carregando...</div>
+    <div class="empty">Aguardando atendimentos...</div>
    </div>
   </div>
+
   <div class="panel">
    <h2 id="detailTitle">Histórico da conversa</h2>
    <div id="messageHistory">
@@ -166,32 +324,43 @@ td{color:#e5e8ef}
 </div>
 
 <script>
-const URL="https://qjujystvdehvolwhtkgw.supabase.co";
-const KEY="sb_publishable_uS0uMa2YNj6VKSKo1FQ_Og_hXQHrFxN";
-const CHAT_FUNCTION=URL+"/functions/v1/admin-chat-list";
+"use strict";
 
-const db=window.supabase.createClient(URL,KEY);
+/* CONFIGURAÇÃO */
+const SUPABASE_URL = "https://qjujystvdehvolwhtkgw.supabase.co";
+const SUPABASE_KEY = "sb_publishable_uS0uMa2YNj6VKSKo1FQ_Og_hXQHrFxN";
+const CHAT_FUNCTION = SUPABASE_URL + "/functions/v1/admin-chat-list";
 
-let currentSession=null;
-let chatSessions=[];
-let chatMessages=[];
+/* CLIENTE SUPABASE: INICIALIZADO ANTES DAS FUNÇÕES */
+const supabaseClient = window.supabase.createClient(
+ SUPABASE_URL,
+ SUPABASE_KEY
+);
 
-const esc=value=>String(value??"").replace(/[&<>"']/g,c=>({
- "&":"&amp;",
- "<":"&lt;",
- ">":"&gt;",
- '"':"&quot;",
- "'":"&#39;"
-}[c]));
+let currentSession = null;
+let chatSessions = [];
+let chatMessages = [];
+
+const $ = id => document.getElementById(id);
+
+function esc(value){
+ return String(value ?? "").replace(/[&<>"']/g, c => ({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+ }[c]));
+}
 
 function formatDate(value){
  if(!value)return "—";
- const date=new Date(value);
- return isNaN(date)?"—":date.toLocaleString("pt-BR");
+ const date = new Date(value);
+ return isNaN(date) ? "—" : date.toLocaleString("pt-BR");
 }
 
-/* NAVEGAÇÃO DO PAINEL */
-function showSection(section,button){
+/* NAVEGAÇÃO */
+window.showSection = function(section,button){
  document.querySelectorAll("nav button").forEach(b=>{
   b.classList.remove("active");
  });
@@ -199,233 +368,258 @@ function showSection(section,button){
  if(button)button.classList.add("active");
 
  document.querySelectorAll("main section").forEach(s=>{
-  s.hidden=true;
+  s.hidden = true;
  });
 
- const target=document.getElementById(section);
-
+ const target = $(section);
  if(!target)return;
 
- target.hidden=false;
+ target.hidden = false;
 
- const titles={
+ const titles = {
   overview:"Visão geral",
   sellers:"Vendedores",
   systems:"Central de Sistemas",
   conversations:"Atendimentos"
  };
 
- document.getElementById("pageTitle").textContent=titles[section]||"NEXA HUB";
+ $("pageTitle").textContent = titles[section] || "NEXA HUB";
 
- if(section==="conversations"){
+ if(section === "conversations"){
   loadChats();
  }
-}
+};
 
-/* AUTENTICAÇÃO E INICIALIZAÇÃO */
-async function start(){
+/* INICIALIZAÇÃO E AUTENTICAÇÃO */
+async function startPanel(){
  try{
-  const {data:{session},error}=await db.auth.getSession();
+  if(!window.supabase){
+   throw new Error("Biblioteca Supabase não carregou. Atualize a página.");
+  }
 
-  if(error||!session){
+  const {data,error} = await supabaseClient.auth.getSession();
+
+  if(error)throw error;
+
+  const session = data.session;
+
+  if(!session){
    location.replace("hub.html");
    return;
   }
 
-  const {data:profile,error:profileError}=await db
+  const {data:profile,error:profileError} = await supabaseClient
    .from("profiles")
    .select("role,active,full_name")
    .eq("id",session.user.id)
    .single();
 
-  if(profileError||!profile||!profile.active||profile.role!=="admin"){
-   await db.auth.signOut();
+  if(profileError)throw profileError;
+
+  if(!profile || !profile.active || profile.role !== "admin"){
+   await supabaseClient.auth.signOut();
    location.replace("hub.html");
    return;
   }
 
-  document.getElementById("welcome").textContent=
-   "Bem-vindo(a), "+(profile.full_name||"Administrador");
+  $("welcome").textContent =
+   "Bem-vindo(a), " + (profile.full_name || "Administrador");
 
   await loadData();
 
  }catch(error){
-  document.getElementById("message").textContent=
-   "Erro ao iniciar painel: "+error.message;
+  $("message").textContent = "Erro ao iniciar painel: " + error.message;
  }
 }
 
-/* CARREGAMENTO DE VENDEDORES E SISTEMAS */
+/* VENDEDORES E SISTEMAS */
 async function loadData(){
- const [sellers,systems]=await Promise.all([
-  db.rpc("admin_list_sellers"),
-  db.rpc("admin_list_systems")
- ]);
-
- if(sellers.error){
-  document.getElementById("sellerMessage").textContent=
-   "Erro: "+sellers.error.message;
- }else{
-  const rows=sellers.data||[];
-
-  document.getElementById("sellerCount").textContent=rows.length;
-
-  document.getElementById("sellerRows").innerHTML=rows.map(s=>`
-   <tr>
-    <td>${esc(s.full_name||"Sem nome")}</td>
-    <td>${esc(s.email)}</td>
-    <td><span class="tag">${s.active?"ATIVO":"INATIVO"}</span></td>
-    <td>${formatDate(s.created_at)}</td>
-   </tr>
-  `).join("");
-
-  document.getElementById("sellerMessage").textContent=
-   rows.length?"":"Nenhum vendedor cadastrado.";
- }
-
- if(systems.error){
-  document.getElementById("systemMessage").textContent=
-   "Erro: "+systems.error.message;
- }else{
-  const rows=systems.data||[];
-
-  document.getElementById("systemCount").textContent=rows.length;
-
-  document.getElementById("systemRows").innerHTML=rows.map(s=>`
-   <tr>
-    <td>${esc(s.name)}</td>
-    <td>${esc(s.category)}</td>
-    <td><span class="tag">${s.active?"ATIVO":"INATIVO"}</span></td>
-    <td>${s.url?`<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" style="color:#e4c783">Abrir</a>`:"—"}</td>
-   </tr>
-  `).join("");
-
-  document.getElementById("systemMessage").textContent=
-   rows.length?"":"Nenhum sistema cadastrado.";
- }
-
- document.getElementById("message").textContent=
-  "Informações carregadas.";
-}
-
-/* CARREGAMENTO DOS ATENDIMENTOS */
-async function loadChats(){
- const status=document.getElementById("chatMessage");
- const list=document.getElementById("chatList");
-
- status.textContent="Buscando atendimentos...";
- list.innerHTML='<div class="empty">Carregando conversas...</div>';
-
  try{
-  const {data:{session},error:sessionError}=await db.auth.getSession();
+  const [sellers,systems] = await Promise.all([
+   supabaseClient.rpc("admin_list_sellers"),
+   supabaseClient.rpc("admin_list_systems")
+  ]);
 
-  if(sessionError||!session){
-   status.textContent="Sessão expirada. Entre novamente.";
-   return;
+  if(sellers.error){
+   $("sellerMessage").textContent = "Erro: " + sellers.error.message;
+  }else{
+   const rows = sellers.data || [];
+   $("sellerCount").textContent = rows.length;
+
+   $("sellerRows").innerHTML = rows.map(s=>`
+    <tr>
+     <td>${esc(s.full_name || "Sem nome")}</td>
+     <td>${esc(s.email || "—")}</td>
+     <td><span class="tag ${s.active?"green":""}">
+      ${s.active?"ATIVO":"INATIVO"}
+     </span></td>
+     <td>${formatDate(s.created_at)}</td>
+    </tr>
+   `).join("");
+
+   $("sellerMessage").textContent =
+    rows.length ? "" : "Nenhum vendedor cadastrado.";
   }
 
-  const response=await fetch(CHAT_FUNCTION,{
+  if(systems.error){
+   $("systemMessage").textContent = "Erro: " + systems.error.message;
+  }else{
+   const rows = systems.data || [];
+   $("systemCount").textContent = rows.length;
+
+   $("systemRows").innerHTML = rows.map(s=>`
+    <tr>
+     <td>${esc(s.name)}</td>
+     <td>${esc(s.category || "—")}</td>
+     <td><span class="tag ${s.active?"green":""}">
+      ${s.active?"ATIVO":"INATIVO"}
+     </span></td>
+     <td>${s.url
+      ? `<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">Abrir sistema</a>`
+      : "—"}
+     </td>
+    </tr>
+   `).join("");
+
+   $("systemMessage").textContent =
+    rows.length ? "" : "Nenhum sistema cadastrado.";
+  }
+
+  $("message").textContent = "Informações carregadas.";
+
+ }catch(error){
+  $("message").textContent = "Erro ao carregar informações: " + error.message;
+ }
+}
+
+/* ATENDIMENTOS */
+async function loadChats(){
+ const status = $("chatMessage");
+ const list = $("chatList");
+
+ status.textContent = "Buscando atendimentos...";
+ list.innerHTML = '<div class="empty">Carregando conversas...</div>';
+
+ try{
+  const {data,error:authError} = await supabaseClient.auth.getSession();
+
+  if(authError)throw authError;
+  if(!data.session){
+   throw new Error("Sessão expirada. Entre novamente.");
+  }
+
+  const response = await fetch(CHAT_FUNCTION,{
    method:"POST",
    headers:{
     "Content-Type":"application/json",
-    "apikey":KEY,
-    "Authorization":"Bearer "+session.access_token
+    "apikey":SUPABASE_KEY,
+    "Authorization":"Bearer " + data.session.access_token
    },
    body:JSON.stringify({})
   });
 
-  const result=await response.json();
+  const responseText = await response.text();
+  let result;
 
-  if(!response.ok||!result.success){
-   throw new Error(result.error||result.message||"Erro HTTP "+response.status);
+  try{
+   result = JSON.parse(responseText);
+  }catch{
+   throw new Error("Resposta inválida da função. HTTP " + response.status);
   }
 
-  chatSessions=result.sessions||[];
-  chatMessages=result.messages||[];
+  if(!response.ok || !result.success){
+   throw new Error(
+    result.error || result.message || "Erro HTTP " + response.status
+   );
+  }
+
+  chatSessions = result.sessions || [];
+  chatMessages = result.messages || [];
 
   renderChats();
 
-  status.textContent=chatSessions.length
-   ?chatSessions.length+" atendimento(s) encontrado(s)."
-   :"Nenhum atendimento recebido ainda.";
+  status.textContent = chatSessions.length
+   ? chatSessions.length + " atendimento(s) encontrado(s)."
+   : "Nenhum atendimento recebido ainda.";
 
   if(currentSession){
-   const selected=chatSessions.find(s=>s.id===currentSession);
-
+   const selected = chatSessions.find(s=>s.id===currentSession);
    if(selected){
     showMessages(selected);
    }else{
-    currentSession=null;
-    document.getElementById("messageHistory").innerHTML=
+    currentSession = null;
+    $("messageHistory").innerHTML =
      '<div class="empty">Selecione um atendimento.</div>';
    }
   }
 
  }catch(error){
-  status.textContent="Não foi possível carregar: "+error.message;
-  list.innerHTML=
-   '<div class="empty">Verifique a conexão e tente atualizar.</div>';
+  status.textContent = "Não foi possível carregar: " + error.message;
+  list.innerHTML =
+   '<div class="empty">Falha ao consultar os atendimentos.</div>';
  }
 }
 
-/* LISTAGEM DAS CONVERSAS */
+/* LISTA DE CONVERSAS */
 function renderChats(){
- const list=document.getElementById("chatList");
+ const list = $("chatList");
 
  if(!chatSessions.length){
-  list.innerHTML='<div class="empty">Nenhum atendimento encontrado.</div>';
+  list.innerHTML = '<div class="empty">Nenhum atendimento encontrado.</div>';
   return;
  }
 
- list.innerHTML=chatSessions.map(s=>`
-  <div class="chat-row ${currentSession===s.id?"selected":""}" data-id="${esc(s.id)}">
-   <strong>${esc(s.customer_name||"Cliente")}</strong>
-   <div>${esc(s.subject||"Atendimento")}</div>
-   <small>Protocolo: ${esc(s.protocol||"—")}</small><br>
-   <small>Status: ${esc(s.status||"—")} · ${formatDate(s.last_message_at||s.created_at)}</small>
+ list.innerHTML = chatSessions.map(s=>`
+  <div class="chat-row ${currentSession===s.id?"selected":""}"
+       data-id="${esc(s.id)}">
+   <strong>${esc(s.customer_name || "Cliente")}</strong>
+   <div>${esc(s.subject || "Atendimento")}</div>
+   <small>Protocolo: ${esc(s.protocol || "—")}</small><br>
+   <small>Status: ${esc(s.status || "—")} ·
+    ${formatDate(s.last_message_at || s.created_at)}
+   </small>
   </div>
  `).join("");
 
  list.querySelectorAll(".chat-row").forEach(row=>{
   row.addEventListener("click",()=>{
-   const selected=chatSessions.find(s=>s.id===row.dataset.id);
+   const selected = chatSessions.find(s=>s.id===row.dataset.id);
    if(selected)showMessages(selected);
   });
  });
 }
 
-/* HISTÓRICO DE MENSAGENS */
+/* HISTÓRICO */
 function showMessages(session){
- currentSession=session.id;
+ currentSession = session.id;
  renderChats();
 
- document.getElementById("detailTitle").textContent=
-  "Protocolo "+(session.protocol||"—");
+ $("detailTitle").textContent =
+  "Protocolo " + (session.protocol || "—");
 
- const history=document.getElementById("messageHistory");
+ const history = $("messageHistory");
 
- const messages=chatMessages
+ const messages = chatMessages
   .filter(m=>m.session_id===session.id)
   .sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
 
  if(!messages.length){
-  history.innerHTML=
+  history.innerHTML =
    '<div class="empty">Ainda não há mensagens neste atendimento.</div>';
   return;
  }
 
- history.innerHTML=messages.map(m=>{
-  const type=m.sender_type||"customer";
+ const labels = {
+  customer:"CLIENTE",
+  assistant:"NEXA ASSISTENTE",
+  seller:"VENDEDOR"
+ };
 
-  const labels={
-   customer:"CLIENTE",
-   assistant:"NEXA ASSISTENTE",
-   seller:"VENDEDOR"
-  };
-
+ history.innerHTML = messages.map(m=>{
+  const type = m.sender_type || "customer";
   return `
    <div class="message-item ${esc(type)}">
-    <small>${labels[type]||"MENSAGEM"} · ${formatDate(m.created_at)}</small>
+    <small>${labels[type] || "MENSAGEM"} · ${formatDate(m.created_at)}</small>
     ${esc(m.message)}
    </div>
   `;
@@ -433,15 +627,15 @@ function showMessages(session){
 }
 
 /* BOTÕES */
-document.getElementById("refreshChats").addEventListener("click",loadChats);
+$("refreshChats").addEventListener("click",loadChats);
 
-document.getElementById("logout").addEventListener("click",async()=>{
- await db.auth.signOut();
+$("logout").addEventListener("click",async()=>{
+ await supabaseClient.auth.signOut();
  location.replace("hub.html");
 });
 
-/* INICIAR PAINEL */
-start();
+/* INICIAR */
+startPanel();
 </script>
 </body>
 </html>
