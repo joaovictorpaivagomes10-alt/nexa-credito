@@ -7,600 +7,393 @@
 <meta name="theme-color" content="#080b13">
 <title>NEXA HUB | Administração</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-:root {
-  --bg:#080b13;
-  --panel:#111a29;
-  --gold:#d8b56a;
-  --text:#f4f5f7;
-  --muted:#94a0b2;
-  --line:#263247;
-}
-* {box-sizing:border-box}
-body {
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,sans-serif;
-}
-.layout {display:flex;min-height:100vh}
-aside {
-  width:245px;
-  background:#0d1421;
-  border-right:1px solid var(--line);
-  padding:25px 17px;
-  flex-shrink:0;
-}
-.logo {
-  font-size:23px;
-  font-weight:800;
-  letter-spacing:4px;
-  color:var(--gold);
-  padding:5px 10px;
-}
-.logo small {
-  display:block;
-  font-size:9px;
-  letter-spacing:3px;
-  color:var(--muted);
-  margin-top:8px;
-}
-nav {margin-top:38px}
-nav button {
-  display:block;
-  width:100%;
-  text-align:left;
-  background:none;
-  border:0;
-  color:#aab5c5;
-  padding:14px 12px;
-  border-radius:9px;
-  margin-bottom:6px;
-  cursor:pointer;
-  font-size:13px;
-}
-nav button.active,nav button:hover {
-  background:#1b2739;
-  color:var(--gold);
-}
-.bottom {margin-top:40px}
-main {
-  flex:1;
-  min-width:0;
-  padding:30px;
-}
-.top {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  margin-bottom:30px;
-}
-h1 {font-size:25px;margin:0}
-.sub {color:var(--muted);font-size:13px;margin-top:7px}
-.pill {
-  color:var(--gold);
-  border:1px solid #665333;
-  padding:8px 12px;
-  border-radius:30px;
-  font-size:11px;
-}
-.grid {
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:15px;
-  margin-bottom:25px;
-}
-.stat,.panel {
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:15px;
-  padding:20px;
-}
-.stat span {font-size:12px;color:var(--muted)}
-.stat strong {
-  display:block;
-  font-size:28px;
-  color:var(--gold);
-  margin-top:12px;
-}
-.panel {margin-bottom:20px}
-.panel h2 {font-size:16px;margin:0 0 17px}
-.panel-head {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-}
-table {
-  width:100%;
-  border-collapse:collapse;
-  font-size:13px;
-}
-th,td {
-  text-align:left;
-  padding:13px 9px;
-  border-bottom:1px solid var(--line);
-}
-th {color:var(--muted);font-weight:500}
-td {color:#e5e8ef}
-.empty {color:var(--muted);font-size:13px;padding:15px 0}
-.tag {
-  font-size:11px;
-  color:#e6ca8f;
-  background:#342b1d;
-  padding:5px 8px;
-  border-radius:20px;
-}
-button.action {
-  background:#27364b;
-  border:1px solid #40516a;
-  color:white;
-  border-radius:8px;
-  padding:9px 12px;
-  cursor:pointer;
-}
-button.action:disabled {opacity:.5;cursor:wait}
-.clickable {cursor:pointer}
-.clickable:hover {background:#192638}
-#message,#chatMessage {
-  font-size:12px;
-  color:var(--muted);
-  margin-top:12px;
-}
-.message-item {
-  background:#0d1421;
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:12px;
-  margin:10px 0;
-}
-.message-item small {
-  display:block;
-  color:var(--gold);
-  margin-bottom:7px;
-}
-.message-item p {
-  margin:0;
-  font-size:13px;
-  white-space:pre-wrap;
-  overflow-wrap:anywhere;
-}
-.mobile {display:none}
-@media(max-width:760px) {
-  .layout {display:block}
-  aside {
-    width:100%;
-    padding:15px;
-    border-right:0;
-    border-bottom:1px solid var(--line);
-  }
-  nav {
-    display:flex;
-    overflow:auto;
-    margin-top:15px;
-    gap:5px;
-  }
-  nav button {
-    white-space:nowrap;
-    width:auto;
-    margin:0;
-  }
-  .bottom {margin-top:10px}
-  main {padding:20px 14px}
-  .grid {grid-template-columns:1fr}
-  .top {align-items:flex-start}
-  h1 {font-size:21px}
-  table {min-width:520px}
-  .table-wrap {overflow-x:auto}
+:root{--bg:#080b13;--panel:#111a29;--gold:#d8b56a;--text:#f4f5f7;--muted:#94a0b2;--line:#263247}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+.layout{display:flex;min-height:100vh}
+aside{width:245px;background:#0d1421;border-right:1px solid var(--line);padding:25px 17px;flex-shrink:0}
+.logo{font-size:23px;font-weight:800;letter-spacing:4px;color:var(--gold);padding:5px 10px}
+.logo small{display:block;font-size:9px;letter-spacing:3px;color:var(--muted);margin-top:8px}
+nav{margin-top:38px}
+nav button{display:block;width:100%;text-align:left;background:none;border:0;color:#aab5c5;padding:14px 12px;border-radius:9px;margin-bottom:6px;cursor:pointer;font-size:13px}
+nav button.active,nav button:hover{background:#1b2739;color:var(--gold)}
+.bottom{margin-top:40px}
+main{flex:1;min-width:0;padding:30px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:30px}
+h1{font-size:25px;margin:0}
+.sub{color:var(--muted);font-size:13px;margin-top:7px}
+.pill{color:var(--gold);border:1px solid #665333;padding:8px 12px;border-radius:30px;font-size:11px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:25px}
+.stat,.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:20px}
+.stat span{font-size:12px;color:var(--muted)}
+.stat strong{display:block;font-size:28px;color:var(--gold);margin-top:12px}
+.panel{margin-bottom:20px}
+.panel h2{font-size:16px;margin:0 0 17px}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:13px 9px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:500}
+td{color:#e5e8ef}
+.empty{color:var(--muted);font-size:13px;padding:15px 0}
+.tag{font-size:11px;color:#e6ca8f;background:#342b1d;padding:5px 8px;border-radius:20px}
+button.action{background:#27364b;border:1px solid #40516a;color:white;border-radius:8px;padding:9px 12px;cursor:pointer}
+button.action:hover{border-color:var(--gold)}
+#message,#chatMessage{font-size:12px;color:var(--muted);margin-top:12px}
+.table-wrap{overflow-x:auto}
+.chat-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:15px}
+.chat-list{max-height:520px;overflow:auto}
+.chat-row{padding:14px;border-bottom:1px solid var(--line);cursor:pointer;border-radius:8px}
+.chat-row:hover,.chat-row.selected{background:#1b2739}
+.chat-row strong{display:block;color:var(--gold);font-size:13px;margin-bottom:6px}
+.chat-row small{color:var(--muted)}
+.message-item{padding:12px;margin:9px 0;background:#1b2739;border-radius:10px;font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+.message-item.customer{border-left:3px solid var(--gold)}
+.message-item.assistant{border-left:3px solid #6c8fc4}
+.message-item.seller{border-left:3px solid #55b88b}
+.message-item small{display:block;color:var(--muted);margin-bottom:5px}
+#messageHistory{max-height:430px;overflow:auto}
+[hidden]{display:none!important}
+@media(max-width:760px){
+ .layout{display:block}
+ aside{width:100%;padding:15px;border-right:0;border-bottom:1px solid var(--line)}
+ nav{display:flex;overflow:auto;margin-top:15px;gap:5px}
+ nav button{white-space:nowrap;width:auto;margin:0}
+ .bottom{margin-top:10px}
+ main{padding:20px 14px}
+ .grid{grid-template-columns:1fr}
+ .top{align-items:flex-start}
+ h1{font-size:21px}
+ table{min-width:480px}
+ .chat-layout{grid-template-columns:1fr}
 }
 </style>
 </head>
-
 <body>
 <div class="layout">
-
 <aside>
-  <div class="logo">
-    NEXA HUB
-    <small>INTELLIGENCE PLATFORM</small>
-  </div>
-
-  <nav>
-    <button class="active" data-section="overview">◈ Visão geral</button>
-    <button data-section="sellers">♙ Vendedores</button>
-    <button data-section="systems">▦ Central de Sistemas</button>
-    <button data-section="conversations">▤ Atendimentos</button>
-  </nav>
-
-  <div class="bottom">
-    <button class="action" id="logout">Sair da plataforma</button>
-  </div>
+ <div class="logo">NEXA HUB<small>INTELLIGENCE PLATFORM</small></div>
+ <nav>
+  <button class="active" data-section="overview">◈ Visão geral</button>
+  <button data-section="sellers">♙ Vendedores</button>
+  <button data-section="systems">▦ Central de Sistemas</button>
+  <button data-section="conversations">▤ Atendimentos</button>
+ </nav>
+ <div class="bottom">
+  <button class="action" id="logout">Sair da plataforma</button>
+ </div>
 </aside>
 
 <main>
 <header class="top">
-  <div>
-    <h1 id="pageTitle">Visão geral</h1>
-    <div class="sub" id="welcome">Painel de controle administrativo</div>
-  </div>
-  <span class="pill">● ADMINISTRADOR</span>
+ <div>
+  <h1 id="pageTitle">Visão geral</h1>
+  <div class="sub" id="welcome">Painel de controle administrativo</div>
+ </div>
+ <span class="pill">● ADMINISTRADOR</span>
 </header>
 
 <section id="overview">
-  <div class="grid">
-    <div class="stat">
-      <span>Vendedores cadastrados</span>
-      <strong id="sellerCount">—</strong>
-    </div>
-    <div class="stat">
-      <span>Sistemas cadastrados</span>
-      <strong id="systemCount">—</strong>
-    </div>
-    <div class="stat">
-      <span>Conta administrativa</span>
-      <strong style="font-size:17px">ATIVA</strong>
-    </div>
-  </div>
-
-  <div class="panel">
-    <h2>Centro de controle NEXA</h2>
-    <p class="sub">
-      Gerencie vendedores, acessos e sistemas autorizados em um único ambiente.
-    </p>
-    <div id="message">Carregando informações...</div>
-  </div>
+ <div class="grid">
+  <div class="stat"><span>Vendedores cadastrados</span><strong id="sellerCount">—</strong></div>
+  <div class="stat"><span>Sistemas cadastrados</span><strong id="systemCount">—</strong></div>
+  <div class="stat"><span>Conta administrativa</span><strong style="font-size:17px">ATIVA</strong></div>
+ </div>
+ <div class="panel">
+  <h2>Centro de controle NEXA</h2>
+  <p class="sub">Gerencie vendedores, acessos, sistemas e atendimentos em um único ambiente.</p>
+  <div id="message">Carregando informações...</div>
+ </div>
 </section>
 
 <section id="sellers" hidden>
-  <div class="panel">
-    <div class="panel-head">
-      <h2>Equipe de vendedores</h2>
-      <span class="tag">GESTÃO</span>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>E-mail</th>
-            <th>Status</th>
-            <th>Cadastro</th>
-          </tr>
-        </thead>
-        <tbody id="sellerRows"></tbody>
-      </table>
-    </div>
-    <div id="sellerMessage" class="empty"></div>
+ <div class="panel">
+  <div class="panel-head"><h2>Equipe de vendedores</h2><span class="tag">GESTÃO</span></div>
+  <div class="table-wrap">
+   <table>
+    <thead><tr><th>Nome</th><th>E-mail</th><th>Status</th><th>Cadastro</th></tr></thead>
+    <tbody id="sellerRows"></tbody>
+   </table>
   </div>
+  <div id="sellerMessage" class="empty"></div>
+ </div>
 </section>
 
 <section id="systems" hidden>
-  <div class="panel">
-    <div class="panel-head">
-      <h2>Central de Sistemas</h2>
-      <span class="tag">PLATAFORMAS</span>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Sistema</th>
-            <th>Categoria</th>
-            <th>Status</th>
-            <th>Endereço</th>
-          </tr>
-        </thead>
-        <tbody id="systemRows"></tbody>
-      </table>
-    </div>
-    <div id="systemMessage" class="empty"></div>
+ <div class="panel">
+  <div class="panel-head"><h2>Central de Sistemas</h2><span class="tag">PLATAFORMAS</span></div>
+  <div class="table-wrap">
+   <table>
+    <thead><tr><th>Sistema</th><th>Categoria</th><th>Status</th><th>Endereço</th></tr></thead>
+    <tbody id="systemRows"></tbody>
+   </table>
   </div>
+  <div id="systemMessage" class="empty"></div>
+ </div>
 </section>
 
 <section id="conversations" hidden>
+ <div class="panel">
+  <div class="panel-head">
+   <div>
+    <h2>Central de Atendimentos</h2>
+    <p class="sub">Consulte solicitações e histórico de mensagens dos clientes.</p>
+   </div>
+   <button class="action" id="refreshChats">↻ Atualizar</button>
+  </div>
+  <div id="chatMessage">Aguardando carregamento dos atendimentos...</div>
+ </div>
+
+ <div class="chat-layout">
   <div class="panel">
-    <div class="panel-head">
-      <h2>Atendimentos recebidos</h2>
-      <button class="action" id="refreshChats">Atualizar</button>
-    </div>
-
-    <div id="chatMessage" class="empty">
-      Abra esta seção para carregar os atendimentos.
-    </div>
-
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Protocolo</th>
-            <th>Cliente</th>
-            <th>Assunto</th>
-            <th>Status</th>
-            <th>Data</th>
-          </tr>
-        </thead>
-        <tbody id="chatRows"></tbody>
-      </table>
-    </div>
+   <h2>Conversas recebidas</h2>
+   <div id="chatList" class="chat-list">
+    <div class="empty">Carregando...</div>
+   </div>
   </div>
-
-  <div class="panel" id="chatDetails" hidden>
-    <div class="panel-head">
-      <h2 id="chatDetailTitle">Histórico do atendimento</h2>
-      <button class="action" id="closeDetails">Fechar</button>
-    </div>
-    <div id="chatMessages"></div>
+  <div class="panel">
+   <h2 id="detailTitle">Histórico da conversa</h2>
+   <div id="messageHistory">
+    <div class="empty">Selecione um atendimento para visualizar as mensagens.</div>
+   </div>
   </div>
+ </div>
 </section>
-
 </main>
 </div>
 
 <script>
-const URL = "https://qjujystvdehvolwhtkgw.supabase.co";
-const KEY = "sb_publishable_uS0uMa2YNj6VKSKo1FQ_Og_hXQHrFxN";
-const CHAT_FUNCTION = URL + "/functions/v1/admin-chat-list";
+const URL="https://qjujystvdehvolwhtkgw.supabase.co";
+const KEY="sb_publishable_uS0uMa2YNj6VKSKo1FQ_Og_hXQHrFxN";
+const CHAT_FUNCTION=URL+"/functions/v1/admin-chat-list";
+const db=window.supabase.createClient(URL,KEY);
 
-const db = window.supabase.createClient(URL, KEY);
+let currentSession=null;
+let chatSessions=[];
+let chatMessages=[];
 
-let currentSession = null;
-let allSessions = [];
-let allMessages = [];
-
-const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({
-  "&":"&amp;",
-  "<":"&lt;",
-  ">":"&gt;",
-  '"':"&quot;",
-  "'":"&#39;"
+const esc=value=>String(value??"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
 }[c]));
 
-function formatDate(value) {
-  if (!value) return "—";
-  const date = new Date(value);
-  return isNaN(date.getTime())
-    ? "—"
-    : date.toLocaleString("pt-BR");
+function formatDate(value){
+ if(!value)return "—";
+ const date=new Date(value);
+ return isNaN(date)?"—":date.toLocaleString("pt-BR");
 }
 
-function statusLabel(status) {
-  const labels = {
-    waiting:"AGUARDANDO",
-    assigned:"EM ATENDIMENTO",
-    closed:"ENCERRADO"
-  };
-  return labels[status] || status || "—";
-}
+async function start(){
+ const {data:{session},error}=await db.auth.getSession();
+ if(error||!session){
+  location.replace("hub.html");
+  return;
+ }
 
-async function start() {
-  const {data:{session},error} = await db.auth.getSession();
+ const {data:profile,error:profileError}=await db
+  .from("profiles")
+  .select("role,active,full_name")
+  .eq("id",session.user.id)
+  .single();
 
-  if (error || !session) {
-    location.replace("hub.html");
-    return;
-  }
-
-  currentSession = session;
-
-  const {data:profile,error:profileError} = await db
-    .from("profiles")
-    .select("role,active,full_name")
-    .eq("id",session.user.id)
-    .single();
-
-  if (
-    profileError ||
-    !profile?.active ||
-    profile.role !== "admin"
-  ) {
-    await db.auth.signOut();
-    location.replace("hub.html");
-    return;
-  }
-
-  document.getElementById("welcome").textContent =
-    "Bem-vindo(a), " + (profile.full_name || "Administrador");
-
-  await loadData();
-}
-
-async function loadData() {
-  const [sellers,systems] = await Promise.all([
-    db.rpc("admin_list_sellers"),
-    db.rpc("admin_list_systems")
-  ]);
-
-  if (sellers.error) {
-    document.getElementById("sellerMessage").textContent =
-      "Erro ao carregar vendedores: " + sellers.error.message;
-  } else {
-    const rows = sellers.data || [];
-    document.getElementById("sellerCount").textContent = rows.length;
-
-    document.getElementById("sellerRows").innerHTML = rows.map(s => `
-      <tr>
-        <td>${esc(s.full_name || "Sem nome")}</td>
-        <td>${esc(s.email)}</td>
-        <td><span class="tag">${s.active ? "ATIVO" : "INATIVO"}</span></td>
-        <td>${formatDate(s.created_at)}</td>
-      </tr>
-    `).join("");
-
-    document.getElementById("sellerMessage").textContent =
-      rows.length ? "" : "Nenhum vendedor cadastrado ainda.";
-  }
-
-  if (systems.error) {
-    document.getElementById("systemMessage").textContent =
-      "Erro ao carregar sistemas: " + systems.error.message;
-  } else {
-    const rows = systems.data || [];
-    document.getElementById("systemCount").textContent = rows.length;
-
-    document.getElementById("systemRows").innerHTML = rows.map(s => `
-      <tr>
-        <td>${esc(s.name)}</td>
-        <td>${esc(s.category)}</td>
-        <td><span class="tag">${s.active ? "ATIVO" : "INATIVO"}</span></td>
-        <td>${s.url
-          ? `<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" style="color:#e4c783">Abrir</a>`
-          : "—"}
-        </td>
-      </tr>
-    `).join("");
-
-    document.getElementById("systemMessage").textContent =
-      rows.length ? "" : "Nenhum sistema cadastrado ainda.";
-  }
-
-  document.getElementById("message").textContent =
-    "Informações carregadas. Use o menu para navegar pelos módulos.";
-}
-
-async function loadChats() {
-  const button = document.getElementById("refreshChats");
-  const status = document.getElementById("chatMessage");
-  const rowsElement = document.getElementById("chatRows");
-
-  if (!currentSession) {
-    status.textContent = "Sua sessão expirou. Entre novamente.";
-    return;
-  }
-
-  button.disabled = true;
-  status.textContent = "Carregando atendimentos...";
-  rowsElement.innerHTML = "";
-
-  try {
-    const {data:{session}} = await db.auth.getSession();
-
-    if (!session) {
-      throw new Error("Sessão expirada. Faça login novamente.");
-    }
-
-    const result = await fetch(CHAT_FUNCTION, {
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json",
-        "apikey":KEY,
-        "Authorization":"Bearer " + session.access_token
-      },
-      body:JSON.stringify({})
-    });
-
-    const data = await result.json();
-
-    if (!result.ok || !data.success) {
-      throw new Error(data.error || "Não foi possível consultar os atendimentos.");
-    }
-
-    allSessions = data.sessions || [];
-    allMessages = data.messages || [];
-
-    if (!allSessions.length) {
-      status.textContent = "Nenhum atendimento recebido até agora.";
-      return;
-    }
-
-    status.textContent =
-      allSessions.length + " atendimento(s) encontrado(s). Toque em uma linha para ver as mensagens.";
-
-    rowsElement.innerHTML = allSessions.map(s => `
-      <tr class="clickable" data-chat-id="${esc(s.id)}">
-        <td>${esc(s.protocol)}</td>
-        <td>${esc(s.customer_name)}</td>
-        <td>${esc(s.subject)}</td>
-        <td><span class="tag">${esc(statusLabel(s.status))}</span></td>
-        <td>${esc(formatDate(s.created_at))}</td>
-      </tr>
-    `).join("");
-
-  } catch (error) {
-    console.error(error);
-    status.textContent = "Erro: " + error.message;
-  } finally {
-    button.disabled = false;
-  }
-}
-
-function showChat(id) {
-  const session = allSessions.find(s => s.id === id);
-  if (!session) return;
-
-  const details = document.getElementById("chatDetails");
-  const messages = document.getElementById("chatMessages");
-
-  document.getElementById("chatDetailTitle").textContent =
-    "Protocolo " + session.protocol + " — " + session.customer_name;
-
-  const chatMessages = allMessages.filter(m => m.session_id === id);
-
-  if (!chatMessages.length) {
-    messages.innerHTML =
-      '<div class="empty">Nenhuma mensagem registrada.</div>';
-  } else {
-    messages.innerHTML = chatMessages.map(m => `
-      <div class="message-item">
-        <small>${esc(m.sender_type)} · ${esc(formatDate(m.created_at))}</small>
-        <p>${esc(m.message)}</p>
-      </div>
-    `).join("");
-  }
-
-  details.hidden = false;
-  details.scrollIntoView({behavior:"smooth",block:"start"});
-}
-
-document.querySelectorAll("nav button").forEach(button => {
-  button.addEventListener("click", async () => {
-    document.querySelectorAll("nav button").forEach(b =>
-      b.classList.remove("active")
-    );
-
-    button.classList.add("active");
-
-    document.querySelectorAll("main section").forEach(section =>
-      section.hidden = true
-    );
-
-    const sectionName = button.dataset.section;
-    document.getElementById(sectionName).hidden = false;
-
-    const titles = {
-      overview:"Visão geral",
-      sellers:"Vendedores",
-      systems:"Central de Sistemas",
-      conversations:"Atendimentos"
-    };
-
-    document.getElementById("pageTitle").textContent =
-      titles[sectionName];
-
-    if (sectionName === "conversations") {
-      await loadChats();
-    }
-  });
-});
-
-document.getElementById("refreshChats")
-  .addEventListener("click", loadChats);
-
-document.getElementById("chatRows")
-  .addEventListener("click", event => {
-    const row = event.target.closest("tr[data-chat-id]");
-    if (row) showChat(row.dataset.chatId);
-  });
-
-document.getElementById("closeDetails")
-  .addEventListener("click", () => {
-    document.getElementById("chatDetails").hidden = true;
-  });
-
-document.getElementById("logout").addEventListener("click", async () => {
+ if(profileError||!profile?.active||profile.role!=="admin"){
   await db.auth.signOut();
   location.replace("hub.html");
+  return;
+ }
+
+ document.getElementById("welcome").textContent=
+  "Bem-vindo(a), "+(profile.full_name||"Administrador");
+
+ await loadData();
+}
+
+async function loadData(){
+ const [sellers,systems]=await Promise.all([
+  db.rpc("admin_list_sellers"),
+  db.rpc("admin_list_systems")
+ ]);
+
+ if(sellers.error){
+  document.getElementById("sellerMessage").textContent=
+   "Erro ao carregar vendedores: "+sellers.error.message;
+ }else{
+  const rows=sellers.data||[];
+  document.getElementById("sellerCount").textContent=rows.length;
+  document.getElementById("sellerRows").innerHTML=rows.map(s=>`
+   <tr>
+    <td>${esc(s.full_name||"Sem nome")}</td>
+    <td>${esc(s.email)}</td>
+    <td><span class="tag">${s.active?"ATIVO":"INATIVO"}</span></td>
+    <td>${formatDate(s.created_at)}</td>
+   </tr>`).join("");
+  document.getElementById("sellerMessage").textContent=
+   rows.length?"":"Nenhum vendedor cadastrado ainda.";
+ }
+
+ if(systems.error){
+  document.getElementById("systemMessage").textContent=
+   "Erro ao carregar sistemas: "+systems.error.message;
+ }else{
+  const rows=systems.data||[];
+  document.getElementById("systemCount").textContent=rows.length;
+  document.getElementById("systemRows").innerHTML=rows.map(s=>`
+   <tr>
+    <td>${esc(s.name)}</td>
+    <td>${esc(s.category)}</td>
+    <td><span class="tag">${s.active?"ATIVO":"INATIVO"}</span></td>
+    <td>${s.url?`<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer" style="color:#e4c783">Abrir</a>`:"—"}</td>
+   </tr>`).join("");
+  document.getElementById("systemMessage").textContent=
+   rows.length?"":"Nenhum sistema cadastrado ainda.";
+ }
+
+ document.getElementById("message").textContent=
+  "Informações carregadas. Use o menu para navegar pelos módulos.";
+}
+
+async function loadChats(){
+ const status=document.getElementById("chatMessage");
+ const list=document.getElementById("chatList");
+ const history=document.getElementById("messageHistory");
+
+ status.textContent="Buscando atendimentos...";
+ list.innerHTML='<div class="empty">Carregando conversas...</div>';
+
+ const {data:{session},error:sessionError}=await db.auth.getSession();
+
+ if(sessionError||!session){
+  status.textContent="Sua sessão expirou. Entre novamente.";
+  return;
+ }
+
+ try{
+  const response=await fetch(CHAT_FUNCTION,{
+   method:"POST",
+   headers:{
+    "Content-Type":"application/json",
+    "apikey":KEY,
+    "Authorization":"Bearer "+session.access_token
+   },
+   body:JSON.stringify({})
+  });
+
+  const result=await response.json();
+
+  if(!response.ok||!result.success){
+   throw new Error(result.error||result.message||"Erro HTTP "+response.status);
+  }
+
+  chatSessions=result.sessions||[];
+  chatMessages=result.messages||[];
+
+  renderChats();
+
+  status.textContent=chatSessions.length
+   ?chatSessions.length+" atendimento(s) encontrado(s)."
+   :"Nenhum atendimento recebido ainda.";
+
+  if(currentSession){
+   const stillExists=chatSessions.find(s=>s.id===currentSession);
+   if(stillExists)showMessages(stillExists);
+   else{
+    currentSession=null;
+    history.innerHTML='<div class="empty">Selecione um atendimento.</div>';
+   }
+  }
+ }catch(error){
+  status.textContent="Não foi possível carregar: "+error.message;
+  list.innerHTML='<div class="empty">Verifique a conexão e tente atualizar.</div>';
+ }
+}
+
+function renderChats(){
+ const list=document.getElementById("chatList");
+
+ if(!chatSessions.length){
+  list.innerHTML='<div class="empty">Nenhum atendimento encontrado.</div>';
+  return;
+ }
+
+ list.innerHTML=chatSessions.map(s=>`
+  <div class="chat-row ${currentSession===s.id?"selected":""}"
+   data-id="${esc(s.id)}">
+   <strong>${esc(s.customer_name||"Cliente")}</strong>
+   <div>${esc(s.subject||"Atendimento")}</div>
+   <small>Protocolo: ${esc(s.protocol||"—")}</small><br>
+   <small>Status: ${esc(s.status||"—")} · ${formatDate(s.last_message_at||s.created_at)}</small>
+  </div>
+ `).join("");
+
+ list.querySelectorAll(".chat-row").forEach(row=>{
+  row.addEventListener("click",()=>{
+   const selected=chatSessions.find(s=>s.id===row.dataset.id);
+   if(selected)showMessages(selected);
+  });
+ });
+}
+
+function showMessages(session){
+ currentSession=session.id;
+ renderChats();
+
+ document.getElementById("detailTitle").textContent=
+  "Protocolo "+(session.protocol||"—");
+
+ const history=document.getElementById("messageHistory");
+
+ const messages=chatMessages
+  .filter(m=>m.session_id===session.id)
+  .sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
+
+ if(!messages.length){
+  history.innerHTML='<div class="empty">Ainda não há mensagens neste atendimento.</div>';
+  return;
+ }
+
+ history.innerHTML=messages.map(m=>{
+  const type=m.sender_type||"customer";
+  const label={
+   customer:"CLIENTE",
+   assistant:"NEXA ASSISTENTE",
+   seller:"VENDEDOR"
+  }[type]||"MENSAGEM";
+
+  return `
+   <div class="message-item ${esc(type)}">
+    <small>${label} · ${formatDate(m.created_at)}</small>
+    ${esc(m.message)}
+   </div>`;
+ }).join("");
+}
+
+document.querySelectorAll("nav button").forEach(button=>{
+ button.addEventListener("click",()=>{
+  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+
+  document.querySelectorAll("main section").forEach(s=>s.hidden=true);
+
+  const section=button.dataset.section;
+  document.getElementById(section).hidden=false;
+
+  const titles={
+   overview:"Visão geral",
+   sellers:"Vendedores",
+   systems:"Central de Sistemas",
+   conversations:"Atendimentos"
+  };
+
+  document.getElementById("pageTitle").textContent=titles[section];
+
+  if(section==="conversations")loadChats();
+ });
+});
+
+document.getElementById("refreshChats").addEventListener("click",loadChats);
+
+document.getElementById("logout").addEventListener("click",async()=>{
+ await db.auth.signOut();
+ location.replace("hub.html");
 });
 
 start();
