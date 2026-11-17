@@ -4,648 +4,607 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090a0c">
-<meta name="description" content="NEXA Crédito. Conheça possibilidades de crédito e soluções financeiras com transparência.">
-<title>NEXA CRÉDITO | Novas possibilidades</title>
+<meta name="theme-color" content="#080b13">
+<meta name="description" content="NEXA CRÉDITO | Informação, orientação e conexão com possibilidades financeiras.">
+<title>NEXA CRÉDITO | Tecnologia Financeira</title>
 
 <style>
-:root {
-  --bg:#090a0c;
-  --surface:#141518;
-  --surface2:#1b1c20;
-  --gold:#c8a45d;
-  --gold2:#ead19a;
-  --white:#f8f7f4;
-  --muted:#a5a5a5;
-  --line:rgba(210,175,105,.22);
+:root{
+ --bg:#080b13;
+ --bg2:#0c1220;
+ --panel:#111a2b;
+ --gold:#d9b45b;
+ --gold2:#f5dfa0;
+ --blue:#19375a;
+ --white:#f7f8fb;
+ --muted:#a4afc0;
+ --line:rgba(217,180,91,.22);
 }
-
-* {margin:0;padding:0;box-sizing:border-box}
-
-html {scroll-behavior:smooth}
-
-body {
-  background:var(--bg);
-  color:var(--white);
-  font-family:Arial,Helvetica,sans-serif;
-  line-height:1.6;
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:85px}
+body{
+ background:var(--bg);
+ color:var(--white);
+ font-family:Inter,Arial,sans-serif;
+ line-height:1.6;
+ overflow-x:hidden;
 }
-
-a {text-decoration:none;color:inherit}
-button {font:inherit}
-
-.container {
-  width:min(1120px,90%);
-  margin:auto;
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+.container{width:min(1160px,calc(100% - 40px));margin:auto}
+header{
+ position:sticky;top:0;z-index:50;
+ background:rgba(8,11,19,.88);
+ backdrop-filter:blur(18px);
+ border-bottom:1px solid rgba(255,255,255,.07);
 }
-
-header {
-  position:sticky;
-  top:0;
-  z-index:10;
-  background:rgba(9,10,12,.94);
-  backdrop-filter:blur(15px);
-  border-bottom:1px solid var(--line);
+.nav{
+ min-height:76px;display:flex;align-items:center;
+ justify-content:space-between;gap:20px;
 }
-
-.nav {
-  min-height:78px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
+.brand{display:flex;align-items:center;gap:11px}
+.brand-mark{
+ width:43px;height:43px;border:1px solid var(--gold);
+ display:grid;place-items:center;border-radius:12px;
+ color:var(--gold);font-weight:900;font-size:20px;
+ box-shadow:0 0 22px rgba(217,180,91,.13);
 }
-
-.logo {
-  color:var(--gold2);
-  font-size:29px;
-  font-weight:900;
-  letter-spacing:4px;
-  line-height:1;
+.brand-name{font-size:21px;font-weight:900;letter-spacing:3px}
+.brand-name span{color:var(--gold)}
+.nav-links{display:flex;gap:25px;align-items:center}
+.nav-links a{font-size:13px;color:#c3cbd8;transition:.2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta,.btn{
+ display:inline-flex;align-items:center;justify-content:center;
+ gap:9px;padding:12px 19px;border-radius:8px;
+ background:linear-gradient(120deg,var(--gold),var(--gold2));
+ color:#10131a;font-weight:800;font-size:13px;
+ border:0;cursor:pointer;transition:.25s;
 }
-
-.logo small {
-  display:block;
-  color:white;
-  font-size:9px;
-  letter-spacing:6px;
-  text-align:center;
-  margin-top:7px;
+.nav-cta:hover,.btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px #d9b45b35}
+.btn-outline{
+ background:transparent;border:1px solid var(--gold);
+ color:var(--gold2);
 }
-
-.nav-links {
-  display:flex;
-  align-items:center;
-  gap:26px;
+.menu-toggle{display:none;background:none;color:var(--gold);border:0;font-size:26px;cursor:pointer}
+.hero{
+ position:relative;min-height:590px;display:grid;
+ grid-template-columns:1.15fr .85fr;align-items:center;gap:40px;
+ padding-top:75px;padding-bottom:75px;
 }
-
-.nav-links a {
-  color:#d0d0d0;
-  font-size:13px;
-  transition:.2s;
+.hero:before{
+ content:"";position:absolute;right:-140px;top:25px;
+ width:550px;height:550px;border-radius:50%;
+ border:1px solid rgba(217,180,91,.12);
+ box-shadow:0 0 100px rgba(25,55,90,.28),inset 0 0 80px rgba(217,180,91,.04);
+ pointer-events:none;
 }
-
-.nav-links a:hover {color:var(--gold2)}
-
-.menu-button {
-  display:none;
-  color:var(--gold2);
-  background:none;
-  border:1px solid var(--line);
-  border-radius:8px;
-  padding:8px 12px;
-  cursor:pointer;
+.hero-copy,.hero-visual{position:relative;z-index:1}
+.eyebrow{
+ display:inline-flex;align-items:center;gap:10px;
+ color:var(--gold);font-size:11px;font-weight:800;
+ letter-spacing:3px;text-transform:uppercase;
 }
-
-.hero {
-  position:relative;
-  overflow:hidden;
-  padding:105px 0 90px;
-  background:
-    radial-gradient(ellipse at 85% 35%,rgba(179,137,65,.18),transparent 35%),
-    radial-gradient(ellipse at 10% 80%,rgba(179,137,65,.08),transparent 35%);
+.eyebrow:before{content:"";width:24px;height:1px;background:var(--gold)}
+.hero h1{
+ font-size:clamp(42px,6vw,72px);line-height:1.04;
+ letter-spacing:-2px;margin:24px 0;
 }
-
-.hero-content {
-  position:relative;
-  z-index:1;
-  max-width:760px;
+.hero h1 span{
+ background:linear-gradient(100deg,var(--gold),#fff0b9,var(--gold));
+ -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-
-.eyebrow {
-  color:var(--gold2);
-  text-transform:uppercase;
-  font-size:11px;
-  letter-spacing:3px;
-  font-weight:bold;
-  margin-bottom:22px;
+.hero-copy>p{max-width:570px;color:var(--muted);font-size:16px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:13px;margin-top:30px}
+.hero-note{font-size:11px;color:#8793a6;margin-top:23px}
+.hero-visual{
+ min-height:380px;display:grid;place-items:center;
 }
-
-.hero h1 {
-  font-size:clamp(38px,7vw,68px);
-  line-height:1.08;
-  letter-spacing:-2px;
-  margin-bottom:24px;
+.orbit{
+ width:min(390px,90vw);aspect-ratio:1;border-radius:50%;
+ border:1px solid rgba(217,180,91,.25);
+ display:grid;place-items:center;position:relative;
+ background:radial-gradient(circle,#17253b 0,#0d1422 48%,transparent 70%);
+ box-shadow:0 0 80px rgba(25,55,90,.25);
+ animation:float 6s ease-in-out infinite;
 }
-
-.hero h1 span {
-  color:var(--gold2);
+.orbit:before,.orbit:after{
+ content:"";position:absolute;border:1px solid rgba(217,180,91,.16);
+ border-radius:50%;inset:25px;
 }
-
-.hero p {
-  color:var(--muted);
-  max-width:580px;
-  font-size:17px;
-  margin-bottom:32px;
+.orbit:after{inset:55px;border-style:dashed;animation:spin 35s linear infinite}
+.orbit-core{text-align:center;z-index:1}
+.orbit-core strong{font-size:92px;letter-spacing:8px;color:var(--gold);text-shadow:0 0 35px #d9b45b55}
+.orbit-core small{display:block;letter-spacing:5px;font-size:11px;color:#d7deea}
+.orbit-tag{
+ position:absolute;padding:9px 13px;border:1px solid var(--line);
+ border-radius:8px;background:#111a2be8;color:var(--gold2);
+ font-size:11px;letter-spacing:1px;
 }
+.tag-one{top:14%;right:-2%}
+.tag-two{bottom:15%;left:-4%}
+.tag-three{bottom:5%;right:12%}
+@keyframes float{50%{transform:translateY(-12px)}}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-.btn {
-  display:inline-flex;
-  justify-content:center;
-  align-items:center;
-  gap:9px;
-  padding:14px 23px;
-  border-radius:8px;
-  background:linear-gradient(135deg,#e0c27f,#b48b45);
-  color:#15120c;
-  font-weight:bold;
-  font-size:13px;
-  transition:.25s;
+.trust-strip{
+ border-top:1px solid rgba(255,255,255,.07);
+ border-bottom:1px solid rgba(255,255,255,.07);
+ background:#0b111d;
 }
-
-.btn:hover {
-  transform:translateY(-3px);
-  box-shadow:0 10px 30px rgba(200,164,93,.2);
+.trust-inner{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:20px;padding:22px 0;text-align:center;
 }
+.trust-inner strong{color:var(--gold2);font-size:13px}
+.trust-inner span{display:block;color:var(--muted);font-size:11px;margin-top:3px}
 
-.btn-outline {
-  background:transparent;
-  border:1px solid var(--gold);
-  color:var(--gold2);
-  margin-left:10px;
+.section{padding:85px 0}
+.section-head{text-align:center;max-width:700px;margin:0 auto 40px}
+.section-head .eyebrow{justify-content:center}
+.section-head h2{font-size:clamp(29px,4vw,42px);line-height:1.15;margin:15px 0}
+.section-head p{color:var(--muted);font-size:14px}
+.products{
+ display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
 }
-
-.section {
-  padding:65px 0;
+.product{
+ position:relative;overflow:hidden;min-height:265px;
+ padding:26px;border:1px solid rgba(255,255,255,.09);
+ border-radius:15px;
+ background:linear-gradient(145deg,#152238,#0e1420 72%);
+ transition:.3s;
 }
-
-.section-heading {
-  margin-bottom:28px;
+.product:after{
+ content:"";position:absolute;width:180px;height:180px;
+ right:-100px;top:-100px;border-radius:50%;
+ background:#d9b45b18;filter:blur(5px);
 }
-
-.section-heading span {
-  color:var(--gold);
-  font-size:11px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  font-weight:bold;
+.product:hover{transform:translateY(-6px);border-color:var(--gold)}
+.product-icon{
+ width:48px;height:48px;border:1px solid var(--line);
+ border-radius:12px;display:grid;place-items:center;
+ color:var(--gold);font-size:23px;margin-bottom:20px;
+ background:#d9b45b0b;
 }
-
-.section-heading h2 {
-  font-size:32px;
-  margin-top:7px;
+.product h3{font-size:19px;margin-bottom:9px}
+.product p{font-size:13px;color:var(--muted);min-height:62px}
+.product .btn{margin-top:18px;position:relative;z-index:2}
+.product .coming{
+ display:inline-block;margin-top:20px;padding:8px 12px;
+ border:1px solid var(--gold);border-radius:6px;
+ color:var(--gold2);font-size:11px;letter-spacing:1px;font-weight:bold;
 }
-
-.section-heading p {
-  color:var(--muted);
-  margin-top:8px;
-  font-size:14px;
+.notice{
+ margin-top:25px;padding:18px 20px;border-radius:10px;
+ background:#19180f;border:1px solid #6c592e;
+ color:#e7d7ae;font-size:13px;
 }
+.notice strong{color:var(--gold2)}
 
-/* Lançamento */
-
-.launch {
-  position:relative;
-  overflow:hidden;
-  padding:40px;
-  border:1px solid rgba(213,177,106,.45);
-  border-radius:18px;
-  background:
-    radial-gradient(circle at 90% 20%,rgba(200,164,93,.17),transparent 38%),
-    linear-gradient(125deg,#211e18,#111214 70%);
-  box-shadow:0 20px 60px rgba(0,0,0,.25);
+.help-section{
+ background:linear-gradient(180deg,#0b111d,#0d1421);
+ border-top:1px solid rgba(255,255,255,.06);
+ border-bottom:1px solid rgba(255,255,255,.06);
 }
-
-.launch-tag {
-  display:inline-block;
-  color:#17130d;
-  background:var(--gold2);
-  padding:6px 13px;
-  border-radius:30px;
-  font-size:10px;
-  font-weight:900;
-  letter-spacing:1px;
-  margin-bottom:20px;
+.help-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:45px;align-items:start}
+.help-intro h2{font-size:38px;line-height:1.12;margin:15px 0}
+.help-intro p{color:var(--muted);font-size:14px}
+.help-intro .btn{margin-top:23px}
+.faq-list{display:grid;gap:10px}
+.faq-item{
+ border:1px solid rgba(255,255,255,.1);border-radius:10px;
+ background:#121d2d;overflow:hidden;
 }
-
-.launch h2 {
-  color:var(--gold2);
-  font-size:clamp(28px,5vw,43px);
-  margin-bottom:12px;
+.faq-question{
+ width:100%;padding:16px 18px;background:none;border:0;
+ color:#f5f5f5;display:flex;justify-content:space-between;
+ text-align:left;gap:15px;cursor:pointer;font-weight:700;font-size:13px;
 }
+.faq-question span:last-child{color:var(--gold);font-size:18px}
+.faq-answer{display:none;padding:0 18px 17px;color:var(--muted);font-size:13px}
+.faq-item.active .faq-answer{display:block}
+.faq-item.active .faq-question{color:var(--gold2)}
 
-.launch p {
-  max-width:650px;
-  color:#c2c2c2;
-  font-size:15px;
+.contact-panel{
+ padding:38px;border-radius:18px;text-align:center;
+ border:1px solid var(--line);
+ background:radial-gradient(circle at top,#1b2c45,#111827 65%);
 }
-
-.launch-note {
-  border-top:1px solid var(--line);
-  padding-top:17px;
-  margin-top:23px;
-  color:var(--gold2);
-  font-size:12px;
-  font-weight:bold;
+.contact-panel h2{font-size:30px;margin:12px 0}
+.contact-panel p{color:var(--muted);font-size:14px;max-width:600px;margin:0 auto}
+.contact-panel .btn{margin-top:23px}
+footer{
+ border-top:1px solid rgba(255,255,255,.08);
+ padding:35px 0;color:#8d99aa;text-align:center;font-size:11px;
 }
+footer .brand{justify-content:center;margin-bottom:15px}
+footer p{max-width:850px;margin:9px auto}
+footer a{color:var(--gold2)}
 
-/* Produtos */
-
-.products-grid {
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:18px;
+.chat-launch{
+ position:fixed;right:22px;bottom:22px;z-index:80;
+ padding:14px 19px;border:0;border-radius:40px;
+ color:#10131a;font-weight:900;cursor:pointer;
+ background:linear-gradient(120deg,var(--gold),var(--gold2));
+ box-shadow:0 8px 30px #0009,0 0 25px #d9b45b30;
 }
-
-.product {
-  position:relative;
-  background:linear-gradient(145deg,#191a1e,#111215);
-  border:1px solid #292a2e;
-  border-radius:14px;
-  padding:27px;
-  transition:.3s;
+.chat{
+ display:none;position:fixed;right:18px;bottom:83px;z-index:81;
+ width:min(375px,calc(100vw - 28px));height:min(570px,78vh);
+ background:#0d1523;border:1px solid #806a3d;border-radius:17px;
+ overflow:hidden;box-shadow:0 20px 70px #000b;
 }
-
-.product:hover {
-  border-color:var(--gold);
-  transform:translateY(-5px);
-  box-shadow:0 15px 35px rgba(0,0,0,.2);
+.chat.open{display:flex;flex-direction:column}
+.chat-header{
+ padding:15px;background:linear-gradient(110deg,#1b2a40,#111827);
+ display:flex;align-items:center;justify-content:space-between;
+ border-bottom:1px solid #344056;
 }
-
-.product-icon {
-  width:45px;
-  height:45px;
-  display:grid;
-  place-items:center;
-  color:var(--gold2);
-  background:rgba(200,164,93,.10);
-  border:1px solid var(--line);
-  border-radius:12px;
-  font-size:20px;
-  margin-bottom:19px;
+.chat-brand{display:flex;align-items:center;gap:10px}
+.chat-avatar{
+ width:36px;height:36px;border-radius:10px;
+ display:grid;place-items:center;color:var(--gold);
+ border:1px solid var(--gold);font-weight:900;
 }
-
-.product h3 {
-  font-size:19px;
-  margin-bottom:8px;
+.chat-header strong{font-size:13px;color:var(--gold2)}
+.chat-header small{display:block;color:#9caabd;font-size:10px}
+.chat-close{background:none;border:0;color:white;font-size:25px;cursor:pointer}
+.chat-body{padding:14px;overflow-y:auto;flex:1}
+.chat-message{
+ padding:12px;border-radius:11px;background:#1a273a;
+ color:#e6ebf2;font-size:12px;margin-bottom:12px;
+ white-space:pre-line;
 }
-
-.product p {
-  color:var(--muted);
-  font-size:13px;
-  min-height:62px;
-  margin-bottom:18px;
+.chat-message.bot{border-left:3px solid var(--gold);margin-right:16px}
+.chat-message.user{background:#40351f;margin-left:35px}
+.chat-options{display:grid;gap:8px;margin-top:10px}
+.chat-options button{
+ padding:10px 12px;border-radius:8px;text-align:left;
+ border:1px solid #39465a;background:#121e30;
+ color:#e9d7a8;font-size:12px;cursor:pointer;transition:.2s;
 }
-
-.product a {
-  color:var(--gold2);
-  font-size:12px;
-  font-weight:bold;
-  letter-spacing:.5px;
+.chat-options button:hover{border-color:var(--gold);background:#202d41}
+.chat-footer{
+ padding:10px;text-align:center;color:#8290a4;
+ font-size:10px;border-top:1px solid #29364a;
 }
-
-.product a:hover {color:white}
-
-.about {
-  background:linear-gradient(90deg,#111214,#191713,#111214);
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-  text-align:center;
+.chat-wa{
+ display:block;text-align:center;margin:5px 0 12px;
+ padding:11px;border-radius:8px;background:#d9b45b;
+ color:#111;font-weight:bold;font-size:12px;
 }
-
-.about-content {
-  max-width:720px;
-  margin:auto;
+@media(max-width:850px){
+ .nav-links{
+  display:none;position:absolute;top:76px;left:0;right:0;
+  padding:20px;background:#0c1220;border-bottom:1px solid var(--line);
+  flex-direction:column;align-items:stretch;gap:17px;
+ }
+ .nav-links.show{display:flex}
+ .menu-toggle{display:block}
+ .nav-cta{display:none}
+ .hero{grid-template-columns:1fr;padding-top:65px;text-align:center}
+ .hero-copy>p{margin:auto}
+ .hero-actions{justify-content:center}
+ .hero-visual{min-height:330px}
+ .orbit{width:310px}
+ .orbit-core strong{font-size:70px}
+ .products{grid-template-columns:repeat(2,1fr)}
+ .help-grid{grid-template-columns:1fr;gap:28px}
+ .help-intro{text-align:center}
+ .help-intro .eyebrow{justify-content:center}
 }
-
-.about h2 {
-  color:var(--gold2);
-  font-size:30px;
-  margin-bottom:14px;
+@media(max-width:560px){
+ .container{width:calc(100% - 30px)}
+ .section{padding:65px 0}
+ .products{grid-template-columns:1fr}
+ .product{min-height:auto}
+ .product p{min-height:0}
+ .trust-inner{grid-template-columns:1fr;gap:13px}
+ .hero h1{font-size:45px}
+ .hero-visual{min-height:290px}
+ .orbit{width:275px}
+ .orbit-core strong{font-size:60px}
+ .tag-one{right:-2%}
+ .tag-two{left:-3%}
+ .contact-panel{padding:27px 18px}
+ .chat-launch{right:13px;bottom:14px}
+ .chat{right:10px;bottom:75px}
 }
-
-.about p {
-  color:var(--muted);
-  font-size:15px;
-}
-
-.contact {
-  text-align:center;
-  padding:48px 25px;
-  border:1px solid var(--line);
-  border-radius:17px;
-  background:linear-gradient(135deg,#1c1a15,#131416);
-}
-
-.contact h2 {
-  font-size:30px;
-  color:var(--gold2);
-  margin-bottom:10px;
-}
-
-.contact p {
-  color:var(--muted);
-  margin-bottom:24px;
-}
-
-footer {
-  border-top:1px solid var(--line);
-  padding:35px 0;
-  text-align:center;
-}
-
-.footer-logo {
-  font-size:22px;
-  color:var(--gold2);
-  font-weight:900;
-  letter-spacing:4px;
-  margin-bottom:14px;
-}
-
-footer p {
-  color:#858585;
-  font-size:11px;
-  margin:6px 0;
-}
-
-.reveal {
-  animation:appear .8s ease both;
-}
-
-@keyframes appear {
-  from {opacity:0;transform:translateY(15px)}
-  to {opacity:1;transform:translateY(0)}
-}
-
-@media(max-width:700px) {
-  .menu-button {display:block}
-
-  .nav-links {
-    display:none;
-    position:absolute;
-    top:78px;
-    left:0;
-    right:0;
-    padding:22px 5%;
-    background:#101114;
-    border-bottom:1px solid var(--line);
-    flex-direction:column;
-    align-items:flex-start;
-    gap:18px;
-  }
-
-  .nav-links.open {display:flex}
-
-  .hero {padding:75px 0 65px}
-
-  .hero h1 {letter-spacing:-1px}
-
-  .hero p {font-size:15px}
-
-  .btn-outline {
-    margin:12px 0 0;
-  }
-
-  .launch {padding:27px 23px}
-
-  .products-grid {grid-template-columns:1fr}
-
-  .product p {min-height:0}
-
-  .section {padding:48px 0}
-}
-
-@media(prefers-reduced-motion:reduce) {
-  *,*::before,*::after {
-    scroll-behavior:auto!important;
-    animation:none!important;
-    transition:none!important;
-  }
+@media(prefers-reduced-motion:reduce){
+ *,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
 }
 </style>
 </head>
 
 <body>
-
 <header>
-  <div class="container nav">
-
-    <a class="logo" href="#">
-      NEXA
-      <small>CRÉDITO</small>
-    </a>
-
-    <button class="menu-button" id="menuButton"
-      aria-label="Abrir menu" aria-expanded="false"
-      aria-controls="navLinks">
-      ☰
-    </button>
-
-    <nav class="nav-links" id="navLinks">
-      <a href="#inicio">Início</a>
-      <a href="#lancamento">Lançamento</a>
-      <a href="#produtos">Soluções</a>
-      <a href="#contato">Contato</a>
-    </nav>
-
-  </div>
+ <div class="container nav">
+  <a class="brand" href="#inicio" aria-label="NEXA Crédito início">
+   <span class="brand-mark">NX</span>
+   <span class="brand-name">NEXA<span>.</span></span>
+  </a>
+  <nav class="nav-links" id="navLinks">
+   <a href="#inicio">Início</a>
+   <a href="#solucoes">Operações</a>
+   <a href="#ajuda">Central de Ajuda</a>
+   <a href="#contato">Contato</a>
+  </nav>
+  <a class="nav-cta" href="https://wa.me/5516988079346" target="_blank" rel="noopener">Falar com a equipe ↗</a>
+  <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">☰</button>
+ </div>
 </header>
 
 <main>
-
-<section class="hero" id="inicio">
-  <div class="container hero-content reveal">
-
-    <div class="eyebrow">NEXA CRÉDITO · NOVAS POSSIBILIDADES</div>
-
-    <h1>
-      Soluções inteligentes<br>
-      para seus <span>próximos passos.</span>
-    </h1>
-
-    <p>
-      Mais possibilidades, mais clareza e atendimento próximo.
-      Conheça soluções e informações financeiras em um só lugar.
-    </p>
-
-    <a class="btn" href="#produtos">
-      CONHECER SOLUÇÕES →
-    </a>
-
-    <a class="btn btn-outline"
-       href="https://wa.me/5516988079346?text=Olá!%20Vim%20pelo%20site%20da%20NEXA.">
-      FALAR COM A NEXA
-    </a>
-
+ <section class="container hero" id="inicio">
+  <div class="hero-copy">
+   <div class="eyebrow">O futuro das conexões financeiras</div>
+   <h1>Conectando você a novas <span>possibilidades.</span></h1>
+   <p>Informação, orientação e acesso a canais de consulta de modalidades financeiras. Uma experiência simples, transparente e conectada.</p>
+   <div class="hero-actions">
+    <a class="btn" href="#solucoes">Explorar operações <span>→</span></a>
+    <a class="btn btn-outline" href="https://wa.me/5516988079346" target="_blank" rel="noopener">Atendimento WhatsApp</a>
+   </div>
+   <p class="hero-note">NEXA CRÉDITO · INFORMAÇÃO E CONEXÃO</p>
   </div>
-</section>
 
-<section class="container section" id="lancamento">
-  <div class="launch reveal">
-
-    <span class="launch-tag">LANÇAMENTO EM BREVE</span>
-
-    <h2>NEXA CRED PIX CARD</h2>
-
-    <p>
-      Uma nova solução está em preparação.
-      Em breve, você poderá conhecer as informações,
-      condições e possibilidades deste produto.
-    </p>
-
-    <div class="launch-note">
-      PRODUTO EM FASE DE PREPARAÇÃO.
-      AINDA NÃO DISPONÍVEL PARA CONTRATAÇÃO.
+  <div class="hero-visual" aria-label="Identidade visual NEXA">
+   <div class="orbit">
+    <div class="orbit-core">
+     <strong>NX</strong>
+     <small>BEYOND FINANCE</small>
     </div>
-
+    <span class="orbit-tag tag-one">INOVAÇÃO</span>
+    <span class="orbit-tag tag-two">CONEXÕES</span>
+    <span class="orbit-tag tag-three">NEXA TECH</span>
+   </div>
   </div>
-</section>
+ </section>
 
-<section class="container section" id="produtos">
-
-  <div class="section-heading">
-    <span>O QUE OFERECEMOS</span>
-    <h2>Nossas soluções</h2>
-    <p>Conheça as possibilidades e consulte as condições disponíveis.</p>
+ <div class="trust-strip">
+  <div class="container trust-inner">
+   <div><strong>INFORMAÇÃO CLARA</strong><span>Conheça as modalidades</span></div>
+   <div><strong>ATENDIMENTO DIGITAL</strong><span>Contato direto com a equipe</span></div>
+   <div><strong>TRANSPARÊNCIA</strong><span>Consulte condições e critérios</span></div>
   </div>
+ </div>
 
-  <div class="products-grid">
+ <section class="section" id="solucoes">
+  <div class="container">
+   <div class="section-head">
+    <div class="eyebrow">Soluções e possibilidades</div>
+    <h2>Explore nossas operações</h2>
+    <p>Consulte as modalidades e acesse os canais responsáveis por cada operação.</p>
+   </div>
 
+   <div class="products">
     <article class="product">
-      <div class="product-icon">◈</div>
-      <h3>Antecipação FGTS</h3>
-      <p>
-        Consulte possibilidades de antecipação do saldo FGTS
-        e conheça as condições oferecidas.
-      </p>
-      <a href="https://central-cred.startcapital.app/credit/nexacredito"
-         target="_blank" rel="noopener noreferrer">
-        CONHECER SOLUÇÃO →
-      </a>
+     <div class="product-icon">◈</div>
+     <h3>Antecipação FGTS</h3>
+     <p>Consulte a possibilidade de antecipação do saque-aniversário do FGTS, conforme os critérios da instituição responsável.</p>
+     <a class="btn" href="https://central-cred.startcapital.app/credit/nexacredito" target="_blank" rel="noopener">Acessar consulta ↗</a>
     </article>
 
     <article class="product">
-      <div class="product-icon">▣</div>
-      <h3>Crédito CLT</h3>
-      <p>
-        Conheça possibilidades de crédito para trabalhadores
-        com carteira assinada.
-      </p>
-      <a href="https://v8-auto-clt-front.vercel.app/3e509b26-3c31-4cd9-b697-cc579ad5c450/contratacao"
-         target="_blank" rel="noopener noreferrer">
-        CONHECER SOLUÇÃO →
-      </a>
+     <div class="product-icon">▣</div>
+     <h3>Crédito CLT</h3>
+     <p>Conheça a modalidade de crédito para trabalhadores elegíveis e consulte as condições disponíveis.</p>
+     <a class="btn" href="https://v8-auto-clt-front.vercel.app/3e509b26-3c31-4cd9-b697-cc579ad5c450/contratacao" target="_blank" rel="noopener">Consultar modalidade ↗</a>
     </article>
 
     <article class="product">
-      <div class="product-icon">◇</div>
-      <h3>Benefícios</h3>
-      <p>
-        Informações sobre soluções financeiras e possibilidades
-        disponíveis para beneficiários.
-      </p>
-      <a href="https://wa.me/5516988079346?text=Olá!%20Quero%20informações%20sobre%20benefícios."
-         target="_blank" rel="noopener noreferrer">
-        CONSULTAR INFORMAÇÕES →
-      </a>
+     <div class="product-icon">⌂</div>
+     <h3>Crédito na conta de energia</h3>
+     <p>Conheça a modalidade disponibilizada pelo fornecedor e verifique seus critérios e condições.</p>
+     <a class="btn" href="https://site.crefaz.com.br/produto/energia" target="_blank" rel="noopener">Conhecer produto ↗</a>
     </article>
 
     <article class="product">
-      <div class="product-icon">▤</div>
-      <h3>Consignado e cartões</h3>
-      <p>
-        Consulte informações sobre modalidades, condições
-        e possibilidades de crédito.
-      </p>
-      <a href="https://wa.me/5516988079346?text=Olá!%20Quero%20informações%20sobre%20consignado%20e%20cartões."
-         target="_blank" rel="noopener noreferrer">
-        CONSULTAR INFORMAÇÕES →
-      </a>
+     <div class="product-icon">◎</div>
+     <h3>Benefícios e consignado</h3>
+     <p>Receba informações sobre possibilidades relacionadas a benefícios e modalidades consignadas.</p>
+     <a class="btn" href="https://wa.me/5516988079346?text=Olá!%20Gostaria%20de%20informações%20sobre%20benefícios%20e%20consignado." target="_blank" rel="noopener">Solicitar informações ↗</a>
     </article>
 
     <article class="product">
-      <div class="product-icon">ϟ</div>
-      <h3>Crédito na conta de energia</h3>
-      <p>
-        Conheça informações sobre a solução e as condições
-        disponibilizadas pela Crefaz.
-      </p>
-      <a href="https://site.crefaz.com.br/produto/energia"
-         target="_blank" rel="noopener noreferrer">
-        CONHECER SOLUÇÃO →
-      </a>
+     <div class="product-icon">◇</div>
+     <h3>Cartões e outras soluções</h3>
+     <p>Entre em contato para conhecer informações sobre possibilidades e critérios de elegibilidade.</p>
+     <a class="btn" href="https://wa.me/5516988079346?text=Olá!%20Gostaria%20de%20informações%20sobre%20cartões." target="_blank" rel="noopener">Falar com a equipe ↗</a>
     </article>
 
+    <article class="product">
+     <div class="product-icon">✧</div>
+     <h3>NEXA CRED PIX CARD</h3>
+     <p>Projeto em preparação. O serviço ainda não está disponível para contratação.</p>
+     <span class="coming">LANÇAMENTO EM BREVE</span>
+    </article>
+   </div>
+
+   <div class="notice">
+    <strong>Transparência:</strong> a disponibilidade, análise, aprovação, taxas, prazos e condições dependem exclusivamente da instituição responsável por cada produto. A NEXA não garante aprovação ou liberação de valores.
+   </div>
   </div>
-</section>
+ </section>
 
-<section class="about section">
-  <div class="container about-content">
-    <div class="eyebrow">NOSSA PROPOSTA</div>
+ <section class="section help-section" id="ajuda">
+  <div class="container help-grid">
+   <div class="help-intro">
+    <div class="eyebrow">Central de conhecimento</div>
+    <h2>Informação antes de qualquer decisão.</h2>
+    <p>Consulte respostas para dúvidas comuns sobre modalidades, documentos, etapas e segurança.</p>
+    <button class="btn" onclick="openAssistant()">Abrir assistente virtual ✦</button>
+   </div>
 
-    <h2>Transparência em cada etapa.</h2>
-
-    <p>
-      Nosso objetivo é facilitar o acesso à informação sobre
-      possibilidades financeiras, com atendimento próximo,
-      clareza nas condições e respeito ao consumidor.
-    </p>
+   <div class="faq-list" id="faqList">
+    <div class="faq-item">
+     <button class="faq-question" aria-expanded="false"><span>Como funciona a antecipação do FGTS?</span><span>+</span></button>
+     <div class="faq-answer">A antecipação pode permitir o recebimento antecipado de valores futuros do saque-aniversário, conforme as regras aplicáveis. A instituição responsável informa os critérios, custos e condições.</div>
+    </div>
+    <div class="faq-item">
+     <button class="faq-question" aria-expanded="false"><span>Como funciona o crédito CLT?</span><span>+</span></button>
+     <div class="faq-answer">É uma modalidade destinada a trabalhadores que atendam aos critérios aplicáveis. As condições, taxas, parcelas e aprovação são definidas pela instituição responsável.</div>
+    </div>
+    <div class="faq-item">
+     <button class="faq-question" aria-expanded="false"><span>O que é crédito na conta de energia?</span><span>+</span></button>
+     <div class="faq-answer">É uma modalidade disponibilizada por fornecedor específico, sujeita a critérios de elegibilidade e condições próprias. Consulte o fornecedor para conhecer os detalhes.</div>
+    </div>
+    <div class="faq-item">
+     <button class="faq-question" aria-expanded="false"><span>Quais documentos posso precisar?</span><span>+</span></button>
+     <div class="faq-answer">Podem ser solicitados CPF, documento de identificação e informações necessárias à análise. A lista exata varia conforme a modalidade e a instituição.</div>
+    </div>
+    <div class="faq-item">
+     <button class="faq-question" aria-expanded="false"><span>A NEXA aprova o crédito?</span><span>+</span></button>
+     <div class="faq-answer">Não. A NEXA é um canal independente de informação e direcionamento. A análise e a aprovação são realizadas pela instituição responsável pela operação.</div>
+    </div>
+    <div class="faq-item">
+     <button class="faq-question" aria-expanded="false"><span>Existe cobrança antecipada para liberar crédito?</span><span>+</span></button>
+     <div class="faq-answer">Tenha cuidado com pedidos de pagamento antecipado para liberar crédito. Verifique a legitimidade da instituição, leia as condições contratuais e confirme tudo nos canais oficiais.</div>
+    </div>
+   </div>
   </div>
-</section>
+ </section>
 
-<section class="container section" id="contato">
-  <div class="contact">
+ <section class="section" id="contato">
+  <div class="container">
+   <div class="contact-panel">
+    <div class="eyebrow">Conecte-se à NEXA</div>
     <h2>Vamos conversar?</h2>
-
-    <p>
-      Nossa equipe está disponível para esclarecer suas dúvidas
-      e apresentar informações sobre as soluções disponíveis.
-    </p>
-
-    <a class="btn"
-       href="https://wa.me/5516988079346?text=Olá!%20Vim%20pelo%20site%20da%20NEXA%20CRÉDITO."
-       target="_blank" rel="noopener noreferrer">
-      FALAR PELO WHATSAPP →
-    </a>
+    <p>Precisa de orientação sobre alguma modalidade? Nossa equipe está disponível para receber sua mensagem e direcionar sua dúvida.</p>
+    <a class="btn" href="https://wa.me/5516988079346" target="_blank" rel="noopener">Iniciar conversa no WhatsApp ↗</a>
+   </div>
   </div>
-</section>
-
+ </section>
 </main>
 
 <footer>
-  <div class="container">
-    <div class="footer-logo">NEXA CRÉDITO</div>
-
-    <p>Atendimento independente de informação e encaminhamento.</p>
-
-    <p>
-      A NEXA não é instituição financeira nem representa
-      oficialmente os fornecedores citados.
-    </p>
-
-    <p>
-      Produtos sujeitos às condições, critérios e aprovação
-      dos respectivos fornecedores.
-    </p>
-
-    <p>© 2026 NEXA CRÉDITO. Todos os direitos reservados.</p>
-  </div>
+ <div class="container">
+  <a class="brand" href="#inicio">
+   <span class="brand-mark">NX</span>
+   <span class="brand-name">NEXA<span>.</span></span>
+  </a>
+  <p>Informação, orientação e conexão.</p>
+  <p>A NEXA é um canal independente de informação e direcionamento. Não é instituição financeira, não concede crédito e não representa oficialmente as instituições ou fornecedores mencionados neste site.</p>
+  <p>A análise, aprovação, contratação, taxas, prazos e liberação de valores são de responsabilidade dos respectivos fornecedores. Consulte sempre os canais oficiais e leia as condições contratuais antes de contratar.</p>
+  <p>Não realize pagamentos antecipados sem verificar a legitimidade da cobrança e da instituição responsável.</p>
+  <p>© 2026 NEXA CRÉDITO. Todos os direitos reservados.</p>
+ </div>
 </footer>
 
+<button class="chat-launch" id="chatLaunch" aria-label="Abrir assistente virtual">✦ Assistente NEXA</button>
+
+<div class="chat" id="chat" role="dialog" aria-label="Assistente virtual NEXA" aria-modal="false">
+ <div class="chat-header">
+  <div class="chat-brand">
+   <div class="chat-avatar">NX</div>
+   <div><strong>ASSISTENTE NEXA</strong><small>Atendimento virtual informativo</small></div>
+  </div>
+  <button class="chat-close" id="chatClose" aria-label="Fechar assistente">×</button>
+ </div>
+ <div class="chat-body" id="chatBody">
+  <div class="chat-message bot">Olá! Seja bem-vindo à NEXA. 👋
+
+Sou o assistente virtual e posso responder dúvidas frequentes sobre nossas modalidades.
+
+Como posso ajudar?</div>
+  <div class="chat-options" id="chatOptions"></div>
+ </div>
+ <div class="chat-footer">Respostas automáticas • Não substituem as informações contratuais</div>
+</div>
+
 <script>
-const menuButton = document.getElementById("menuButton");
-const navLinks = document.getElementById("navLinks");
+const menuToggle=document.getElementById("menuToggle");
+const navLinks=document.getElementById("navLinks");
 
-menuButton.addEventListener("click", () => {
-  const isOpen = navLinks.classList.toggle("open");
-  menuButton.setAttribute("aria-expanded", String(isOpen));
-  menuButton.setAttribute(
-    "aria-label",
-    isOpen ? "Fechar menu" : "Abrir menu"
-  );
-  menuButton.textContent = isOpen ? "✕" : "☰";
+menuToggle.addEventListener("click",()=>{
+ const open=navLinks.classList.toggle("show");
+ menuToggle.setAttribute("aria-expanded",String(open));
+ menuToggle.textContent=open?"×":"☰";
+});
+navLinks.querySelectorAll("a").forEach(link=>{
+ link.addEventListener("click",()=>{
+  navLinks.classList.remove("show");
+  menuToggle.setAttribute("aria-expanded","false");
+  menuToggle.textContent="☰";
+ });
 });
 
-navLinks.querySelectorAll("a").forEach(link => {
-  link.addEventListener("click", () => {
-    navLinks.classList.remove("open");
-    menuButton.setAttribute("aria-expanded", "false");
-    menuButton.setAttribute("aria-label", "Abrir menu");
-    menuButton.textContent = "☰";
-  });
+document.querySelectorAll(".faq-question").forEach(button=>{
+ button.addEventListener("click",()=>{
+  const item=button.parentElement;
+  const active=item.classList.toggle("active");
+  button.setAttribute("aria-expanded",String(active));
+  button.querySelector("span:last-child").textContent=active?"−":"+";
+ });
 });
+
+const faqData=[
+ ["Como funciona o FGTS?","A antecipação pode permitir o recebimento antecipado de valores futuros do saque-aniversário, conforme regras aplicáveis. A instituição responsável informa critérios, custos e condições."],
+ ["Como funciona o crédito CLT?","É uma modalidade para trabalhadores que atendam aos critérios aplicáveis. Taxas, parcelas, condições e aprovação são definidas pela instituição responsável."],
+ ["Como funciona o crédito na conta de energia?","É uma modalidade disponibilizada por fornecedor específico, sujeita a critérios de elegibilidade e condições próprias. Consulte o fornecedor para conhecer os detalhes."],
+ ["Como funciona o consignado?","No crédito consignado, quando disponível, as parcelas são descontadas diretamente do benefício ou remuneração, conforme as regras da modalidade. A instituição responsável informa as condições."],
+ ["Quais documentos posso precisar?","Podem ser solicitados CPF, documento de identificação e informações necessárias à análise. Os documentos variam conforme a modalidade e a instituição."],
+ ["A NEXA aprova o crédito?","Não. A NEXA é um canal independente de informação e direcionamento. A análise e a aprovação são realizadas pela instituição responsável pela operação."],
+ ["Quanto tempo demora a liberação?","O prazo depende da modalidade, da análise, da documentação e dos procedimentos da instituição responsável. Não garantimos prazo de liberação."],
+ ["Existe cobrança antecipada?","Tenha cuidado com pedidos de pagamento antecipado para liberar crédito. Verifique a legitimidade da instituição, leia o contrato e confirme as condições nos canais oficiais."],
+ ["O que é a NEXA CRED PIX CARD?","É um projeto em preparação e ainda não está disponível para contratação. Não realize pagamentos nem envie dados para contratar esse serviço."],
+ ["Quero falar com um atendente","Você pode continuar o atendimento pelo WhatsApp da NEXA. Toque no botão abaixo para iniciar a conversa."]
+];
+
+const chat=document.getElementById("chat");
+const chatBody=document.getElementById("chatBody");
+const chatOptions=document.getElementById("chatOptions");
+
+function addMessage(text,type){
+ const div=document.createElement("div");
+ div.className="chat-message "+type;
+ div.textContent=text;
+ chatBody.insertBefore(div,chatOptions);
+ chatBody.scrollTop=chatBody.scrollHeight;
+}
+function renderOptions(){
+ chatOptions.innerHTML="";
+ faqData.forEach((item,index)=>{
+  const button=document.createElement("button");
+  button.type="button";
+  button.textContent=item[0];
+  button.addEventListener("click",()=>answerQuestion(index));
+  chatOptions.appendChild(button);
+ });
+ const reset=document.createElement("button");
+ reset.type="button";
+ reset.textContent="↻ Ver todas as perguntas";
+ reset.addEventListener("click",()=>{
+  addMessage("Escolha uma das perguntas disponíveis:","bot");
+  chatOptions.style.display="grid";
+  chatBody.scrollTop=chatBody.scrollHeight;
+ });
+ chatOptions.appendChild(reset);
+}
+function answerQuestion(index){
+ const item=faqData[index];
+ addMessage(item[0],"user");
+ addMessage(item[1],"bot");
+ if(index===9){
+  const link=document.createElement("a");
+  link.className="chat-wa";
+  link.href="https://wa.me/5516988079346";
+  link.target="_blank";
+  link.rel="noopener";
+  link.textContent="Abrir WhatsApp";
+  chatBody.insertBefore(link,chatOptions);
+ }
+ chatBody.scrollTop=chatBody.scrollHeight;
+}
+function openAssistant(){
+ chat.classList.add("open");
+}
+function closeAssistant(){
+ chat.classList.remove("open");
+}
+document.getElementById("chatLaunch").addEventListener("click",openAssistant);
+document.getElementById("chatClose").addEventListener("click",closeAssistant);
+
+renderOptions();
 </script>
-
 </body>
 </html>
-
