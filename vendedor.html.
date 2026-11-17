@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080b13">
+<title>NEXA HUB | Área do Vendedor</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--bg:#080b13;--panel:#111a29;--gold:#d8b56a;--text:#f4f5f7;--muted:#94a0b2;--line:#263247}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+.layout{display:flex;min-height:100vh}
+aside{width:245px;background:#0d1421;border-right:1px solid var(--line);padding:25px 17px;flex-shrink:0}
+.logo{font-size:23px;font-weight:800;letter-spacing:4px;color:var(--gold);padding:5px 10px}
+.logo small{display:block;font-size:9px;letter-spacing:3px;color:var(--muted);margin-top:8px}
+nav{margin-top:38px}
+nav button{display:block;width:100%;text-align:left;background:none;border:0;color:#aab5c5;padding:14px 12px;border-radius:9px;margin-bottom:6px;cursor:pointer;font-size:13px}
+nav button.active,nav button:hover{background:#1b2739;color:var(--gold)}
+main{flex:1;min-width:0;padding:30px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:30px}
+h1{font-size:25px;margin:0}
+.sub{color:var(--muted);font-size:13px;margin-top:7px}
+.pill{color:var(--gold);border:1px solid #665333;padding:8px 12px;border-radius:30px;font-size:11px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:25px}
+.stat,.panel{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:20px}
+.stat span{font-size:12px;color:var(--muted)}
+.stat strong{display:block;font-size:28px;color:var(--gold);margin-top:12px}
+.panel{margin-bottom:20px}
+.panel h2{font-size:16px;margin:0 0 17px}
+.system{display:flex;justify-content:space-between;align-items:center;gap:15px;padding:15px 0;border-bottom:1px solid var(--line)}
+.system:last-child{border:0}
+.system a{color:var(--gold);text-decoration:none;font-size:12px}
+.tag{font-size:11px;color:#e6ca8f;background:#342b1d;padding:5px 8px;border-radius:20px}
+button.action{background:#27364b;border:1px solid #40516a;color:white;border-radius:8px;padding:10px 13px;cursor:pointer}
+.empty{color:var(--muted);font-size:13px;line-height:1.6}
+section[hidden]{display:none}
+@media(max-width:760px){
+ .layout{display:block}
+ aside{width:100%;padding:15px;border-right:0;border-bottom:1px solid var(--line)}
+ nav{display:flex;overflow:auto;margin-top:15px;gap:5px}
+ nav button{white-space:nowrap;width:auto;margin:0}
+ main{padding:20px 14px}
+ .grid{grid-template-columns:1fr}
+ h1{font-size:21px}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside>
+ <div class="logo">NEXA HUB<small>SELLER WORKSPACE</small></div>
+ <nav>
+  <button class="active" data-section="overview">◈ Meu painel</button>
+  <button data-section="systems">▦ Meus sistemas</button>
+  <button data-section="clients">♙ Meus clientes</button>
+  <button data-section="support">▤ Atendimentos</button>
+ </nav>
+ <p><button class="action" id="logout">Sair da plataforma</button></p>
+</aside>
+
+<main>
+<header class="top">
+ <div>
+  <h1 id="pageTitle">Meu painel</h1>
+  <div class="sub" id="welcome">Seu ambiente individual de trabalho</div>
+ </div>
+ <span class="pill">● VENDEDOR</span>
+</header>
+
+<section id="overview">
+ <div class="grid">
+  <div class="stat"><span>Meus clientes</span><strong>—</strong></div>
+  <div class="stat"><span>Atendimentos</span><strong>—</strong></div>
+  <div class="stat"><span>Minha conta</span><strong style="font-size:17px">ATIVA</strong></div>
+ </div>
+ <div class="panel">
+  <h2>Bem-vindo à NEXA HUB</h2>
+  <p class="empty">Aqui você encontrará seus clientes, sistemas autorizados e atendimentos. Os módulos serão ativados conforme as permissões do administrador.</p>
+ </div>
+</section>
+
+<section id="systems" hidden>
+ <div class="panel">
+  <h2>Sistemas autorizados</h2>
+  <div id="systemList" class="empty">Carregando seus acessos...</div>
+ </div>
+</section>
+
+<section id="clients" hidden>
+ <div class="panel">
+  <h2>Minha carteira</h2>
+  <div class="empty">A carteira de clientes será conectada ao módulo de clientes da NEXA HUB.</div>
+ </div>
+</section>
+
+<section id="support" hidden>
+ <div class="panel">
+  <h2>Meus atendimentos</h2>
+  <div class="empty">O histórico de conversas será integrado ao NEXA CHAT.</div>
+ </div>
+</section>
+</main>
+</div>
+
+<script>
+const URL="https://qjujystvdehvolwhtkgw.supabase.co";
+const KEY="sb_publishable_uS0uMa2YNj6VKSKo1FQ_Og_hXQHrFxN";
+const db=window.supabase.createClient(URL,KEY);
+
+const esc=value=>String(value??"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
+
+async function start(){
+ const {data:{session},error}=await db.auth.getSession();
+ if(error||!session){location.replace("hub.html");return;}
+
+ const {data:profile,error:profileError}=await db
+  .from("profiles").select("role,active,full_name")
+  .eq("id",session.user.id).single();
+
+ if(profileError||!profile?.active||profile.role!=="seller"){
+  await db.auth.signOut();
+  location.replace("hub.html");
+  return;
+ }
+
+ document.getElementById("welcome").textContent=
+  "Olá, "+(profile.full_name||"Vendedor")+". Este é seu espaço de trabalho.";
+
+ await loadSystems(session.user.id);
+}
+
+async function loadSystems(sellerId){
+ const {data:permissions,error}=await db
+  .from("seller_system_permissions")
+  .select("system_id")
+  .eq("seller_id",sellerId)
+  .eq("allowed",true);
+
+ if(error){
+  document.getElementById("systemList").textContent=
+   "Não foi possível carregar suas permissões.";
+  return;
+ }
+
+ const ids=(permissions||[]).map(p=>p.system_id);
+ if(!ids.length){
+  document.getElementById("systemList").textContent=
+   "Nenhum sistema foi liberado para sua conta ainda.";
+  return;
+ }
+
+ const {data:systems, error:systemError}=await db
+  .from("systems")
+  .select("id,name,description,url,category")
+  .in("id",ids)
+  .eq("active",true)
+  .order("display_order");
+
+ if(systemError){
+  document.getElementById("systemList").textContent=
+   "Não foi possível consultar os sistemas.";
+  return;
+ }
+
+ document.getElementById("systemList").innerHTML=(systems||[]).map(s=>`
+  <div class="system">
+   <div>
+    <strong>${esc(s.name)}</strong>
+    <div class="sub">${esc(s.category||"Geral")} · ${esc(s.description||"")}</div>
+   </div>
+   ${s.url?`<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">ACESSAR ↗</a>`:""}
+  </div>
+ `).join("")||"Nenhum sistema ativo disponível.";
+}
+
+document.querySelectorAll("nav button").forEach(button=>{
+ button.addEventListener("click",()=>{
+  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+  button.classList.add("active");
+  document.querySelectorAll("main section").forEach(s=>s.hidden=true);
+  document.getElementById(button.dataset.section).hidden=false;
+  const titles={overview:"Meu painel",systems:"Meus sistemas",clients:"Meus clientes",support:"Atendimentos"};
+  document.getElementById("pageTitle").textContent=titles[button.dataset.section];
+ });
+});
+
+document.getElementById("logout").addEventListener("click",async()=>{
+ await db.auth.signOut();
+ location.replace("hub.html");
+});
+
+start();
+</script>
+</body>
+</html>
