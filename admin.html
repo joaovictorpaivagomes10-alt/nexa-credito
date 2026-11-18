@@ -1,283 +1,167 @@
+<!-- Seção de Atendimento / Chat -->
+<div id="atendimento-view" class="flex h-[calc(100vh-100px)] bg-slate-900 text-slate-100 rounded-xl overflow-hidden border border-slate-800 shadow-2xl">
+    
+    <!-- Lista de Conversas (Lateral Esquerda) -->
+    <div class="w-1/3 border-r border-slate-800 flex flex-col bg-slate-950/50">
+        <!-- Cabeçalho da Lista -->
+        <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+            <h2 class="font-bold text-lg text-emerald-400">Atendimentos</h2>
+            <span class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-medium">3 Online</span>
+        </div>
+        <!-- Barra de Pesquisa -->
+        <div class="p-3">
+            <input type="text" id="search-chat" placeholder="Buscar cliente..." class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500">
+        </div>
+        <!-- Lista de Contatos -->
+        <div class="flex-1 overflow-y-auto divide-y divide-slate-900">
+            <div onclick="selectChat('Ana Clara', 'Olá, minha proposta foi aprovada?')" class="p-4 hover:bg-slate-900 cursor-pointer transition flex items-center gap-3 bg-slate-900/60 border-l-4 border-emerald-500">
+                <div class="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center font-bold text-white">AC</div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex justify-between items-baseline">
+                        <h4 class="font-semibold text-sm truncate text-slate-200">Ana Clara</h4>
+                        <span class="text-xs text-slate-500">14:22</span>
+                    </div>
+                    <p class="text-xs text-slate-400 truncate">Olá, minha proposta foi aprovada?</p>
+                </div>
+            </div>
+            <div onclick="selectChat('Carlos Silva', 'Enviei os documentos pendentes.')" class="p-4 hover:bg-slate-900 cursor-pointer transition flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white">CS</div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex justify-between items-baseline">
+                        <h4 class="font-semibold text-sm truncate text-slate-200">Carlos Silva</h4>
+                        <span class="text-xs text-slate-500">Ontem</span>
+                    </div>
+                    <p class="text-xs text-slate-400 truncate">Enviei os documentos pendentes.</p>
+                </div>
+            </div>
+            <div onclick="selectChat('Mariana Souza', 'Qual a taxa de juros para empréstimo?')" class="p-4 hover:bg-slate-900 cursor-pointer transition flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center font-bold text-white">MS</div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex justify-between items-baseline">
+                        <h4 class="font-semibold text-sm truncate text-slate-200">Mariana Souza</h4>
+                        <span class="text-xs text-slate-500">2 dias</span>
+                    </div>
+                    <p class="text-xs text-slate-400 truncate">Qual a taxa de juros para empréstimo?</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080b13">
-<title>NEXA HUB | Administração</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-:root{--bg:#080b13;--panel:#101827;--gold:#d6b46a;--text:#f4f5f7;--muted:#9ba7b8;--line:#263247}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-button,input{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
-.login-wrap{min-height:100vh;display:grid;place-items:center;padding:20px}
-.login{width:100%;max-width:390px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:28px}
-.logo{font-size:28px;font-weight:900;letter-spacing:3px;color:var(--gold);text-align:center}
-.sub{text-align:center;color:var(--muted);font-size:13px;margin:8px 0 28px}
-label{display:block;color:var(--muted);font-size:13px;margin:15px 0 7px}
-input{width:100%;padding:14px;border-radius:9px;border:1px solid var(--line);background:#080e19;color:white;outline:none}
-input:focus{border-color:var(--gold)}
-.btn{width:100%;border:0;border-radius:9px;background:var(--gold);color:#111;font-weight:800;padding:14px;margin-top:20px}
-.error{color:#ff8585;font-size:13px;margin-top:14px;line-height:1.5}
-.shell{min-height:100vh;display:flex}
-.sidebar{width:235px;background:#0d1421;border-right:1px solid var(--line);padding:24px 16px;flex-shrink:0}
-.brand{font-size:23px;font-weight:900;letter-spacing:2px;color:var(--gold);padding:8px}
-.brand small{display:block;font-size:10px;letter-spacing:3px;color:var(--muted);margin-top:5px}
-.nav{margin-top:35px}
-.nav button{display:block;width:100%;text-align:left;padding:14px;border:0;background:transparent;color:var(--muted);border-radius:8px;margin:5px 0}
-.nav button.active,.nav button:hover{background:#1b2638;color:var(--gold)}
-.logout{margin-top:30px!important;color:#ff9b9b!important}
-.main{flex:1;min-width:0;padding:28px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:15px;border-bottom:1px solid var(--line);padding-bottom:20px}
-.top h1{font-size:23px;margin:0}
-.status{font-size:12px;color:#9bd9aa}
-.content{padding-top:25px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:18px;margin-bottom:15px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}
-.metric{font-size:30px;font-weight:800;color:var(--gold);margin-top:10px}
-.muted{color:var(--muted);font-size:13px}
-.item{padding:15px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
-.item:last-child{border:0}
-.tag{display:inline-block;padding:5px 9px;border-radius:20px;background:#263247;color:#d8c18e;font-size:11px;margin-top:7px}
-.refresh{background:#263247;color:white;border:1px solid var(--line);padding:9px 13px;border-radius:8px}
-.message{padding:10px;margin:8px 0;border-radius:8px;background:#172235;font-size:13px;overflow-wrap:anywhere}
-.message.customer{border-left:3px solid var(--gold)}
-.message.seller{border-left:3px solid #7db9e8}
-@media(max-width:700px){
-.shell{display:block}
-.sidebar{width:100%;padding:15px}
-.nav{display:flex;overflow-x:auto;margin-top:12px}
-.nav button{white-space:nowrap;width:auto;margin:3px}
-.logout{margin-top:3px!important}
-.main{padding:18px}
-.top h1{font-size:19px}
-}
-</style>
-</head>
-<body>
+    <!-- Janela Principal do Chat (Direita) -->
+    <div class="flex-1 flex flex-col bg-slate-900">
+        <!-- Topo da Conversa -->
+        <div id="chat-header" class="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/30">
+            <div class="flex items-center gap-3">
+                <div id="active-avatar" class="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center font-bold text-white">AC</div>
+                <div>
+                    <h3 id="active-name" class="font-semibold text-slate-100">Ana Clara</h3>
+                    <span class="text-xs text-emerald-400 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Em atendimento</span>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="quickAction('proposta')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">Ver Proposta</button>
+                <button onclick="quickAction('boleto')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">Enviar Boleto</button>
+            </div>
+        </div>
 
-<section id="loginScreen" class="login-wrap">
- <div class="login">
-  <div class="logo">NEXA</div>
-  <div class="sub">CENTRAL ADMINISTRATIVA</div>
-  <form id="loginForm">
-   <label for="email">E-mail de acesso</label>
-   <input id="email" type="email" autocomplete="username" required>
-   <label for="password">Senha</label>
-   <input id="password" type="password" autocomplete="current-password" required>
-   <button class="btn" id="loginButton" type="submit">ENTRAR NO PAINEL</button>
-  </form>
-  <div id="loginError" class="error"></div>
- </div>
-</section>
+        <!-- Histórico de Mensagens -->
+        <div id="chat-messages" class="flex-1 p-6 overflow-y-auto space-y-4 flex flex-col">
+            <div class="text-center my-2">
+                <span class="text-[10px] bg-slate-800 text-slate-400 px-3 py-1 rounded-full uppercase tracking-wider">Hoje</span>
+            </div>
+            <!-- Mensagem recebida -->
+            <div class="flex items-end gap-2 max-w-lg">
+                <div class="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">AC</div>
+                <div class="bg-slate-800 text-slate-200 p-3.5 rounded-2xl rounded-bl-sm text-sm shadow-sm">
+                    Olá! Gostaria de saber o status da minha análise de crédito enviada ontem.
+                    <span class="block text-[10px] text-slate-400 text-right mt-1">14:20</span>
+                </div>
+            </div>
+            <!-- Mensagem enviada (Atendente) -->
+            <div class="flex items-end gap-2 max-w-lg ml-auto flex-row-reverse">
+                <div class="bg-emerald-600 text-white p-3.5 rounded-2xl rounded-br-sm text-sm shadow-sm">
+                    Olá Ana! Deixa eu verificar aqui no sistema para você um instante.
+                    <span class="block text-[10px] text-emerald-200 text-right mt-1">14:21</span>
+                </div>
+            </div>
+            <!-- Mensagem recebida -->
+            <div class="flex items-end gap-2 max-w-lg">
+                <div class="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">AC</div>
+                <div class="bg-slate-800 text-slate-200 p-3.5 rounded-2xl rounded-bl-sm text-sm shadow-sm">
+                    Ok, fico no aguardo!
+                    <span class="block text-[10px] text-slate-400 text-right mt-1">14:22</span>
+                </div>
+            </div>
+        </div>
 
-<section id="app" class="shell hidden">
- <aside class="sidebar">
-  <div class="brand">NEXA<small>ADMINISTRAÇÃO</small></div>
-  <nav class="nav">
-   <button class="active" data-page="overview">Visão geral</button>
-   <button data-page="sellers">Vendedores</button>
-   <button data-page="systems">Sistemas</button>
-   <button data-page="chats">Atendimentos</button>
-   <button class="logout" id="logoutButton">Sair da conta</button>
-  </nav>
- </aside>
- <main class="main">
-  <header class="top">
-   <h1 id="pageTitle">Visão geral</h1>
-   <span class="status">● CONECTADO</span>
-  </header>
-  <div class="content" id="pageContent">
-   <div class="card">Carregando painel...</div>
-  </div>
- </main>
-</section>
+        <!-- Rodapé / Caixa de Texto -->
+        <div class="p-4 border-t border-slate-800 bg-slate-950/30">
+            <form id="chat-form" onsubmit="sendMessage(event)" class="flex gap-3 items-center">
+                <button type="button" class="text-slate-400 hover:text-slate-200 transition p-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+                </button>
+                <input type="text" id="chat-input" placeholder="Digite sua resposta..." class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-emerald-500 transition">
+                <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-3 rounded-xl font-medium text-sm transition flex items-center gap-2 shadow-lg shadow-emerald-600/20">
+                    Enviar
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script>
-const SUPABASE_URL="https://qjujystvdehvolwhtkgw.supabase.co";
-const SUPABASE_KEY="sb_publishable_uS0uMa2YNj6VKSKo1FQ_Og_hXQHrFxN";
-const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-const $=id=>document.getElementById(id);
-let currentSession=null;
-let currentPage="overview";
-let cachedSellers=[];
-let cachedSystems=[];
-let cachedChats=[];
+    // Funções de controle do chat
+    function selectChat(name, lastMsg) {
+        document.getElementById('active-name').innerText = name;
+        document.getElementById('active-avatar').innerText = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+        
+        // Simulação de troca de conversa
+        const messagesContainer = document.getElementById('chat-messages');
+        messagesContainer.innerHTML = `
+            <div class="text-center my-2">
+                <span class="text-[10px] bg-slate-800 text-slate-400 px-3 py-1 rounded-full uppercase tracking-wider">Hoje</span>
+            </div>
+            <div class="flex items-end gap-2 max-w-lg">
+                <div class="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">${document.getElementById('active-avatar').innerText}</div>
+                <div class="bg-slate-800 text-slate-200 p-3.5 rounded-2xl rounded-bl-sm text-sm shadow-sm">
+                    ${lastMsg}
+                    <span class="block text-[10px] text-slate-400 text-right mt-1">Agora</span>
+                </div>
+            </div>
+        `;
+    }
 
-function escapeHTML(value){
- return String(value??"").replace(/[&<>"']/g,c=>({
- "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- })[c]);
-}
-function showError(message){
- $("loginError").textContent=message;
-}
-async function checkAdmin(){
- const {data:{session},error}=await supabaseClient.auth.getSession();
- if(error||!session)return false;
- currentSession=session;
- const {data:profile,error:profileError}=await supabaseClient
-  .from("profiles")
-  .select("id,role,active")
-  .eq("id",session.user.id)
-  .maybeSingle();
+    function sendMessage(event) {
+        event.preventDefault();
+        const input = document.getElementById('chat-input');
+        const text = input.value.trim();
+        if(!text) return;
 
- if(profileError){
-  showError("Não foi possível verificar seu perfil: "+profileError.message);
-  return false;
- }
- if(!profile){
-  showError("Seu usuário não possui perfil cadastrado.");
-  return false;
- }
- if(profile.role!=="admin"||profile.active!==true){
-  showError("Acesso negado. Sua conta precisa estar ativa e ter a função admin.");
-  await supabaseClient.auth.signOut();
-  return false;
- }
- return true;
-}
-async function openPanel(){
- $("loginScreen").classList.add("hidden");
- $("app").classList.remove("hidden");
- await showPage("overview");
-}
-$("loginForm").addEventListener("submit",async event=>{
- event.preventDefault();
- const button=$("loginButton");
- button.disabled=true;
- button.textContent="VERIFICANDO...";
- showError("");
- try{
-  const email=$("email").value.trim();
-  const password=$("password").value;
-  const {error}=await supabaseClient.auth.signInWithPassword({email,password});
-  if(error)throw error;
-  const allowed=await checkAdmin();
-  if(!allowed){
-   await supabaseClient.auth.signOut();
-   return;
-  }
-  await openPanel();
- }catch(error){
-  showError(error.message==="Invalid login credentials"
-   ?"E-mail ou senha incorretos."
-   :"Não foi possível entrar: "+error.message);
- }finally{
-  button.disabled=false;
-  button.textContent="ENTRAR NO PAINEL";
- }
-});
-$("logoutButton").addEventListener("click",async()=>{
- await supabaseClient.auth.signOut();
- currentSession=null;
- $("app").classList.add("hidden");
- $("loginScreen").classList.remove("hidden");
- $("password").value="";
- showError("Você saiu da sua conta.");
-});
-supabaseClient.auth.onAuthStateChange((event)=>{
- if(event==="SIGNED_OUT"){
-  $("app").classList.add("hidden");
-  $("loginScreen").classList.remove("hidden");
- }
-});
-document.querySelectorAll("[data-page]").forEach(button=>{
- button.addEventListener("click",()=>showPage(button.dataset.page));
-});
-async function showPage(page){
- currentPage=page;
- document.querySelectorAll("[data-page]").forEach(b=>
-  b.classList.toggle("active",b.dataset.page===page)
- );
- const titles={overview:"Visão geral",sellers:"Vendedores",systems:"Sistemas",chats:"Atendimentos"};
- $("pageTitle").textContent=titles[page]||"NEXA";
- $("pageContent").innerHTML='<div class="card">Carregando...</div>';
- if(page==="overview")renderOverview();
- if(page==="sellers")await loadSellers();
- if(page==="systems")await loadSystems();
- if(page==="chats")await loadChats();
-}
-function renderOverview(){
- $("pageContent").innerHTML=`
- <div class="grid">
-  <div class="card"><div class="muted">Vendedores carregados</div><div class="metric">${cachedSellers.length}</div></div>
-  <div class="card"><div class="muted">Sistemas carregados</div><div class="metric">${cachedSystems.length}</div></div>
-  <div class="card"><div class="muted">Atendimentos carregados</div><div class="metric">${cachedChats.length}</div></div>
- </div>
- <div class="card"><h3>Central NEXA</h3><p class="muted">Utilize o menu para consultar vendedores, sistemas e atendimentos.</p></div>`;
-}
-async function loadSellers(){
- const {data,error}=await supabaseClient.rpc("admin_list_sellers");
- if(error){
-  $("pageContent").innerHTML=`<div class="card error">Erro ao carregar vendedores: ${escapeHTML(error.message)}</div>`;
-  return;
- }
- cachedSellers=Array.isArray(data)?data:(data?.sellers||[]);
- $("pageContent").innerHTML=`<div class="card"><h3>Equipe de vendedores</h3>
- ${cachedSellers.length?cachedSellers.map(s=>`
- <div class="item"><strong>${escapeHTML(s.full_name||s.name||"Sem nome")}</strong>
- <div class="muted">${escapeHTML(s.email||"")}</div>
- <span class="tag">${escapeHTML(s.role||"vendedor")} · ${s.active===false?"Inativo":"Ativo"}</span></div>`).join(""):'<p class="muted">Nenhum vendedor encontrado.</p>'}
- </div>`;
-}
-async function loadSystems(){
- const {data,error}=await supabaseClient.rpc("admin_list_systems");
- if(error){
-  $("pageContent").innerHTML=`<div class="card error">Erro ao carregar sistemas: ${escapeHTML(error.message)}</div>`;
-  return;
- }
- cachedSystems=Array.isArray(data)?data:(data?.systems||[]);
- $("pageContent").innerHTML=`<div class="card"><h3>Sistemas disponíveis</h3>
- ${cachedSystems.length?cachedSystems.map(s=>`
- <div class="item"><strong>${escapeHTML(s.name||s.system_name||s.title||"Sistema")}</strong>
- <p class="muted">${escapeHTML(s.description||s.details||"")}</p>
- <span class="tag">${s.active===false?"Inativo":"Ativo"}</span></div>`).join(""):'<p class="muted">Nenhum sistema encontrado.</p>'}
- </div>`;
-}
-async function loadChats(){
- const {data:{session},error:sessionError}=await supabaseClient.auth.getSession();
- if(sessionError||!session){
-  $("pageContent").innerHTML='<div class="card error">Sessão encerrada. Entre novamente.</div>';
-  return;
- }
- try{
-  const response=await fetch(SUPABASE_URL+"/functions/v1/admin-chat-list",{
-   method:"GET",
-   headers:{
-    "Authorization":"Bearer "+session.access_token,
-    "apikey":SUPABASE_KEY
-   }
-  });
-  const result=await response.json();
-  if(!response.ok||result.success===false){
-   throw new Error(result.error||result.message||"Falha ao consultar atendimentos (HTTP "+response.status+").");
-  }
-  cachedChats=result.sessions||[];
-  const messages=result.messages||[];
-  $("pageContent").innerHTML=`<div class="card"><h3>Atendimentos recebidos</h3>
-  ${cachedChats.length?cachedChats.map(s=>{
-   const related=messages.filter(m=>String(m.session_id)===String(s.id));
-   return `<div class="item">
-    <strong>${escapeHTML(s.customer_name||"Cliente")}</strong>
-    <div class="muted">${escapeHTML(s.protocol||"")} · ${escapeHTML(s.customer_contact||"")}</div>
-    <span class="tag">${escapeHTML(s.status||"")}</span>
-    <div>${related.map(m=>`<div class="message ${escapeHTML(m.sender_type||"")}"><strong>${escapeHTML(m.sender_type||"")}</strong>: ${escapeHTML(m.message||"")}</div>`).join("")||'<p class="muted">Nenhuma mensagem retornada.</p>'}</div>
-   </div>`;
-  }).join(""):'<p class="muted">Nenhum atendimento encontrado.</p>'}
-  </div>`;
- }catch(error){
-  $("pageContent").innerHTML=`<div class="card error">Não foi possível carregar os atendimentos: ${escapeHTML(error.message)}</div>`;
- }
-}
-(async()=>{
- const allowed=await checkAdmin();
- if(allowed)await openPanel();
-})();
+        const messagesContainer = document.getElementById('chat-messages');
+        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        // Adiciona mensagem do atendente
+        messagesContainer.innerHTML += `
+            <div class="flex items-end gap-2 max-w-lg ml-auto flex-row-reverse animate-fade-in">
+                <div class="bg-emerald-600 text-white p-3.5 rounded-2xl rounded-br-sm text-sm shadow-sm">
+                    ${text}
+                    <span class="block text-[10px] text-emerald-200 text-right mt-1">${time}</span>
+                </div>
+            </div>
+        `;
+
+        input.value = '';
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function quickAction(type) {
+        const input = document.getElementById('chat-input');
+        if(type === 'proposta') {
+            input.value = 'Sua proposta está em análise final com o parceiro bancário. Previsão de retorno em até 2 horas úteis.';
+        } else if(type === 'boleto') {
+            input.value = 'Segue o link para visualização e pagamento do boleto referente à sua parcela: https://nexa-credito.app/boleto/...';
+        }
+        input.focus();
+    }
 </script>
-</body>
-</html>
