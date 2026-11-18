@@ -1,135 +1,212 @@
-
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080b13">
-<title>NEXA CHAT | Atendimento</title>
-<style>
-:root{--gold:#d6ad60;--bg:#080b13;--panel:#111827;--text:#f5f5f5;--muted:#9ca3af}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0%,#1b263a 0,#080b13 55%);font-family:Arial,sans-serif;color:var(--text);display:flex;align-items:center;justify-content:center;padding:22px}
-.wrap{width:100%;max-width:560px}
-.brand{text-align:center;margin-bottom:25px}
-.logo{width:58px;height:58px;border:1px solid var(--gold);border-radius:18px;display:grid;place-items:center;margin:auto;color:var(--gold);font-size:25px;font-weight:800}
-.brand h1{letter-spacing:5px;font-size:23px;margin:14px 0 5px}
-.brand p{color:var(--muted);font-size:12px;letter-spacing:2px}
-.card{background:rgba(17,24,39,.94);border:1px solid #293244;border-radius:22px;padding:27px;box-shadow:0 20px 70px #0008}
-.tag{color:var(--gold);font-size:11px;letter-spacing:2px;font-weight:bold}
-h2{font-size:25px;margin:12px 0 8px}
-.desc{color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:24px}
-label{display:block;font-size:12px;color:#d1d5db;margin:16px 0 8px}
-input,select,textarea{width:100%;padding:14px;border-radius:11px;border:1px solid #303b4e;background:#0b1220;color:white;font-size:14px;outline:none}
-input:focus,select:focus,textarea:focus{border-color:var(--gold)}
-textarea{min-height:115px;resize:vertical}
-button{width:100%;padding:16px;border:0;border-radius:11px;background:linear-gradient(100deg,#b98b3e,#f0d18b);color:#151515;font-weight:800;font-size:14px;margin-top:22px;cursor:pointer}
-button:disabled{opacity:.6;cursor:wait}
-#status{display:none;margin-top:18px;padding:15px;border-radius:12px;background:#172337;border:1px solid #34445e;line-height:1.6;font-size:14px}
-.protocol{color:var(--gold);font-weight:bold;font-size:18px}
-.foot{text-align:center;color:#687386;font-size:11px;margin-top:18px}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atendimento Inteligente · NEXA Crédito</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        nexa: { dark: '#090d16', card: '#111827', border: '#1f293d', emerald: '#10b981' }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body>
-<main class="wrap">
-  <header class="brand">
-    <div class="logo">NX</div>
-    <h1>NEXA</h1>
-    <p>ATENDIMENTO INTELIGENTE</p>
-  </header>
+<body class="bg-[#070a12] text-slate-100 min-h-screen flex flex-col justify-between font-sans">
 
-  <section class="card">
-    <div class="tag">NEXA CHAT / CENTRAL DE RELACIONAMENTO</div>
-    <h2>Como podemos ajudar?</h2>
-    <p class="desc">Envie sua solicitação. Nossa equipe receberá seu atendimento e poderá dar continuidade à conversa.</p>
+    <!-- Cabeçalho -->
+    <header class="border-b border-slate-800/80 bg-slate-950/60 backdrop-blur sticky top-0 z-50 px-6 py-4 flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center font-bold text-emerald-400">NX</div>
+            <div>
+                <span class="font-bold tracking-wider text-sm block leading-none">NEXA</span>
+                <span class="text-[10px] text-emerald-400 font-medium tracking-widest uppercase">Atendimento Inteligente</span>
+            </div>
+        </a>
+        <a href="index.html" class="text-xs text-slate-400 hover:text-slate-200 transition">← Voltar ao início</a>
+    </header>
 
-    <form id="chatForm">
-      <label for="name">Seu nome</label>
-      <input id="name" maxlength="100" required placeholder="Digite seu nome">
+    <!-- Conteúdo Principal -->
+    <main class="flex-1 max-w-2xl w-full mx-auto p-4 sm:p-6 flex flex-col justify-center">
+        
+        <!-- ETAPA 1: Formulário / Assistente de Triagem -->
+        <div id="wizard-card" class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl">
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xl mx-auto mb-3">🤖</div>
+                <h1 class="text-xl font-bold">Assistente Virtual NEXA</h1>
+                <p class="text-xs text-slate-400 mt-1">Informe seus dados para gerarmos sua senha e direcionarmos você ao especialista ideal.</p>
+            </div>
 
-      <label for="contact">WhatsApp ou telefone</label>
-      <input id="contact" maxlength="100" placeholder="(DDD) 00000-0000">
+            <form id="ticket-form" onsubmit="createTicketAndStartChat(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Seu Nome Completo</label>
+                    <input type="text" id="client-name" required placeholder="Ex: João da Silva" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-emerald-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">WhatsApp / Telefone</label>
+                    <input type="text" id="client-phone" required placeholder="(16) 99999-9999" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-emerald-500 transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Qual modalidade você deseja consultar?</label>
+                    <select id="service-type" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-emerald-500 transition">
+                        <option value="Antecipação FGTS">Antecipação FGTS</option>
+                        <option value="Crédito CLT">Crédito CLT</option>
+                        <option value="Crédito na Conta de Energia">Crédito na Conta de Energia</option>
+                        <option value="Consignado & Benefícios">Consignado & Benefícios</option>
+                        <option value="Cartões e Outras Soluções">Cartões e Outras Soluções</option>
+                    </select>
+                </div>
+                <button type="submit" id="btn-generate" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium py-3.5 rounded-xl transition shadow-lg shadow-emerald-600/20 text-sm">
+                    Gerar Senha e Iniciar Atendimento
+                </button>
+            </form>
+        </div>
 
-      <label for="subject">Qual assunto deseja tratar?</label>
-      <select id="subject" required>
-        <option value="">Selecione uma opção</option>
-        <option value="FGTS">Crédito FGTS</option>
-        <option value="CLT">Crédito CLT</option>
-        <option value="Crefaz">Crédito Crefaz</option>
-        <option value="Atendimento humano">Falar com atendente</option>
-        <option value="Outros">Outros assuntos</option>
-      </select>
+        <!-- ETAPA 2: Sala de Chat Ativa (Oculta até gerar o ticket) -->
+        <div id="chat-room" class="hidden bg-slate-900/90 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl flex flex-col h-[600px]">
+            <!-- Topo do Chat -->
+            <div class="p-4 bg-slate-950/60 border-b border-slate-800 flex items-center justify-between">
+                <div>
+                    <span id="display-ticket-badge" class="text-[10px] bg-emerald-500/20 text-emerald-400 font-bold px-2.5 py-1 rounded-full uppercase">Senha: E-000</span>
+                    <h2 id="display-client-title" class="font-bold text-sm mt-1 text-slate-100">Atendimento em Andamento</h2>
+                </div>
+                <div class="flex items-center gap-2 text-xs text-emerald-400">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span> Conectado com Especialista
+                </div>
+            </div>
 
-      <label for="message">Sua mensagem</label>
-      <textarea id="message" maxlength="4000" required placeholder="Conte brevemente como podemos ajudar..."></textarea>
+            <!-- Mensagens -->
+            <div id="messages-container" class="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col bg-slate-950/30">
+                <div class="text-center my-2">
+                    <span class="text-[10px] bg-slate-800/80 text-slate-400 px-3 py-1 rounded-full">Assistente Virtual iniciou o atendimento</span>
+                </div>
+                <div class="flex items-end gap-2 max-w-md">
+                    <div class="w-7 h-7 rounded-full bg-emerald-600 flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0">NX</div>
+                    <div class="bg-slate-800 text-slate-200 p-3 rounded-2xl rounded-bl-sm text-xs leading-relaxed">
+                        Olá! Sua senha foi gerada com sucesso. Nossa equipe já foi alertada e o primeiro atendente disponível irá responder em instantes.
+                    </div>
+                </div>
+            </div>
 
-      <button id="send" type="submit">INICIAR ATENDIMENTO →</button>
-    </form>
+            <!-- Caixa de Texto -->
+            <form id="chat-form" onsubmit="sendClientMessage(event)" class="p-3 bg-slate-950 border-t border-slate-800 flex gap-2">
+                <input type="text" id="client-msg-input" autocomplete="off" placeholder="Digite sua mensagem..." class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-100 focus:outline-none focus:border-emerald-500">
+                <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2.5 rounded-xl font-medium text-xs transition shadow-md">Enviar</button>
+            </form>
+        </div>
 
-    <div id="status" role="status"></div>
-  </section>
+    </main>
 
-  <footer class="foot">NEXA CRÉDITO · Atendimento e encaminhamento de solicitações.</footer>
-</main>
+    <!-- Rodapé -->
+    <footer class="text-center py-4 text-xs text-slate-500 border-t border-slate-800/80">
+        NEXA CRÉDITO · Canal independente de informação e direcionamento.
+    </footer>
 
-<script>
-const ENDPOINT = "https://qjujystvdehvolwhtkgw.supabase.co/functions/v1/clever-task";
-const PUBLIC_KEY = "sb_publishable_uS0uMa2YNj6VKSKo1FQ_Og_hXQHrFxN";
+    <!-- Script de Integração Supabase -->
+    <script>
+        // Substitua pelas suas chaves reais do Supabase
+        const SUPABASE_URL = 'SUA_SUPABASE_URL_AQUI';
+        const SUPABASE_KEY = 'SUA_SUPABASE_ANON_KEY_AQUI';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const form = document.getElementById("chatForm");
-const button = document.getElementById("send");
-const statusBox = document.getElementById("status");
+        let currentTicketId = null;
 
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
+        async function createTicketAndStartChat(event) {
+            event.preventDefault();
+            const name = document.getElementById('client-name').value;
+            const phone = document.getElementById('client-phone').value;
+            const service = document.getElementById('service-type').value;
 
-  const payload = {
-    customer_name: document.getElementById("name").value.trim(),
-    customer_contact: document.getElementById("contact").value.trim(),
-    subject: document.getElementById("subject").value,
-    message: document.getElementById("message").value.trim()
-  };
+            const prefix = service.includes('FGTS') ? 'F' : service.includes('CLT') ? 'C' : 'E';
+            const ticketNumber = `${prefix}-${Math.floor(100 + Math.random() * 900)}`;
 
-  if (payload.customer_name.length < 2 || !payload.subject || !payload.message) {
-    alert("Preencha seu nome, assunto e mensagem.");
-    return;
-  }
+            const btn = document.getElementById('btn-generate');
+            btn.innerText = 'Gerando senha...';
+            btn.disabled = true;
 
-  button.disabled = true;
-  button.textContent = "ENVIANDO...";
-  statusBox.style.display = "block";
-  statusBox.textContent = "Enviando sua solicitação com segurança...";
+            try {
+                // 1. Cria o registro na fila
+                const { data, error } = await supabase
+                    .from('queue_tickets')
+                    .insert([{ ticket_number: ticketNumber, client_name: name, client_phone: phone, service_type: service, status: 'aguardando' }])
+                    .select()
+                    .single();
 
-  try {
-    const response = await fetch(ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "apikey": PUBLIC_KEY,
-        "Authorization": "Bearer " + PUBLIC_KEY
-      },
-      body: JSON.stringify(payload)
-    });
+                if (error) throw error;
 
-    const result = await response.json();
+                currentTicketId = data.id;
 
-    if (!response.ok || !result.success) {
-      throw new Error(result.error || "Não foi possível enviar o atendimento.");
-    }
+                // 2. Transiciona a tela para o chat
+                document.getElementById('wizard-card').classList.add('hidden');
+                document.getElementById('chat-room').classList.remove('hidden');
+                document.getElementById('display-ticket-badge').innerText = `Senha: ${ticketNumber}`;
+                document.getElementById('display-client-title').innerText = `${name} • ${service}`;
 
-    statusBox.innerHTML =
-      "Solicitação recebida!<br>Seu protocolo:<br><span class='protocol'>" +
-      result.protocol +
-      "</span><br>Guarde esse número para consultar seu atendimento.";
+                // 3. Ouve novas mensagens em tempo real para este ticket
+                setupRealtimeChat(currentTicketId);
 
-    form.reset();
-  } catch (error) {
-    statusBox.textContent = error.message || "Falha ao conectar. Tente novamente.";
-  } finally {
-    button.disabled = false;
-    button.textContent = "INICIAR ATENDIMENTO →";
-  }
-});
-</script>
+            } catch (err) {
+                console.error('Erro ao gerar senha:', err);
+                alert('Erro ao conectar com o servidor. Tente novamente.');
+                btn.innerText = 'Gerar Senha e Iniciar Atendimento';
+                btn.disabled = false;
+            }
+        }
+
+        async function sendClientMessage(event) {
+            event.preventDefault();
+            const input = document.getElementById('client-msg-input');
+            const text = input.value.trim();
+            if(!text || !currentTicketId) return;
+
+            try {
+                await supabase.from('messages').insert([
+                    { ticket_id: currentTicketId, sender: 'client', message: text }
+                ]);
+
+                appendMessageUI('client', text);
+                input.value = '';
+            } catch (err) {
+                console.error('Erro ao enviar mensagem:', err);
+            }
+        }
+
+        function appendMessageUI(sender, text) {
+            const container = document.getElementById('messages-container');
+            const isAdmin = sender === 'admin';
+
+            container.innerHTML += `
+                <div class="flex items-end gap-2 max-w-md ${isAdmin ? '' : 'ml-auto flex-row-reverse'}">
+                    <div class="w-7 h-7 rounded-full ${isAdmin ? 'bg-blue-600' : 'bg-emerald-600'} flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0">
+                        ${isAdmin ? 'OP' : 'EU'}
+                    </div>
+                    <div class="${isAdmin ? 'bg-slate-800 text-slate-200 rounded-bl-sm' : 'bg-emerald-600 text-white rounded-br-sm'} p-3 rounded-2xl text-xs leading-relaxed shadow-sm">
+                        ${text}
+                    </div>
+                </div>
+            `;
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function setupRealtimeChat(ticketId) {
+            supabase
+                .channel(`ticket-${ticketId}`)
+                .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `ticket_id=eq.${ticketId}` }, payload => {
+                    if(payload.new.sender === 'admin') {
+                        appendMessageUI('admin', payload.new.message);
+                    }
+                })
+                .subscribe();
+        }
+    </script>
 </body>
 </html>
