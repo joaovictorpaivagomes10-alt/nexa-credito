@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080b13">
+<title>NEXA | Atendimento</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b13;color:#f5f5f5;font-family:Arial,sans-serif;min-height:100vh}
+header{padding:22px;text-align:center;border-bottom:1px solid #263247}
+.logo{font-size:30px;font-weight:900;letter-spacing:5px;color:#d6b46a}
+.logo small{display:block;font-size:10px;letter-spacing:4px;color:#aaa;margin-top:5px}
+main{max-width:520px;margin:45px auto;padding:20px}
+.card{background:#111a29;border:1px solid #263247;border-radius:18px;padding:25px}
+h1{font-size:24px;margin:0 0 10px}
+p{color:#aab4c3;line-height:1.6;font-size:14px}
+label{display:block;margin:19px 0 8px;font-size:13px;color:#d6b46a}
+input,select,textarea{width:100%;padding:14px;border-radius:9px;border:1px solid #344158;background:#080e19;color:white;font-size:15px;outline:none}
+textarea{min-height:110px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:#d6b46a}
+button{width:100%;padding:16px;margin-top:22px;background:#d6b46a;color:#111;border:0;border-radius:9px;font-weight:900;font-size:14px;cursor:pointer}
+button:disabled{opacity:.5}
+.notice{font-size:11px;color:#8994a5;text-align:center;margin-top:20px}
+#result{display:none;margin-top:20px;padding:16px;border-radius:10px;background:#17283a;overflow-wrap:anywhere}
+#result strong{color:#d6b46a}
+.error{background:#351b22!important;color:#ffb5b5}
+footer{text-align:center;color:#667085;font-size:11px;padding:20px}
+</style>
+</head>
+<body>
+<header>
+ <div class="logo">NEXA<small>CRÉDITO E ATENDIMENTO</small></div>
+</header>
+
+<main>
+ <section class="card">
+  <h1>Como podemos ajudar?</h1>
+  <p>Preencha os dados abaixo para iniciar seu atendimento com nossa equipe.</p>
+
+  <form id="form">
+   <label for="nome">Nome completo</label>
+   <input id="nome" maxlength="100" required placeholder="Digite seu nome">
+
+   <label for="contato">WhatsApp ou telefone</label>
+   <input id="contato" maxlength="30" required placeholder="(00) 00000-0000">
+
+   <label for="assunto">Qual atendimento deseja?</label>
+   <select id="assunto" required>
+    <option value="">Selecione uma opção</option>
+    <option value="FGTS">Crédito FGTS</option>
+    <option value="CLT">Crédito CLT</option>
+    <option value="Crefaz">Crédito Crefaz</option>
+    <option value="Informações">Informações</option>
+    <option value="Outro">Outro assunto</option>
+   </select>
+
+   <label for="mensagem">Sua mensagem</label>
+   <textarea id="mensagem" maxlength="4000" required placeholder="Conte como podemos ajudar..."></textarea>
+
+   <button id="submit" type="submit">SOLICITAR ATENDIMENTO</button>
+  </form>
+
+  <div id="result"></div>
+  <div class="notice">Seus dados serão utilizados para dar continuidade ao atendimento solicitado.</div>
+ </section>
+</main>
+
+<footer>NEXA CRÉDITO · Canal independente de informações e atendimento</footer>
+
+<script>
+const FUNCTION_URL="https://qjujystvdehvolwhtkgw.supabase.co/functions/v1/clever-task";
+
+const form=document.getElementById("form");
+const button=document.getElementById("submit");
+const result=document.getElementById("result");
+
+form.addEventListener("submit",async function(event){
+ event.preventDefault();
+
+ const customer_name=document.getElementById("nome").value.trim();
+ const customer_contact=document.getElementById("contato").value.trim();
+ const subject=document.getElementById("assunto").value;
+ const message=document.getElementById("mensagem").value.trim();
+
+ if(!customer_name||!customer_contact||!subject||!message){
+  showMessage("Preencha todos os campos.","error");
+  return;
+ }
+
+ button.disabled=true;
+ button.textContent="ENVIANDO...";
+ result.style.display="none";
+
+ try{
+  const response=await fetch(FUNCTION_URL,{
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({
+    customer_name,
+    customer_contact,
+    subject,
+    message
+   })
+  });
+
+  const data=await response.json();
+
+  if(!response.ok||data.success===false){
+   throw new Error(data.error||data.message||"Não foi possível enviar sua solicitação.");
+  }
+
+  showMessage(
+   "<strong>Solicitação enviada!</strong><br><br>"+
+   "Seu protocolo: <strong>"+escapeHTML(data.protocol||data.session?.protocol||"Recebido")+"</strong><br><br>"+
+   "Nossa equipe poderá dar continuidade ao atendimento.",
+   ""
+  );
+  form.reset();
+
+ }catch(error){
+  showMessage("Não foi possível enviar: "+escapeHTML(error.message),"error");
+ }finally{
+  button.disabled=false;
+  button.textContent="SOLICITAR ATENDIMENTO";
+ }
+});
+
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ })[c]);
+}
+function showMessage(message,type){
+ result.className=type;
+ result.innerHTML=message;
+ result.style.display="block";
+}
+</script>
+</body>
+</html>
