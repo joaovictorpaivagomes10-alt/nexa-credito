@@ -1,258 +1,215 @@
-<!-- Seção de Atendimento do Operador / Vendedor -->
-<div class="space-y-6 text-slate-100">
-    
-    <!-- Barra de Status do Atendente -->
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col sm:flex-row justify-between items-center gap-4 shadow-xl">
-        <div>
-            <h3 class="text-base font-bold text-emerald-400">Painel do Especialista / Atendente</h3>
-            <p class="text-xs text-slate-400">Gerencie a fila de triagem e atenda os clientes vindos do assistente virtual.</p>
-        </div>
-        <div class="flex items-center gap-3">
-            <span id="attendant-badge" class="text-xs px-3 py-1 rounded-full bg-slate-800 text-slate-300 font-medium">Status: Offline</span>
-            <button onclick="toggleAttendantStatus()" id="btn-status" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs px-4 py-2.5 rounded-xl font-medium transition shadow-md">Ficar Disponível</button>
-        </div>
-    </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        <!-- Coluna da Esquerda: Fila de Espera -->
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col h-[520px]">
-            <h4 class="font-bold text-xs uppercase tracking-wider text-slate-400 mb-4 flex justify-between items-center">
-                <span>Fila de Espera</span>
-                <span id="queue-count" class="bg-slate-800 text-emerald-400 px-2 py-0.5 rounded-full text-[10px]">0 aguardando</span>
-            </h4>
-            <div id="queue-list" class="flex-1 overflow-y-auto space-y-2.5 pr-1">
-                <div class="text-center text-xs text-slate-500 my-auto py-10">Nenhum cliente na fila no momento.</div>
-            </div>
-            <button onclick="callNextTicket()" class="mt-4 w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 rounded-xl transition text-xs shadow-lg flex items-center justify-center gap-2">
-                📢 Chamar Próximo da Fila
-            </button>
-        </div>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080b13">
+<title>NEXA | Administração</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080b13;color:#fff;font-family:Arial,sans-serif}
+.hidden{display:none!important}
+.login{min-height:100vh;display:grid;place-items:center;padding:20px}
+.card{background:#111a29;border:1px solid #263247;border-radius:15px;padding:23px}
+.login .card{width:100%;max-width:390px}
+.logo{text-align:center;color:#d6b46a;font-size:30px;font-weight:900;letter-spacing:4px}
+.sub{text-align:center;color:#9ba7b8;font-size:11px;margin:8px 0 25px}
+label{display:block;color:#d6b46a;font-size:13px;margin:16px 0 7px}
+input{width:100%;padding:14px;background:#080e19;border:1px solid #344158;border-radius:8px;color:white}
+button{padding:12px 15px;border:0;border-radius:8px;background:#d6b46a;color:#111;font-weight:bold;cursor:pointer}
+.primary{width:100%;margin-top:20px}
+.error{color:#ff9999;font-size:13px;margin-top:14px}
+.layout{min-height:100vh}
+header{padding:18px 22px;background:#101827;border-bottom:1px solid #263247;display:flex;justify-content:space-between;align-items:center;gap:12px}
+header strong{color:#d6b46a;font-size:21px;letter-spacing:3px}
+main{max-width:850px;margin:auto;padding:20px}
+h1{font-size:23px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+.actions button{background:#263247;color:white}
+.actions button.active{background:#d6b46a;color:#111}
+.item{border-bottom:1px solid #263247;padding:16px 0}
+.item:last-child{border:0}
+.muted{color:#9ba7b8;font-size:13px;line-height:1.6}
+.tag{display:inline-block;background:#263247;color:#d6b46a;padding:5px 9px;border-radius:20px;font-size:11px;margin:8px 0}
+.message{background:#172438;padding:12px;border-radius:9px;margin:8px 0;font-size:13px;overflow-wrap:anywhere}
+#content{min-height:150px}
+</style>
+</head>
+<body>
 
-        <!-- Coluna da Direita: Chat Ativo com o Cliente -->
-        <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col h-[520px] overflow-hidden">
-            <div class="p-4 bg-slate-950/60 border-b border-slate-800 flex justify-between items-center">
-                <div>
-                    <h4 id="active-client-name" class="font-bold text-sm text-slate-100">Nenhum cliente selecionado</h4>
-                    <p id="active-client-service" class="text-[10px] text-slate-400">Aguardando chamada...</p>
-                </div>
-                <button onclick="finishTicket()" class="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 px-3 py-1.5 rounded-lg transition">Finalizar Atendimento</button>
-            </div>
+<section id="login" class="login">
+ <div class="card">
+  <div class="logo">NEXA</div>
+  <div class="sub">PAINEL ADMINISTRATIVO</div>
+  <form id="loginForm">
+   <label>E-mail</label>
+   <input id="email" type="email" autocomplete="username" required>
+   <label>Senha</label>
+   <input id="password" type="password" autocomplete="current-password" required>
+   <button id="loginButton" class="primary">ENTRAR</button>
+  </form>
+  <div id="error" class="error"></div>
+ </div>
+</section>
 
-            <!-- Mensagens do Chat Admin -->
-            <div id="admin-messages" class="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col bg-slate-950/30">
-                <div class="text-center text-xs text-slate-500 my-auto">Selecione ou chame um cliente para iniciar o chat.</div>
-            </div>
-
-            <!-- Input do Atendente -->
-            <form id="admin-chat-form" onsubmit="sendAdminMessage(event)" class="p-3 bg-slate-950 border-t border-slate-800 flex gap-2">
-                <input type="text" id="admin-msg-input" disabled placeholder="Chame um cliente para começar..." class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-100 focus:outline-none focus:border-emerald-500 disabled:opacity-50">
-                <button type="submit" id="admin-send-btn" disabled class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2.5 rounded-xl font-medium text-xs transition shadow-md disabled:opacity-50">Responder</button>
-            </form>
-        </div>
-
-    </div>
-</div>
+<section id="panel" class="layout hidden">
+ <header>
+  <strong>NEXA ADMIN</strong>
+  <button id="logout">SAIR</button>
+ </header>
+ <main>
+  <h1>Central de atendimentos</h1>
+  <p class="muted">Gerenciamento dos atendimentos recebidos.</p>
+  <div class="actions">
+   <button id="refresh" class="active">ATUALIZAR</button>
+  </div>
+  <div id="content" class="card">Carregando...</div>
+ </main>
+</section>
 
 <script>
-    let isOnline = false;
-    let activeTicket = null;
+const URL="https://qjujystvdehvolwhtkgw.supabase.co";
+const KEY="sb_publishable_uS0uMa2YNj6VKSKo1FQ_Og_hXQHrFxN";
+const db=window.supabase.createClient(URL,KEY);
+const $=id=>document.getElementById(id);
+let busy=false;
 
-    function toggleAttendantStatus() {
-        isOnline = !isOnline;
-        const badge = document.getElementById('attendant-badge');
-        const btn = document.getElementById('btn-status');
+function esc(v){
+ return String(v??"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ })[c]);
+}
 
-        if(isOnline) {
-            badge.innerText = 'Status: Disponível';
-            badge.className = 'text-xs px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-medium';
-            btn.innerText = 'Ficar Offline';
-            btn.className = 'bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-4 py-2.5 rounded-xl font-medium transition';
-            loadQueue();
-        } else {
-            badge.innerText = 'Status: Offline';
-            badge.className = 'text-xs px-3 py-1 rounded-full bg-slate-800 text-slate-300 font-medium';
-            btn.innerText = 'Ficar Disponível';
-            btn.className = 'bg-emerald-600 hover:bg-emerald-500 text-white text-xs px-4 py-2.5 rounded-xl font-medium transition';
-        }
-    }
+async function isAdmin(){
+ const {data:{session},error}=await db.auth.getSession();
+ if(error||!session)return false;
 
-    async function loadQueue() {
-        try {
-            const { data, error } = await supabase
-                .from('queue_tickets')
-                .select('*')
-                .eq('status', 'aguardando')
-                .order('created_at', { ascending: true });
+ const {data:profile,error:profileError}=await db
+  .from("profiles")
+  .select("role,active")
+  .eq("id",session.user.id)
+  .maybeSingle();
 
-            if(error) throw error;
+ if(profileError){
+  $("error").textContent="Erro ao verificar perfil: "+profileError.message;
+  return false;
+ }
+ if(!profile||profile.role!=="admin"||profile.active!==true){
+  $("error").textContent="Conta sem permissão de administrador ativa.";
+  await db.auth.signOut();
+  return false;
+ }
+ return true;
+}
 
-            const listContainer = document.getElementById('queue-list');
-            document.getElementById('queue-count').innerText = `${data.length} aguardando`;
+async function enter(){
+ $("error").textContent="";
+ const button=$("loginButton");
+ button.disabled=true;
+ button.textContent="VERIFICANDO...";
+ try{
+  const {error}=await db.auth.signInWithPassword({
+   email:$("email").value.trim(),
+   password:$("password").value
+  });
+  if(error)throw error;
 
-            if(data.length === 0) {
-                listContainer.innerHTML = `<div class="text-center text-xs text-slate-500 my-auto py-10">Nenhum cliente na fila no momento.</div>`;
-                return;
-            }
+  if(!await isAdmin()){
+   await db.auth.signOut();
+   return;
+  }
 
-            listContainer.innerHTML = data.map(t => `
-                <div class="p-3 bg-slate-950/70 border border-slate-800 rounded-xl flex justify-between items-center">
-                    <div>
-                        <span class="text-xs font-bold text-emerald-400">${t.ticket_number}</span>
-                        <h5 class="text-xs font-semibold text-slate-200">${t.client_name}</h5>
-                        <p class="text-[10px] text-slate-400">${t.service_type}</p>
-                    </div>
-                    <button onclick="callSpecificTicket('${t.id}')" class="text-[10px] bg-slate-800 hover:bg-emerald-600 text-slate-200 px-3 py-1.5 rounded-lg transition">Atender</button>
-                </div>
-            `).join('');
-        } catch(err) {
-            console.error('Erro ao carregar fila:', err);
-        }
-    }
+  $("login").classList.add("hidden");
+  $("panel").classList.remove("hidden");
+  await loadChats();
+ }catch(e){
+  $("error").textContent=e.message==="Invalid login credentials"
+   ?"E-mail ou senha incorretos."
+   :"Erro: "+e.message;
+ }finally{
+  button.disabled=false;
+  button.textContent="ENTRAR";
+ }
+}
 
-    async function callNextTicket() {
-        if(!isOnline) {
-            alert('Você precisa estar com o status "Disponível".');
-            return;
-        }
+$("loginForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ enter();
+});
 
-        try {
-            const { data, error } = await supabase
-                .from('queue_tickets')
-                .select('*')
-                .eq('status', 'aguardando')
-                .order('created_at', { ascending: true })
-                .limit(1)
-                .single();
+async function loadChats(){
+ if(busy)return;
+ busy=true;
+ $("content").innerHTML="Buscando atendimentos...";
+ $("refresh").disabled=true;
+ try{
+  const {data:{session},error:sessionError}=await db.auth.getSession();
+  if(sessionError||!session)throw new Error("Sessão não encontrada.");
 
-            if(error || !data) {
-                alert('A fila está vazia.');
-                return;
-            }
+  const response=await fetch(URL+"/functions/v1/admin-chat-list",{
+   method:"GET",
+   headers:{
+    "Authorization":"Bearer "+session.access_token,
+    "apikey":KEY
+   }
+  });
+  const data=await response.json();
 
-            setActiveTicket(data);
-        } catch(err) {
-            console.error('Erro ao chamar próximo:', err);
-        }
-    }
+  if(!response.ok||data.success===false){
+   throw new Error(data.error||data.message||"Erro HTTP "+response.status);
+  }
 
-    async function callSpecificTicket(ticketId) {
-        try {
-            const { data, error } = await supabase
-                .from('queue_tickets')
-                .select('*')
-                .eq('id', ticketId)
-                .single();
+  const sessions=data.sessions||[];
+  const messages=data.messages||[];
 
-            if(error) throw error;
-            setActiveTicket(data);
-        } catch(err) {
-            console.error('Erro ao selecionar ticket:', err);
-        }
-    }
+  if(!sessions.length){
+   $("content").innerHTML='<p class="muted">Nenhum atendimento encontrado.</p>';
+   return;
+  }
 
-    async function setActiveTicket(ticket) {
-        activeTicket = ticket;
+  $("content").innerHTML=sessions.map(s=>{
+   const related=messages.filter(m=>String(m.session_id)===String(s.id));
+   return `
+    <div class="item">
+     <strong>${esc(s.customer_name||"Cliente")}</strong>
+     <div class="muted">${esc(s.customer_contact||"")}</div>
+     <div class="muted">Protocolo: ${esc(s.protocol||"Não informado")}</div>
+     <span class="tag">${esc(s.status||"")}</span>
+     <p class="muted">Assunto: ${esc(s.subject||"")}</p>
+     ${related.map(m=>`
+      <div class="message">
+       <strong>${esc(m.sender_type||"")}</strong><br>
+       ${esc(m.message||"")}
+      </div>`).join("")}
+    </div>`;
+  }).join("");
 
-        await supabase
-            .from('queue_tickets')
-            .update({ status: 'em_atendimento' })
-            .eq('id', ticket.id);
+ }catch(e){
+  $("content").innerHTML='<p class="error">Erro ao carregar: '+esc(e.message)+'</p>';
+ }finally{
+  busy=false;
+  $("refresh").disabled=false;
+ }
+}
 
-        document.getElementById('active-client-name').innerText = `${ticket.ticket_number} - ${ticket.client_name}`;
-        document.getElementById('active-client-service').innerText = `Serviço: ${ticket.service_type} | Fone: ${ticket.client_phone}`;
-        document.getElementById('admin-msg-input').disabled = false;
-        document.getElementById('admin-send-btn').disabled = false;
+$("refresh").addEventListener("click",loadChats);
 
-        loadAdminMessages(ticket.id);
-        setupAdminRealtime(ticket.id);
-        loadQueue();
-    }
+$("logout").addEventListener("click",async()=>{
+ await db.auth.signOut();
+ $("panel").classList.add("hidden");
+ $("login").classList.remove("hidden");
+ $("password").value="";
+});
 
-    async function loadAdminMessages(ticketId) {
-        try {
-            const { data, error } = await supabase
-                .from('messages')
-                .select('*')
-                .eq('ticket_id', ticketId)
-                .order('created_at', { ascending: true });
-
-            if(error) throw error;
-
-            const container = document.getElementById('admin-messages');
-            container.innerHTML = data.length === 0 ? `<div class="text-center text-xs text-slate-500 my-auto">Inicie a conversa com o cliente.</div>` : '';
-
-            data.forEach(m => appendAdminMsgUI(m.sender, m.message));
-        } catch(err) {
-            console.error('Erro ao carregar mensagens:', err);
-        }
-    }
-
-    async function sendAdminMessage(event) {
-        event.preventDefault();
-        const input = document.getElementById('admin-msg-input');
-        const text = input.value.trim();
-        if(!text || !activeTicket) return;
-
-        try {
-            await supabase.from('messages').insert([
-                { ticket_id: activeTicket.id, sender: 'admin', message: text }
-            ]);
-
-            appendAdminMsgUI('admin', text);
-            input.value = '';
-        } catch(err) {
-            console.error('Erro ao enviar:', err);
-        }
-    }
-
-    function appendAdminMsgUI(sender, text) {
-        const container = document.getElementById('admin-messages');
-        const isAdmin = sender === 'admin';
-
-        container.innerHTML += `
-            <div class="flex items-end gap-2 max-w-md ${isAdmin ? 'ml-auto flex-row-reverse' : ''}">
-                <div class="w-7 h-7 rounded-full ${isAdmin ? 'bg-blue-600' : 'bg-emerald-600'} flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0">
-                    ${isAdmin ? 'EU' : 'CLI'}
-                </div>
-                <div class="${isAdmin ? 'bg-blue-600 text-white rounded-br-sm' : 'bg-slate-800 text-slate-200 rounded-bl-sm'} p-3 rounded-2xl text-xs leading-relaxed shadow-sm">
-                    ${text}
-                </div>
-            </div>
-        `;
-        container.scrollTop = container.scrollHeight;
-    }
-
-    async function finishTicket() {
-        if(!activeTicket) return;
-
-        try {
-            await supabase
-                .from('queue_tickets')
-                .update({ status: 'finalizado' })
-                .eq('id', activeTicket.id);
-
-            alert('Atendimento finalizado com sucesso!');
-            activeTicket = null;
-            document.getElementById('active-client-name').innerText = 'Nenhum cliente selecionado';
-            document.getElementById('active-client-service').innerText = 'Aguardando chamada...';
-            document.getElementById('admin-messages').innerHTML = `<div class="text-center text-xs text-slate-500 my-auto">Atendimento concluído.</div>`;
-            document.getElementById('admin-msg-input').disabled = true;
-            document.getElementById('admin-send-btn').disabled = true;
-            loadQueue();
-        } catch(err) {
-            console.error('Erro ao finalizar:', err);
-        }
-    }
-
-    function setupAdminRealtime(ticketId) {
-        supabase
-            .channel(`admin-ticket-${ticketId}`)
-            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `ticket_id=eq.${ticketId}` }, payload => {
-                if(payload.new.sender === 'client') {
-                    appendAdminMsgUI('client', payload.new.message);
-                }
-            })
-            .subscribe();
-    }
+(async()=>{
+ if(await isAdmin()){
+  $("login").classList.add("hidden");
+  $("panel").classList.remove("hidden");
+  await loadChats();
+ }
+})();
 </script>
+</body>
+</html>
