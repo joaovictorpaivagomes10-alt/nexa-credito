@@ -1,167 +1,258 @@
-<!-- Seção de Atendimento / Chat -->
-<div id="atendimento-view" class="flex h-[calc(100vh-100px)] bg-slate-900 text-slate-100 rounded-xl overflow-hidden border border-slate-800 shadow-2xl">
+<!-- Seção de Atendimento do Operador / Vendedor -->
+<div class="space-y-6 text-slate-100">
     
-    <!-- Lista de Conversas (Lateral Esquerda) -->
-    <div class="w-1/3 border-r border-slate-800 flex flex-col bg-slate-950/50">
-        <!-- Cabeçalho da Lista -->
-        <div class="p-4 border-b border-slate-800 flex items-center justify-between">
-            <h2 class="font-bold text-lg text-emerald-400">Atendimentos</h2>
-            <span class="text-xs bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-medium">3 Online</span>
+    <!-- Barra de Status do Atendente -->
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col sm:flex-row justify-between items-center gap-4 shadow-xl">
+        <div>
+            <h3 class="text-base font-bold text-emerald-400">Painel do Especialista / Atendente</h3>
+            <p class="text-xs text-slate-400">Gerencie a fila de triagem e atenda os clientes vindos do assistente virtual.</p>
         </div>
-        <!-- Barra de Pesquisa -->
-        <div class="p-3">
-            <input type="text" id="search-chat" placeholder="Buscar cliente..." class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-emerald-500">
-        </div>
-        <!-- Lista de Contatos -->
-        <div class="flex-1 overflow-y-auto divide-y divide-slate-900">
-            <div onclick="selectChat('Ana Clara', 'Olá, minha proposta foi aprovada?')" class="p-4 hover:bg-slate-900 cursor-pointer transition flex items-center gap-3 bg-slate-900/60 border-l-4 border-emerald-500">
-                <div class="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center font-bold text-white">AC</div>
-                <div class="flex-1 min-w-0">
-                    <div class="flex justify-between items-baseline">
-                        <h4 class="font-semibold text-sm truncate text-slate-200">Ana Clara</h4>
-                        <span class="text-xs text-slate-500">14:22</span>
-                    </div>
-                    <p class="text-xs text-slate-400 truncate">Olá, minha proposta foi aprovada?</p>
-                </div>
-            </div>
-            <div onclick="selectChat('Carlos Silva', 'Enviei os documentos pendentes.')" class="p-4 hover:bg-slate-900 cursor-pointer transition flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white">CS</div>
-                <div class="flex-1 min-w-0">
-                    <div class="flex justify-between items-baseline">
-                        <h4 class="font-semibold text-sm truncate text-slate-200">Carlos Silva</h4>
-                        <span class="text-xs text-slate-500">Ontem</span>
-                    </div>
-                    <p class="text-xs text-slate-400 truncate">Enviei os documentos pendentes.</p>
-                </div>
-            </div>
-            <div onclick="selectChat('Mariana Souza', 'Qual a taxa de juros para empréstimo?')" class="p-4 hover:bg-slate-900 cursor-pointer transition flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center font-bold text-white">MS</div>
-                <div class="flex-1 min-w-0">
-                    <div class="flex justify-between items-baseline">
-                        <h4 class="font-semibold text-sm truncate text-slate-200">Mariana Souza</h4>
-                        <span class="text-xs text-slate-500">2 dias</span>
-                    </div>
-                    <p class="text-xs text-slate-400 truncate">Qual a taxa de juros para empréstimo?</p>
-                </div>
-            </div>
+        <div class="flex items-center gap-3">
+            <span id="attendant-badge" class="text-xs px-3 py-1 rounded-full bg-slate-800 text-slate-300 font-medium">Status: Offline</span>
+            <button onclick="toggleAttendantStatus()" id="btn-status" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs px-4 py-2.5 rounded-xl font-medium transition shadow-md">Ficar Disponível</button>
         </div>
     </div>
 
-    <!-- Janela Principal do Chat (Direita) -->
-    <div class="flex-1 flex flex-col bg-slate-900">
-        <!-- Topo da Conversa -->
-        <div id="chat-header" class="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/30">
-            <div class="flex items-center gap-3">
-                <div id="active-avatar" class="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center font-bold text-white">AC</div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Coluna da Esquerda: Fila de Espera -->
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col h-[520px]">
+            <h4 class="font-bold text-xs uppercase tracking-wider text-slate-400 mb-4 flex justify-between items-center">
+                <span>Fila de Espera</span>
+                <span id="queue-count" class="bg-slate-800 text-emerald-400 px-2 py-0.5 rounded-full text-[10px]">0 aguardando</span>
+            </h4>
+            <div id="queue-list" class="flex-1 overflow-y-auto space-y-2.5 pr-1">
+                <div class="text-center text-xs text-slate-500 my-auto py-10">Nenhum cliente na fila no momento.</div>
+            </div>
+            <button onclick="callNextTicket()" class="mt-4 w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-3 rounded-xl transition text-xs shadow-lg flex items-center justify-center gap-2">
+                📢 Chamar Próximo da Fila
+            </button>
+        </div>
+
+        <!-- Coluna da Direita: Chat Ativo com o Cliente -->
+        <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col h-[520px] overflow-hidden">
+            <div class="p-4 bg-slate-950/60 border-b border-slate-800 flex justify-between items-center">
                 <div>
-                    <h3 id="active-name" class="font-semibold text-slate-100">Ana Clara</h3>
-                    <span class="text-xs text-emerald-400 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Em atendimento</span>
+                    <h4 id="active-client-name" class="font-bold text-sm text-slate-100">Nenhum cliente selecionado</h4>
+                    <p id="active-client-service" class="text-[10px] text-slate-400">Aguardando chamada...</p>
                 </div>
+                <button onclick="finishTicket()" class="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 px-3 py-1.5 rounded-lg transition">Finalizar Atendimento</button>
             </div>
-            <div class="flex gap-2">
-                <button onclick="quickAction('proposta')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">Ver Proposta</button>
-                <button onclick="quickAction('boleto')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 transition">Enviar Boleto</button>
-            </div>
-        </div>
 
-        <!-- Histórico de Mensagens -->
-        <div id="chat-messages" class="flex-1 p-6 overflow-y-auto space-y-4 flex flex-col">
-            <div class="text-center my-2">
-                <span class="text-[10px] bg-slate-800 text-slate-400 px-3 py-1 rounded-full uppercase tracking-wider">Hoje</span>
+            <!-- Mensagens do Chat Admin -->
+            <div id="admin-messages" class="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col bg-slate-950/30">
+                <div class="text-center text-xs text-slate-500 my-auto">Selecione ou chame um cliente para iniciar o chat.</div>
             </div>
-            <!-- Mensagem recebida -->
-            <div class="flex items-end gap-2 max-w-lg">
-                <div class="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">AC</div>
-                <div class="bg-slate-800 text-slate-200 p-3.5 rounded-2xl rounded-bl-sm text-sm shadow-sm">
-                    Olá! Gostaria de saber o status da minha análise de crédito enviada ontem.
-                    <span class="block text-[10px] text-slate-400 text-right mt-1">14:20</span>
-                </div>
-            </div>
-            <!-- Mensagem enviada (Atendente) -->
-            <div class="flex items-end gap-2 max-w-lg ml-auto flex-row-reverse">
-                <div class="bg-emerald-600 text-white p-3.5 rounded-2xl rounded-br-sm text-sm shadow-sm">
-                    Olá Ana! Deixa eu verificar aqui no sistema para você um instante.
-                    <span class="block text-[10px] text-emerald-200 text-right mt-1">14:21</span>
-                </div>
-            </div>
-            <!-- Mensagem recebida -->
-            <div class="flex items-end gap-2 max-w-lg">
-                <div class="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">AC</div>
-                <div class="bg-slate-800 text-slate-200 p-3.5 rounded-2xl rounded-bl-sm text-sm shadow-sm">
-                    Ok, fico no aguardo!
-                    <span class="block text-[10px] text-slate-400 text-right mt-1">14:22</span>
-                </div>
-            </div>
-        </div>
 
-        <!-- Rodapé / Caixa de Texto -->
-        <div class="p-4 border-t border-slate-800 bg-slate-950/30">
-            <form id="chat-form" onsubmit="sendMessage(event)" class="flex gap-3 items-center">
-                <button type="button" class="text-slate-400 hover:text-slate-200 transition p-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
-                </button>
-                <input type="text" id="chat-input" placeholder="Digite sua resposta..." class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-emerald-500 transition">
-                <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-3 rounded-xl font-medium text-sm transition flex items-center gap-2 shadow-lg shadow-emerald-600/20">
-                    Enviar
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-                </button>
+            <!-- Input do Atendente -->
+            <form id="admin-chat-form" onsubmit="sendAdminMessage(event)" class="p-3 bg-slate-950 border-t border-slate-800 flex gap-2">
+                <input type="text" id="admin-msg-input" disabled placeholder="Chame um cliente para começar..." class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-100 focus:outline-none focus:border-emerald-500 disabled:opacity-50">
+                <button type="submit" id="admin-send-btn" disabled class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2.5 rounded-xl font-medium text-xs transition shadow-md disabled:opacity-50">Responder</button>
             </form>
         </div>
+
     </div>
 </div>
 
 <script>
-    // Funções de controle do chat
-    function selectChat(name, lastMsg) {
-        document.getElementById('active-name').innerText = name;
-        document.getElementById('active-avatar').innerText = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
-        
-        // Simulação de troca de conversa
-        const messagesContainer = document.getElementById('chat-messages');
-        messagesContainer.innerHTML = `
-            <div class="text-center my-2">
-                <span class="text-[10px] bg-slate-800 text-slate-400 px-3 py-1 rounded-full uppercase tracking-wider">Hoje</span>
-            </div>
-            <div class="flex items-end gap-2 max-w-lg">
-                <div class="w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">${document.getElementById('active-avatar').innerText}</div>
-                <div class="bg-slate-800 text-slate-200 p-3.5 rounded-2xl rounded-bl-sm text-sm shadow-sm">
-                    ${lastMsg}
-                    <span class="block text-[10px] text-slate-400 text-right mt-1">Agora</span>
-                </div>
-            </div>
-        `;
-    }
+    let isOnline = false;
+    let activeTicket = null;
 
-    function sendMessage(event) {
-        event.preventDefault();
-        const input = document.getElementById('chat-input');
-        const text = input.value.trim();
-        if(!text) return;
+    function toggleAttendantStatus() {
+        isOnline = !isOnline;
+        const badge = document.getElementById('attendant-badge');
+        const btn = document.getElementById('btn-status');
 
-        const messagesContainer = document.getElementById('chat-messages');
-        const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-        // Adiciona mensagem do atendente
-        messagesContainer.innerHTML += `
-            <div class="flex items-end gap-2 max-w-lg ml-auto flex-row-reverse animate-fade-in">
-                <div class="bg-emerald-600 text-white p-3.5 rounded-2xl rounded-br-sm text-sm shadow-sm">
-                    ${text}
-                    <span class="block text-[10px] text-emerald-200 text-right mt-1">${time}</span>
-                </div>
-            </div>
-        `;
-
-        input.value = '';
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }
-
-    function quickAction(type) {
-        const input = document.getElementById('chat-input');
-        if(type === 'proposta') {
-            input.value = 'Sua proposta está em análise final com o parceiro bancário. Previsão de retorno em até 2 horas úteis.';
-        } else if(type === 'boleto') {
-            input.value = 'Segue o link para visualização e pagamento do boleto referente à sua parcela: https://nexa-credito.app/boleto/...';
+        if(isOnline) {
+            badge.innerText = 'Status: Disponível';
+            badge.className = 'text-xs px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 font-medium';
+            btn.innerText = 'Ficar Offline';
+            btn.className = 'bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs px-4 py-2.5 rounded-xl font-medium transition';
+            loadQueue();
+        } else {
+            badge.innerText = 'Status: Offline';
+            badge.className = 'text-xs px-3 py-1 rounded-full bg-slate-800 text-slate-300 font-medium';
+            btn.innerText = 'Ficar Disponível';
+            btn.className = 'bg-emerald-600 hover:bg-emerald-500 text-white text-xs px-4 py-2.5 rounded-xl font-medium transition';
         }
-        input.focus();
+    }
+
+    async function loadQueue() {
+        try {
+            const { data, error } = await supabase
+                .from('queue_tickets')
+                .select('*')
+                .eq('status', 'aguardando')
+                .order('created_at', { ascending: true });
+
+            if(error) throw error;
+
+            const listContainer = document.getElementById('queue-list');
+            document.getElementById('queue-count').innerText = `${data.length} aguardando`;
+
+            if(data.length === 0) {
+                listContainer.innerHTML = `<div class="text-center text-xs text-slate-500 my-auto py-10">Nenhum cliente na fila no momento.</div>`;
+                return;
+            }
+
+            listContainer.innerHTML = data.map(t => `
+                <div class="p-3 bg-slate-950/70 border border-slate-800 rounded-xl flex justify-between items-center">
+                    <div>
+                        <span class="text-xs font-bold text-emerald-400">${t.ticket_number}</span>
+                        <h5 class="text-xs font-semibold text-slate-200">${t.client_name}</h5>
+                        <p class="text-[10px] text-slate-400">${t.service_type}</p>
+                    </div>
+                    <button onclick="callSpecificTicket('${t.id}')" class="text-[10px] bg-slate-800 hover:bg-emerald-600 text-slate-200 px-3 py-1.5 rounded-lg transition">Atender</button>
+                </div>
+            `).join('');
+        } catch(err) {
+            console.error('Erro ao carregar fila:', err);
+        }
+    }
+
+    async function callNextTicket() {
+        if(!isOnline) {
+            alert('Você precisa estar com o status "Disponível".');
+            return;
+        }
+
+        try {
+            const { data, error } = await supabase
+                .from('queue_tickets')
+                .select('*')
+                .eq('status', 'aguardando')
+                .order('created_at', { ascending: true })
+                .limit(1)
+                .single();
+
+            if(error || !data) {
+                alert('A fila está vazia.');
+                return;
+            }
+
+            setActiveTicket(data);
+        } catch(err) {
+            console.error('Erro ao chamar próximo:', err);
+        }
+    }
+
+    async function callSpecificTicket(ticketId) {
+        try {
+            const { data, error } = await supabase
+                .from('queue_tickets')
+                .select('*')
+                .eq('id', ticketId)
+                .single();
+
+            if(error) throw error;
+            setActiveTicket(data);
+        } catch(err) {
+            console.error('Erro ao selecionar ticket:', err);
+        }
+    }
+
+    async function setActiveTicket(ticket) {
+        activeTicket = ticket;
+
+        await supabase
+            .from('queue_tickets')
+            .update({ status: 'em_atendimento' })
+            .eq('id', ticket.id);
+
+        document.getElementById('active-client-name').innerText = `${ticket.ticket_number} - ${ticket.client_name}`;
+        document.getElementById('active-client-service').innerText = `Serviço: ${ticket.service_type} | Fone: ${ticket.client_phone}`;
+        document.getElementById('admin-msg-input').disabled = false;
+        document.getElementById('admin-send-btn').disabled = false;
+
+        loadAdminMessages(ticket.id);
+        setupAdminRealtime(ticket.id);
+        loadQueue();
+    }
+
+    async function loadAdminMessages(ticketId) {
+        try {
+            const { data, error } = await supabase
+                .from('messages')
+                .select('*')
+                .eq('ticket_id', ticketId)
+                .order('created_at', { ascending: true });
+
+            if(error) throw error;
+
+            const container = document.getElementById('admin-messages');
+            container.innerHTML = data.length === 0 ? `<div class="text-center text-xs text-slate-500 my-auto">Inicie a conversa com o cliente.</div>` : '';
+
+            data.forEach(m => appendAdminMsgUI(m.sender, m.message));
+        } catch(err) {
+            console.error('Erro ao carregar mensagens:', err);
+        }
+    }
+
+    async function sendAdminMessage(event) {
+        event.preventDefault();
+        const input = document.getElementById('admin-msg-input');
+        const text = input.value.trim();
+        if(!text || !activeTicket) return;
+
+        try {
+            await supabase.from('messages').insert([
+                { ticket_id: activeTicket.id, sender: 'admin', message: text }
+            ]);
+
+            appendAdminMsgUI('admin', text);
+            input.value = '';
+        } catch(err) {
+            console.error('Erro ao enviar:', err);
+        }
+    }
+
+    function appendAdminMsgUI(sender, text) {
+        const container = document.getElementById('admin-messages');
+        const isAdmin = sender === 'admin';
+
+        container.innerHTML += `
+            <div class="flex items-end gap-2 max-w-md ${isAdmin ? 'ml-auto flex-row-reverse' : ''}">
+                <div class="w-7 h-7 rounded-full ${isAdmin ? 'bg-blue-600' : 'bg-emerald-600'} flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0">
+                    ${isAdmin ? 'EU' : 'CLI'}
+                </div>
+                <div class="${isAdmin ? 'bg-blue-600 text-white rounded-br-sm' : 'bg-slate-800 text-slate-200 rounded-bl-sm'} p-3 rounded-2xl text-xs leading-relaxed shadow-sm">
+                    ${text}
+                </div>
+            </div>
+        `;
+        container.scrollTop = container.scrollHeight;
+    }
+
+    async function finishTicket() {
+        if(!activeTicket) return;
+
+        try {
+            await supabase
+                .from('queue_tickets')
+                .update({ status: 'finalizado' })
+                .eq('id', activeTicket.id);
+
+            alert('Atendimento finalizado com sucesso!');
+            activeTicket = null;
+            document.getElementById('active-client-name').innerText = 'Nenhum cliente selecionado';
+            document.getElementById('active-client-service').innerText = 'Aguardando chamada...';
+            document.getElementById('admin-messages').innerHTML = `<div class="text-center text-xs text-slate-500 my-auto">Atendimento concluído.</div>`;
+            document.getElementById('admin-msg-input').disabled = true;
+            document.getElementById('admin-send-btn').disabled = true;
+            loadQueue();
+        } catch(err) {
+            console.error('Erro ao finalizar:', err);
+        }
+    }
+
+    function setupAdminRealtime(ticketId) {
+        supabase
+            .channel(`admin-ticket-${ticketId}`)
+            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'messages', filter: `ticket_id=eq.${ticketId}` }, payload => {
+                if(payload.new.sender === 'client') {
+                    appendAdminMsgUI('client', payload.new.message);
+                }
+            })
+            .subscribe();
     }
 </script>
